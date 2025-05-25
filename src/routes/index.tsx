@@ -7,6 +7,7 @@ import { KbdDemo } from '../components/kbd/demo';
 import { LoaderDemo } from '../components/loader/demo';
 import { RadialProgressDemo } from '../components/radial-progress/demo';
 import { SkeletonDemo } from '../components/skeleton/demo';
+import { SnackDemo } from '../components/snack/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 
@@ -172,6 +173,7 @@ function App() {
         <LoaderDemo />
         <SkeletonDemo />
         <AlertDemo />
+        <SnackDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>

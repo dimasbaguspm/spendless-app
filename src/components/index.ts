@@ -9,6 +9,7 @@ export { Modal, type ModalProps } from './modal';
 export { Popover, type PopoverProps } from './popover';
 export { RadialProgress, type RadialProgressProps } from './radial-progress';
 export { Skeleton, SkeletonAvatar, SkeletonText, SkeletonButton, SkeletonCard, type SkeletonProps } from './skeleton';
+export { Snack, type SnackProps } from './snack';
 export { Tab, type TabProps } from './tab';
 export { Tag, type TagProps } from './tag';
 export { TopNav, type TopNavProps } from './top-nav';
