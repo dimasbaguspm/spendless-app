@@ -6,6 +6,7 @@ import { BadgeDemo } from '../components/badge/demo';
 import { CheckboxDemo } from '../components/checkbox/demo';
 import { KbdDemo } from '../components/kbd/demo';
 import { LoaderDemo } from '../components/loader/demo';
+import { PaginationDemo } from '../components/pagination/demo';
 import { RadialProgressDemo } from '../components/radial-progress/demo';
 import { RadioDemo } from '../components/radio/demo';
 import { SegmentDemo } from '../components/segment/demo';
@@ -190,6 +191,7 @@ function App() {
         <CheckboxDemo />
         <RadioDemo />
         <SegmentDemo />
+        <PaginationDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>

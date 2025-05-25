@@ -7,6 +7,7 @@ export { Drawer, type DrawerProps } from './drawer';
 export { Kbd, type KbdProps } from './kbd';
 export { Loader, type LoaderProps } from './loader';
 export { Modal, type ModalProps } from './modal';
+export { Pagination, type PaginationProps } from './pagination';
 export { Popover, type PopoverProps } from './popover';
 export { RadialProgress, type RadialProgressProps } from './radial-progress';
 export { Radio, type RadioProps } from './radio';
