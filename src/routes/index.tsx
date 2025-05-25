@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '../components';
+import { AlertDemo } from '../components/alert/demo';
 import { BadgeDemo } from '../components/badge/demo';
 import { KbdDemo } from '../components/kbd/demo';
 import { LoaderDemo } from '../components/loader/demo';
@@ -170,6 +171,7 @@ function App() {
         <KbdDemo />
         <LoaderDemo />
         <SkeletonDemo />
+        <AlertDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>
