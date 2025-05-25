@@ -8,6 +8,7 @@ import { LoaderDemo } from '../components/loader/demo';
 import { RadialProgressDemo } from '../components/radial-progress/demo';
 import { SkeletonDemo } from '../components/skeleton/demo';
 import { SnackDemo } from '../components/snack/demo';
+import { TextInputDemo } from '../components/text-input/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 import { useSnack } from '../providers/snack';
@@ -176,6 +177,7 @@ function App() {
         <SkeletonDemo />
         <AlertDemo />
         <SnackDemo />
+        <TextInputDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>

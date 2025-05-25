@@ -12,6 +12,7 @@ export { Skeleton, SkeletonAvatar, SkeletonText, SkeletonButton, SkeletonCard, t
 export { Snack, type SnackProps } from './snack';
 export { Tab, type TabProps } from './tab';
 export { Tag, type TagProps } from './tag';
+export { TextInput, type TextInputProps } from './text-input';
 export { TopNav, type TopNavProps } from './top-nav';
 export { UserMenuPanel, type UserMenuPanelProps } from './top-nav/user-menu-panel';
 export { UserMenuItem, type UserMenuItemProps } from './top-nav/user-menu-item';
