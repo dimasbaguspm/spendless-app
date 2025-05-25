@@ -4,6 +4,7 @@ export { Drawer, type DrawerProps } from './drawer';
 export { Modal, type ModalProps } from './modal';
 export { Popover, type PopoverProps } from './popover';
 export { Tab, type TabProps } from './tab';
+export { Tag, type TagProps } from './tag';
 export { TopNav, type TopNavProps } from './top-nav';
 export { UserMenuPanel, type UserMenuPanelProps } from './top-nav/user-menu-panel';
 export { UserMenuItem, type UserMenuItemProps } from './top-nav/user-menu-item';
