@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { cn } from '../../libs/utils';
 
 const iconButtonVariants = cva(
-  'inline-flex items-center justify-center rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -22,10 +22,15 @@ const iconButtonVariants = cva(
         lg: 'h-12 w-12',
         xl: 'h-14 w-14',
       },
+      rounded: {
+        true: 'rounded-full',
+        false: 'rounded',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'md',
+      rounded: false,
     },
   }
 );
@@ -37,9 +42,9 @@ export interface IconButtonProps
 }
 
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className, variant, size, children, ...props }, ref) => {
+  ({ className, variant, size, rounded, children, ...props }, ref) => {
     return (
-      <button className={cn(iconButtonVariants({ variant, size, className }))} ref={ref} {...props}>
+      <button className={cn(iconButtonVariants({ variant, size, rounded, className }))} ref={ref} {...props}>
         {children}
       </button>
     );
