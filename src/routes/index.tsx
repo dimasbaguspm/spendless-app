@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '../components';
+import { BadgeDemo } from '../components/badge/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 
@@ -158,6 +159,8 @@ function App() {
             </div>
           </div>
         </div>
+
+        <BadgeDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>
