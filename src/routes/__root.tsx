@@ -11,16 +11,17 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <TopNav
-      menuItems={[
-        { label: 'Home', href: '/' },
-        { label: 'About', href: '/about' },
-        { label: 'Contact', href: '/contact' },
-      ]}
-    >
+    <>
+      <TopNav
+        menuItems={[
+          { label: 'Home', href: '/' },
+          { label: 'About', href: '/about' },
+          { label: 'Contact', href: '/contact' },
+        ]}
+      />
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools buttonPosition="bottom-right" />;
-    </TopNav>
+    </>
   ),
 });
