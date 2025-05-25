@@ -1,0 +1,96 @@
+import { useMutation, type MutationObserverBaseResult, type UseMutationOptions } from '@tanstack/react-query';
+import axios, { type AxiosRequestConfig } from 'axios';
+
+import { BASE_URL } from './constants';
+
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+export interface UseApiMutateOptions<TData, TVariables, TError> {
+  path: string;
+  method?: HttpMethod;
+  onSuccess?: (data: TData, variables: TVariables) => void;
+  onError?: (error: TError, variables: TVariables) => void;
+  onMutate?: (variables: TVariables) => Promise<unknown>;
+  onSettled?: (data: TData | undefined, error: TError | null, variables: TVariables) => void;
+  silentError?: boolean;
+}
+
+type States = Pick<MutationObserverBaseResult, 'isError' | 'isIdle' | 'isPending' | 'isSuccess'>;
+
+export type UseApiMutateResult<TData, TVariables, TError> = [
+  mutateAsync: (variables: TVariables) => Promise<TData>,
+  error: TError | null,
+  states: States,
+  reset: () => void,
+];
+
+export const useApiMutate = <TData, TVariables = unknown, TError = Error>(
+  options: UseApiMutateOptions<TData, TVariables, TError>
+): UseApiMutateResult<TData, TVariables, TError> => {
+  const { path, method = 'GET', onSuccess, onError, onMutate, onSettled, silentError = false } = options;
+
+  const mutationOptions: UseMutationOptions<TData, TError, TVariables> = {
+    mutationFn: async (variables: TVariables) => {
+      try {
+        let response;
+
+        const axiosConfig: AxiosRequestConfig = {
+          baseURL: BASE_URL,
+        };
+
+        switch (method.toUpperCase()) {
+          case 'GET':
+            response = await axios.get<TData>(path, {
+              ...axiosConfig,
+              params: variables,
+            });
+            break;
+          case 'POST':
+            response = await axios.post<TData>(path, variables, axiosConfig);
+            break;
+          case 'PUT':
+            response = await axios.put<TData>(path, variables, axiosConfig);
+            break;
+          case 'PATCH':
+            response = await axios.patch<TData>(path, variables, axiosConfig);
+            break;
+          case 'DELETE':
+            response = await axios.delete<TData>(path, {
+              ...axiosConfig,
+              data: variables,
+            });
+            break;
+          default:
+            throw new Error(`Unsupported HTTP method: ${method}`);
+        }
+
+        onSuccess?.(response.data, variables);
+        return response.data;
+      } catch (error) {
+        onError?.(error as TError, variables);
+        throw error;
+      }
+    },
+    onMutate,
+    onSettled: (data, error, variables) => {
+      onSettled?.(data, error, variables);
+    },
+    meta: {
+      silentError,
+    },
+  };
+
+  const mutation = useMutation(mutationOptions);
+
+  return [
+    mutation.mutateAsync,
+    mutation.error,
+    {
+      isError: mutation.isError,
+      isIdle: mutation.isIdle,
+      isPending: mutation.isPending,
+      isSuccess: mutation.isSuccess,
+    },
+    mutation.reset,
+  ];
+};
