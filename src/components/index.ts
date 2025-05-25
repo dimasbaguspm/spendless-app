@@ -2,6 +2,7 @@ export { Avatar, type AvatarProps } from './avatar';
 export { Badge, type BadgeProps } from './badge';
 export { Button, IconButton, type ButtonProps, type IconButtonProps } from './button';
 export { Drawer, type DrawerProps } from './drawer';
+export { Kbd, type KbdProps } from './kbd';
 export { Modal, type ModalProps } from './modal';
 export { Popover, type PopoverProps } from './popover';
 export { Tab, type TabProps } from './tab';
