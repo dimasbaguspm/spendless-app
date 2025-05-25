@@ -9,6 +9,7 @@ export { Loader, type LoaderProps } from './loader';
 export { Modal, type ModalProps } from './modal';
 export { Popover, type PopoverProps } from './popover';
 export { RadialProgress, type RadialProgressProps } from './radial-progress';
+export { Radio, type RadioProps } from './radio';
 export { Skeleton, SkeletonAvatar, SkeletonText, SkeletonButton, SkeletonCard, type SkeletonProps } from './skeleton';
 export { Snack, type SnackProps } from './snack';
 export { Tab, type TabProps } from './tab';
