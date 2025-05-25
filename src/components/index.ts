@@ -13,6 +13,7 @@ export { Snack, type SnackProps } from './snack';
 export { Tab, type TabProps } from './tab';
 export { Tag, type TagProps } from './tag';
 export { TextInput, type TextInputProps } from './text-input';
+export { TextArea, type TextAreaProps } from './text-area';
 export { Select, type SelectProps } from './select';
 export { TopNav, type TopNavProps } from './top-nav';
 export { UserMenuPanel, type UserMenuPanelProps } from './top-nav/user-menu-panel';
