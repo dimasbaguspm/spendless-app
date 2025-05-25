@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '../components';
 import { useDrawer } from '../providers/drawer';
+import { useModal } from '../providers/modal';
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -9,6 +10,7 @@ export const Route = createFileRoute('/')({
 
 function App() {
   const { openDrawer } = useDrawer();
+  const { openModal } = useModal();
   return (
     <div className="min-h-screen bg-sand-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -20,7 +22,7 @@ function App() {
             <Button variant="coral" onClick={() => openDrawer('')} size="lg">
               Open Drawer
             </Button>
-            <Button variant="sage" size="lg">
+            <Button variant="sage" size="lg" onClick={() => openModal('')}>
               Get Started
             </Button>
             <Button variant="mist" size="lg">
