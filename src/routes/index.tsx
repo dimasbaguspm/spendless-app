@@ -10,6 +10,7 @@ import { SkeletonDemo } from '../components/skeleton/demo';
 import { SnackDemo } from '../components/snack/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
+import { useSnack } from '../providers/snack';
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -18,6 +19,7 @@ export const Route = createFileRoute('/')({
 function App() {
   const { openDrawer } = useDrawer();
   const { openModal } = useModal();
+  const { success } = useSnack();
   return (
     <div className="min-h-screen bg-sand-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -32,7 +34,7 @@ function App() {
             <Button variant="sage" size="lg" onClick={() => openModal('')}>
               Get Started
             </Button>
-            <Button variant="mist" size="lg">
+            <Button variant="mist" size="lg" onClick={() => success('This is a success message!')}>
               View Semantic Colors
             </Button>
           </div>
