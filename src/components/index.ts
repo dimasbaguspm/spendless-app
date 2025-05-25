@@ -6,6 +6,7 @@ export { Kbd, type KbdProps } from './kbd';
 export { Loader, type LoaderProps } from './loader';
 export { Modal, type ModalProps } from './modal';
 export { Popover, type PopoverProps } from './popover';
+export { RadialProgress, type RadialProgressProps } from './radial-progress';
 export { Tab, type TabProps } from './tab';
 export { Tag, type TagProps } from './tag';
 export { TopNav, type TopNavProps } from './top-nav';

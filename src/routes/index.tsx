@@ -4,6 +4,7 @@ import { Button } from '../components';
 import { BadgeDemo } from '../components/badge/demo';
 import { KbdDemo } from '../components/kbd/demo';
 import { LoaderDemo } from '../components/loader/demo';
+import { RadialProgressDemo } from '../components/radial-progress/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 
@@ -163,6 +164,7 @@ function App() {
         </div>
 
         <BadgeDemo />
+        <RadialProgressDemo />
         <LoaderDemo />
         <KbdDemo />
         <LoaderDemo />
