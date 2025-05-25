@@ -2,6 +2,7 @@ export { Alert, type AlertProps } from './alert';
 export { Avatar, type AvatarProps } from './avatar';
 export { Badge, type BadgeProps } from './badge';
 export { Button, IconButton, type ButtonProps, type IconButtonProps } from './button';
+export { Checkbox, type CheckboxProps } from './checkbox';
 export { Drawer, type DrawerProps } from './drawer';
 export { Kbd, type KbdProps } from './kbd';
 export { Loader, type LoaderProps } from './loader';
