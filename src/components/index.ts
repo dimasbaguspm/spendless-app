@@ -26,3 +26,4 @@ export { UserMenuPanel, type UserMenuPanelProps } from './top-nav/user-menu-pane
 export { UserMenuItem, type UserMenuItemProps } from './top-nav/user-menu-item';
 export { UserMenuSeparator, type UserMenuSeparatorProps } from './top-nav/user-menu-separator';
 export { Breadcrumb, type BreadcrumbProps } from './breadcrumb';
+export { ScrollArea, type ScrollAreaProps } from './scroll-area';
