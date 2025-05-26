@@ -27,3 +27,4 @@ export { UserMenuItem, type UserMenuItemProps } from './top-nav/user-menu-item';
 export { UserMenuSeparator, type UserMenuSeparatorProps } from './top-nav/user-menu-separator';
 export { Breadcrumb, type BreadcrumbProps } from './breadcrumb';
 export { ScrollArea, type ScrollAreaProps } from './scroll-area';
+export { FormLayout, type FormLayoutProps, type FormLayoutFieldProps } from './form-layout';
