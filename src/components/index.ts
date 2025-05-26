@@ -8,6 +8,7 @@ export { Kbd, type KbdProps } from './kbd';
 export { LineProgress, type LineProgressProps } from './line-progress';
 export { Loader, type LoaderProps } from './loader';
 export { Modal, type ModalProps } from './modal';
+export { Numpad, type NumpadProps } from './numpad';
 export { Pagination, type PaginationProps } from './pagination';
 export { Popover, type PopoverProps } from './popover';
 export { RadialProgress, type RadialProgressProps } from './radial-progress';
