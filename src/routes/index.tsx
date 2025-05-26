@@ -1,21 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { Button } from '../components';
-import { AlertDemo } from '../components/alert/demo';
-import { BadgeDemo } from '../components/badge/demo';
-import { CheckboxDemo } from '../components/checkbox/demo';
-import { KbdDemo } from '../components/kbd/demo';
-import { LoaderDemo } from '../components/loader/demo';
-import { PaginationDemo } from '../components/pagination/demo';
-import { RadialProgressDemo } from '../components/radial-progress/demo';
-import { RadioDemo } from '../components/radio/demo';
-import { SegmentDemo } from '../components/segment/demo';
-import { SelectDemo } from '../components/select';
-import { SkeletonDemo } from '../components/skeleton/demo';
-import { SnackDemo } from '../components/snack/demo';
-import { SwitchDemo } from '../components/switch/demo';
-import { TextAreaDemo } from '../components/text-area/demo';
-import { TextInputDemo } from '../components/text-input/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 import { useSnack } from '../providers/snack';
@@ -175,23 +160,6 @@ function App() {
             </div>
           </div>
         </div>
-
-        <BadgeDemo />
-        <RadialProgressDemo />
-        <LoaderDemo />
-        <KbdDemo />
-        <LoaderDemo />
-        <SkeletonDemo />
-        <AlertDemo />
-        <SnackDemo />
-        <TextInputDemo />
-        <SelectDemo />
-        <TextAreaDemo />
-        <SwitchDemo />
-        <CheckboxDemo />
-        <RadioDemo />
-        <SegmentDemo />
-        <PaginationDemo />
 
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>

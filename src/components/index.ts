@@ -5,6 +5,7 @@ export { Button, IconButton, type ButtonProps, type IconButtonProps } from './bu
 export { Checkbox, type CheckboxProps } from './checkbox';
 export { Drawer, type DrawerProps } from './drawer';
 export { Kbd, type KbdProps } from './kbd';
+export { LineProgress, type LineProgressProps } from './line-progress';
 export { Loader, type LoaderProps } from './loader';
 export { Modal, type ModalProps } from './modal';
 export { Pagination, type PaginationProps } from './pagination';
