@@ -1,4 +1,4 @@
-import { Heart, Plus, Settings, Trash2 } from 'lucide-react';
+import { Heart, Plus, Settings, Trash2, Download, Upload, Save } from 'lucide-react';
 
 import { Button, IconButton } from '.';
 
@@ -41,6 +41,45 @@ export function ButtonDemo() {
               </Button>
               <Button variant="ghost" disabled>
                 Ghost
+              </Button>
+            </div>
+          </div>
+
+          {/* Busy State */}
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium text-gray-700">Busy State</h3>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="default" busy>
+                Saving...
+              </Button>
+              <Button variant="secondary" busy>
+                Loading...
+              </Button>
+              <Button variant="outline" busy>
+                Processing...
+              </Button>
+              <Button variant="ghost" busy>
+                Submitting...
+              </Button>
+            </div>
+          </div>
+
+          {/* With Icons */}
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium text-gray-700">With Icons</h3>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="default" iconLeft={<Download className="h-4 w-4" />}>
+                Download
+              </Button>
+              <Button variant="secondary" iconRight={<Upload className="h-4 w-4" />}>
+                Upload
+              </Button>
+              <Button
+                variant="outline"
+                iconLeft={<Save className="h-4 w-4" />}
+                iconRight={<Heart className="h-4 w-4" />}
+              >
+                Save & Like
               </Button>
             </div>
           </div>

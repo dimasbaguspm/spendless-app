@@ -1,7 +1,8 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { forwardRef } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 
 import { cn } from '../../libs/utils';
+import { Loader } from '../loader';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -65,11 +66,41 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  /** When true, shows a loader and disables the button */
+  busy?: boolean;
+  /** Icon to display on the left side of the button */
+  iconLeft?: ReactNode;
+  /** Icon to display on the right side of the button */
+  iconRight?: ReactNode;
+}
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, ...props }, ref) => {
-  return <button className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
-});
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, busy, iconLeft, iconRight, children, disabled, ...props }, ref) => {
+    const isDisabled = disabled ?? busy;
+
+    return (
+      <button className={cn(buttonVariants({ variant, size, className }))} ref={ref} disabled={isDisabled} {...props}>
+        {busy ? (
+          <>
+            <Loader
+              size="sm"
+              variant={variant === 'outline' || variant?.includes('outline') ? 'default' : 'cream'}
+              className="mr-2"
+            />
+            {children}
+          </>
+        ) : (
+          <>
+            {iconLeft && <span className="mr-2">{iconLeft}</span>}
+            {children}
+            {iconRight && <span className="ml-2">{iconRight}</span>}
+          </>
+        )}
+      </button>
+    );
+  }
+);
 
 Button.displayName = 'Button';
 
