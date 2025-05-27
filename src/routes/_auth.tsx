@@ -5,7 +5,7 @@ import { redirectIfAuthenticated } from '../hooks';
 export const Route = createFileRoute('/_auth')({
   component: RouteComponent,
   beforeLoad: () => {
-    throw redirectIfAuthenticated('/');
+    redirectIfAuthenticated('/');
   },
 });
 

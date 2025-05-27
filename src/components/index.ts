@@ -40,3 +40,4 @@ export { UserMenuSeparator, type UserMenuSeparatorProps } from './top-nav/user-m
 export { Breadcrumb, type BreadcrumbProps } from './breadcrumb';
 export { ScrollArea, type ScrollAreaProps } from './scroll-area';
 export { FormLayout, type FormLayoutProps, type FormLayoutFieldProps } from './form-layout';
+export { BottomBar, type BottomBarProps } from './bottom-bar';

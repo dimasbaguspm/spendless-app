@@ -28,7 +28,7 @@ import { TokenManager } from './use-session';
 export const requireAuth = (redirectTo: string = '/auth/login') => {
   // Check if user has authentication tokens
   if (!TokenManager.hasTokens()) {
-    return redirect({
+    throw redirect({
       to: redirectTo,
       replace: true,
     });
@@ -56,7 +56,7 @@ export const requireAuth = (redirectTo: string = '/auth/login') => {
 export const redirectIfAuthenticated = (redirectTo: string = '/') => {
   // Check if user has authentication tokens
   if (TokenManager.hasTokens()) {
-    return redirect({
+    throw redirect({
       to: redirectTo,
       replace: true,
     });

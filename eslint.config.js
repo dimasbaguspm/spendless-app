@@ -42,7 +42,6 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
-      '@typescript-eslint/no-misused-promises': 'warn',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/prefer-nullish-coalescing': 'warn',
       '@typescript-eslint/prefer-optional-chain': 'warn',
@@ -53,6 +52,7 @@ export default [
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/no-misused-promises': 'off',
+      '@typescript-eslint/only-throw-error': 'off',
       // General rules
       'no-console': 'warn',
       'no-duplicate-imports': 'error',

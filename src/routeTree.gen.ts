@@ -11,12 +11,22 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ProtectedImport } from './routes/_protected'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProtectedTransactionsImport } from './routes/_protected/transactions'
+import { Route as ProtectedHomeImport } from './routes/_protected/home'
+import { Route as ProtectedAnalyticsImport } from './routes/_protected/analytics'
+import { Route as ProtectedAccountImport } from './routes/_protected/account'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
 
 // Create/Update Routes
+
+const ProtectedRoute = ProtectedImport.update({
+  id: '/_protected',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
@@ -27,6 +37,30 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const ProtectedTransactionsRoute = ProtectedTransactionsImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedHomeRoute = ProtectedHomeImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedAnalyticsRoute = ProtectedAnalyticsImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedAccountRoute = ProtectedAccountImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 
 const AuthRegisterRoute = AuthRegisterImport.update({
@@ -59,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -72,6 +113,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/register'
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof AuthImport
+    }
+    '/_protected/account': {
+      id: '/_protected/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof ProtectedAccountImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/analytics': {
+      id: '/_protected/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof ProtectedAnalyticsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/home': {
+      id: '/_protected/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof ProtectedHomeImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/transactions': {
+      id: '/_protected/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof ProtectedTransactionsImport
+      parentRoute: typeof ProtectedImport
     }
   }
 }
@@ -90,45 +159,104 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface ProtectedRouteChildren {
+  ProtectedAccountRoute: typeof ProtectedAccountRoute
+  ProtectedAnalyticsRoute: typeof ProtectedAnalyticsRoute
+  ProtectedHomeRoute: typeof ProtectedHomeRoute
+  ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedAccountRoute: ProtectedAccountRoute,
+  ProtectedAnalyticsRoute: ProtectedAnalyticsRoute,
+  ProtectedHomeRoute: ProtectedHomeRoute,
+  ProtectedTransactionsRoute: ProtectedTransactionsRoute,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof ProtectedRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/account': typeof ProtectedAccountRoute
+  '/analytics': typeof ProtectedAnalyticsRoute
+  '/home': typeof ProtectedHomeRoute
+  '/transactions': typeof ProtectedTransactionsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof ProtectedRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/account': typeof ProtectedAccountRoute
+  '/analytics': typeof ProtectedAnalyticsRoute
+  '/home': typeof ProtectedHomeRoute
+  '/transactions': typeof ProtectedTransactionsRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/_protected': typeof ProtectedRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/_protected/account': typeof ProtectedAccountRoute
+  '/_protected/analytics': typeof ProtectedAnalyticsRoute
+  '/_protected/home': typeof ProtectedHomeRoute
+  '/_protected/transactions': typeof ProtectedTransactionsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | ''
+    | '/login'
+    | '/register'
+    | '/account'
+    | '/analytics'
+    | '/home'
+    | '/transactions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/register'
-  id: '__root__' | '/' | '/_auth' | '/_auth/login' | '/_auth/register'
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/register'
+    | '/account'
+    | '/analytics'
+    | '/home'
+    | '/transactions'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_protected'
+    | '/_auth/login'
+    | '/_auth/register'
+    | '/_protected/account'
+    | '/_protected/analytics'
+    | '/_protected/home'
+    | '/_protected/transactions'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  ProtectedRoute: typeof ProtectedRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  ProtectedRoute: ProtectedRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -142,7 +270,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_auth"
+        "/_auth",
+        "/_protected"
       ]
     },
     "/": {
@@ -155,6 +284,15 @@ export const routeTree = rootRoute
         "/_auth/register"
       ]
     },
+    "/_protected": {
+      "filePath": "_protected.tsx",
+      "children": [
+        "/_protected/account",
+        "/_protected/analytics",
+        "/_protected/home",
+        "/_protected/transactions"
+      ]
+    },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
@@ -162,6 +300,22 @@ export const routeTree = rootRoute
     "/_auth/register": {
       "filePath": "_auth/register.tsx",
       "parent": "/_auth"
+    },
+    "/_protected/account": {
+      "filePath": "_protected/account.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/analytics": {
+      "filePath": "_protected/analytics.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/home": {
+      "filePath": "_protected/home.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/transactions": {
+      "filePath": "_protected/transactions.tsx",
+      "parent": "/_protected"
     }
   }
 }
