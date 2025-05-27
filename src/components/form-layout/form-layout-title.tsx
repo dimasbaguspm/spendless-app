@@ -22,7 +22,7 @@ const formLayoutTitleVariants = cva('space-y-4', {
   },
   defaultVariants: {
     spacing: 'md',
-    span: 1,
+    span: 'full',
   },
 });
 
@@ -43,17 +43,16 @@ const formLayoutTitleTextVariants = cva('font-semibold text-slate-700 border-b b
 export interface FormLayoutTitleProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof formLayoutTitleVariants> {
-  title?: string;
+  title: string;
   titleSize?: VariantProps<typeof formLayoutTitleTextVariants>['size'];
   titleClassName?: string;
 }
 
 export const FormLayoutTitle = forwardRef<HTMLDivElement, FormLayoutTitleProps>(
-  ({ className, spacing, span, title, titleSize, titleClassName, children, ...props }, ref) => {
+  ({ className, spacing, span, title, titleSize, titleClassName, ...props }, ref) => {
     return (
       <div ref={ref} className={cn(formLayoutTitleVariants({ spacing, span }), className)} {...props}>
-        {title && <h3 className={cn(formLayoutTitleTextVariants({ size: titleSize }), titleClassName)}>{title}</h3>}
-        {children}
+        <h3 className={cn(formLayoutTitleTextVariants({ size: titleSize }), titleClassName)}>{title}</h3>
       </div>
     );
   }
