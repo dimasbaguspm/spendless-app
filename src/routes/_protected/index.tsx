@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { Button, PageLayout } from '../../components';
 
-export const Route = createFileRoute('/_protected/home')({
+export const Route = createFileRoute('/_protected/')({
   component: HomeComponent,
 });
 

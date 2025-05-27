@@ -13,9 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProtectedImport } from './routes/_protected'
 import { Route as AuthImport } from './routes/_auth'
-import { Route as IndexImport } from './routes/index'
+import { Route as ProtectedIndexImport } from './routes/_protected/index'
 import { Route as ProtectedTransactionsImport } from './routes/_protected/transactions'
-import { Route as ProtectedHomeImport } from './routes/_protected/home'
 import { Route as ProtectedAnalyticsImport } from './routes/_protected/analytics'
 import { Route as ProtectedAccountImport } from './routes/_protected/account'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
@@ -33,21 +32,15 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const ProtectedIndexRoute = ProtectedIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => ProtectedRoute,
 } as any)
 
 const ProtectedTransactionsRoute = ProtectedTransactionsImport.update({
   id: '/transactions',
   path: '/transactions',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
-const ProtectedHomeRoute = ProtectedHomeImport.update({
-  id: '/home',
-  path: '/home',
   getParentRoute: () => ProtectedRoute,
 } as any)
 
@@ -79,13 +72,6 @@ const AuthLoginRoute = AuthLoginImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_auth': {
       id: '/_auth'
       path: ''
@@ -128,18 +114,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAnalyticsImport
       parentRoute: typeof ProtectedImport
     }
-    '/_protected/home': {
-      id: '/_protected/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof ProtectedHomeImport
-      parentRoute: typeof ProtectedImport
-    }
     '/_protected/transactions': {
       id: '/_protected/transactions'
       path: '/transactions'
       fullPath: '/transactions'
       preLoaderRoute: typeof ProtectedTransactionsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/': {
+      id: '/_protected/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedIndexImport
       parentRoute: typeof ProtectedImport
     }
   }
@@ -162,15 +148,15 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface ProtectedRouteChildren {
   ProtectedAccountRoute: typeof ProtectedAccountRoute
   ProtectedAnalyticsRoute: typeof ProtectedAnalyticsRoute
-  ProtectedHomeRoute: typeof ProtectedHomeRoute
   ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
+  ProtectedIndexRoute: typeof ProtectedIndexRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAccountRoute: ProtectedAccountRoute,
   ProtectedAnalyticsRoute: ProtectedAnalyticsRoute,
-  ProtectedHomeRoute: ProtectedHomeRoute,
   ProtectedTransactionsRoute: ProtectedTransactionsRoute,
+  ProtectedIndexRoute: ProtectedIndexRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
@@ -178,83 +164,75 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 )
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '': typeof ProtectedRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/account': typeof ProtectedAccountRoute
   '/analytics': typeof ProtectedAnalyticsRoute
-  '/home': typeof ProtectedHomeRoute
   '/transactions': typeof ProtectedTransactionsRoute
+  '/': typeof ProtectedIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '': typeof ProtectedRouteWithChildren
+  '': typeof AuthRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/account': typeof ProtectedAccountRoute
   '/analytics': typeof ProtectedAnalyticsRoute
-  '/home': typeof ProtectedHomeRoute
   '/transactions': typeof ProtectedTransactionsRoute
+  '/': typeof ProtectedIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_protected/account': typeof ProtectedAccountRoute
   '/_protected/analytics': typeof ProtectedAnalyticsRoute
-  '/_protected/home': typeof ProtectedHomeRoute
   '/_protected/transactions': typeof ProtectedTransactionsRoute
+  '/_protected/': typeof ProtectedIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | ''
     | '/login'
     | '/register'
     | '/account'
     | '/analytics'
-    | '/home'
     | '/transactions'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | ''
     | '/login'
     | '/register'
     | '/account'
     | '/analytics'
-    | '/home'
     | '/transactions'
+    | '/'
   id:
     | '__root__'
-    | '/'
     | '/_auth'
     | '/_protected'
     | '/_auth/login'
     | '/_auth/register'
     | '/_protected/account'
     | '/_protected/analytics'
-    | '/_protected/home'
     | '/_protected/transactions'
+    | '/_protected/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
 }
@@ -269,13 +247,9 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
         "/_auth",
         "/_protected"
       ]
-    },
-    "/": {
-      "filePath": "index.tsx"
     },
     "/_auth": {
       "filePath": "_auth.tsx",
@@ -289,8 +263,8 @@ export const routeTree = rootRoute
       "children": [
         "/_protected/account",
         "/_protected/analytics",
-        "/_protected/home",
-        "/_protected/transactions"
+        "/_protected/transactions",
+        "/_protected/"
       ]
     },
     "/_auth/login": {
@@ -309,12 +283,12 @@ export const routeTree = rootRoute
       "filePath": "_protected/analytics.tsx",
       "parent": "/_protected"
     },
-    "/_protected/home": {
-      "filePath": "_protected/home.tsx",
-      "parent": "/_protected"
-    },
     "/_protected/transactions": {
       "filePath": "_protected/transactions.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/": {
+      "filePath": "_protected/index.tsx",
       "parent": "/_protected"
     }
   }
