@@ -52,6 +52,7 @@ export default [
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-misused-promises': 'off',
       // General rules
       'no-console': 'warn',
       'no-duplicate-imports': 'error',

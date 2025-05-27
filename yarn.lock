@@ -5686,6 +5686,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:7.56.4":
+  version: 7.56.4
+  resolution: "react-hook-form@npm:7.56.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/ebb4d447aae47fbbac380ddf4f9cca0c9fb51bf962099174cad3233a5a569135fdb7879152a119862e596f602a7c5179625c1fb2fdfaa01f7be45d16d796d99d
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^17.0.1":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
@@ -6271,6 +6280,7 @@ __metadata:
     prettier: "npm:3.5.3"
     react: "npm:19.1.0"
     react-dom: "npm:19.1.0"
+    react-hook-form: "npm:7.56.4"
     swagger-typescript-api: "npm:13.1.3"
     tailwind-merge: "npm:3.3.0"
     tailwindcss: "npm:4.1.7"
