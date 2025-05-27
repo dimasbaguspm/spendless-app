@@ -25,12 +25,22 @@ const formLayoutVariants = cva('grid gap-4', {
   },
 });
 
-export interface FormLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof formLayoutVariants> {}
+export interface FormLayoutProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof formLayoutVariants> {
+  title?: string;
+  titleClassName?: string;
+}
 
-export const FormLayout = forwardRef<HTMLDivElement, FormLayoutProps>(({ className, columns, gap, ...props }, ref) => {
-  return <div ref={ref} className={cn(formLayoutVariants({ columns, gap }), className)} {...props} />;
-});
+export const FormLayout = forwardRef<HTMLDivElement, FormLayoutProps>(
+  ({ className, columns, gap, title, titleClassName, children, ...props }, ref) => {
+    return (
+      <div className="space-y-4">
+        {title && <h2 className={cn('text-xl font-semibold text-slate-700 mb-4', titleClassName)}>{title}</h2>}
+        <div ref={ref} className={cn(formLayoutVariants({ columns, gap }), className)} {...props}>
+          {children}
+        </div>
+      </div>
+    );
+  }
+);
 
 FormLayout.displayName = 'FormLayout';
