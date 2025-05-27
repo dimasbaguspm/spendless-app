@@ -1,15 +1,15 @@
-import { Outlet, createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 import { redirectIfAuthenticated } from '../hooks';
 
-export const Route = createFileRoute('/auth')({
-  component: AuthLayout,
+export const Route = createFileRoute('/_auth')({
+  component: RouteComponent,
   beforeLoad: () => {
-    redirectIfAuthenticated('/');
+    throw redirectIfAuthenticated('/');
   },
 });
 
-function AuthLayout() {
+function RouteComponent() {
   return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
