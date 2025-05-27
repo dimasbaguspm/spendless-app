@@ -1,6 +1,8 @@
 import { useMutation, type MutationObserverBaseResult, type UseMutationOptions } from '@tanstack/react-query';
 import axios, { type AxiosRequestConfig } from 'axios';
 
+import { TokenManager } from '../use-session';
+
 import { BASE_URL } from './constants';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -13,6 +15,7 @@ export interface UseApiMutateOptions<TData, TVariables, TError> {
   onMutate?: (variables: TVariables) => Promise<unknown>;
   onSettled?: (data: TData | undefined, error: TError | null, variables: TVariables) => void;
   silentError?: boolean;
+  headers?: Record<string, string>;
 }
 
 type States = Pick<MutationObserverBaseResult, 'isError' | 'isIdle' | 'isPending' | 'isSuccess'>;
@@ -28,6 +31,7 @@ export const useApiMutate = <TData, TVariables = unknown, TError = Error>(
   options: UseApiMutateOptions<TData, TVariables, TError>
 ): UseApiMutateResult<TData, TVariables, TError> => {
   const { path, method = 'GET', onSuccess, onError, onMutate, onSettled, silentError = false } = options;
+  const accessToken = TokenManager.getAccessToken();
 
   const mutationOptions: UseMutationOptions<TData, TError, TVariables> = {
     mutationFn: async (variables: TVariables) => {
@@ -36,6 +40,10 @@ export const useApiMutate = <TData, TVariables = unknown, TError = Error>(
 
         const axiosConfig: AxiosRequestConfig = {
           baseURL: BASE_URL,
+          headers: {
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            ...options.headers,
+          },
         };
 
         switch (method.toUpperCase()) {

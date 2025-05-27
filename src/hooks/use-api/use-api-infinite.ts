@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 
 import type { PaginatedResponse } from '../../types/api';
+import { TokenManager } from '../use-session';
 
 import { BASE_URL } from './constants';
 
@@ -21,6 +22,7 @@ export interface UseApiInfiniteOptions<Data, Query, Error> {
   enabled?: boolean;
   retry?: boolean;
   silentError?: boolean;
+  headers?: Record<string, string>;
   onSuccess?: (data: Data) => void;
   onError?: (error: Error) => void;
   getNextPageParam?: (lastPage: Data, allPages: Data[], lastPageParam: unknown, allPageParams: unknown[]) => unknown;
@@ -76,12 +78,15 @@ export const useApiInfinite = <TData extends PaginatedResponse, TQuery, TError =
     enabled = true,
     retry = true,
     silentError = false,
+    headers = {},
     onSuccess,
     onError,
     getNextPageParam,
     getPreviousPageParam,
     initialPageParam,
   } = options ?? {};
+
+  const accessToken = TokenManager.getAccessToken();
 
   const query = useInfiniteQuery<TData, TError>({
     queryKey: queryKey.filter(Boolean),
@@ -91,6 +96,10 @@ export const useApiInfinite = <TData extends PaginatedResponse, TQuery, TError =
           params: {
             ...queryParams,
             pageParam,
+          },
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+            ...headers,
           },
           baseURL: BASE_URL,
         });

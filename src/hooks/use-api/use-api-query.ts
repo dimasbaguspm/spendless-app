@@ -6,12 +6,15 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { TokenManager } from '../use-session';
+
 import { BASE_URL } from './constants';
 
 export interface UseApiQueryOptions<Data, Query, Error> {
   queryKey: (string | number | undefined)[];
   path: string;
   queryParams?: Query;
+  headers?: Record<string, string>;
   enabled?: boolean;
   retry?: boolean;
   silentError?: boolean;
@@ -47,6 +50,8 @@ export type UseApiQueryResult<TData, TError> = [
 export const useApiQuery = <TData, TQuery, TError = Error>(
   options: UseApiQueryOptions<TData, TQuery, TError>
 ): UseApiQueryResult<TData, TError> => {
+  const accessToken = TokenManager.getAccessToken();
+
   const {
     queryKey,
     path,
@@ -54,6 +59,7 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
     enabled = true,
     retry = true,
     silentError = false,
+    headers = {},
     onSuccess,
     onError,
   } = options ?? {};
@@ -65,6 +71,11 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
         const response = await axios.get<TData>(path, {
           params: queryParams,
           baseURL: BASE_URL,
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+            ...headers,
+          },
+          validateStatus: (status) => status >= 200 && status < 300,
         });
 
         const data = response.data;

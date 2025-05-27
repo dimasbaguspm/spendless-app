@@ -20,6 +20,9 @@ export const useApiRegisterMutation = (): UseApiMutateResult<
   return useApiMutate({
     path: '/auth/register',
     method: 'POST',
+    headers: {
+      Authorization: '',
+    },
   });
 };
 
@@ -35,5 +38,8 @@ export const useApiLoginMutation = (): UseApiMutateResult<
   return useApiMutate({
     path: '/auth/login',
     method: 'POST',
+    headers: {
+      Authorization: '',
+    },
   });
 };
