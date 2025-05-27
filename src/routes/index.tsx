@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Button } from '../components';
+import { Button, PageLayout, TopNav } from '../components';
+import { ButtonDemo } from '../components/button/demo';
+import { PageLayoutDemo } from '../components/page-layout/demo';
+import { TooltipDemo } from '../components/tooltip/demo';
 import { useDrawer } from '../providers/drawer';
 import { useModal } from '../providers/modal';
 import { useSnack } from '../providers/snack';
@@ -13,12 +16,32 @@ function App() {
   const { openDrawer } = useDrawer();
   const { openModal } = useModal();
   const { success } = useSnack();
+
   return (
-    <div className="min-h-screen bg-sand-50 p-8">
+    <PageLayout
+      minHeight="viewport"
+      background="none"
+      header={
+        <TopNav
+          menuItems={[
+            { label: 'Home', href: '/', active: true },
+            { label: 'Components', href: '/components' },
+            { label: 'Documentation', href: '/docs' },
+          ]}
+          avatarSrc="https://picsum.photos/32/32"
+        />
+      }
+      headerProps={{
+        sticky: true,
+        shadow: 'sm',
+        background: 'white',
+      }}
+      mainProps={{ padding: 'xl' }}
+    >
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-slate-600 mb-4">Spendless App</h1>
-          <p className="text-xl text-slate-500 mb-8">Beautiful Color Palette Showcase</p>
+          <p className="text-xl text-slate-500 mb-8">Beautiful Color Palette Showcase with Global Layout</p>
 
           <div className="flex gap-4 justify-center mb-8">
             <Button variant="coral" onClick={() => openDrawer('')} size="lg">
@@ -161,11 +184,14 @@ function App() {
           </div>
         </div>
 
+        <ButtonDemo />
+        <TooltipDemo />
+        <PageLayoutDemo />
         <div className="bg-white rounded-xl p-6 shadow-lg border border-mist-200 text-center">
           <p className="text-slate-600 text-lg mb-4">Your complete palette with semantic colors! 🎨</p>
           <p className="text-slate-500">Perfect for financial apps with clear log levels and beautiful design.</p>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

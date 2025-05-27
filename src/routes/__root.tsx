@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
-import { Breadcrumb, TopNav } from '../components';
+import { PageLayout } from '../components';
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -11,23 +11,10 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <>
-      <TopNav
-        menuItems={[
-          { label: 'Home', href: '/' },
-          { label: 'About', href: '/about' },
-          { label: 'Contact', href: '/contact' },
-        ]}
-      />
-      <Breadcrumb>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/about" isCurrentPage>
-          About
-        </Breadcrumb.Item>
-      </Breadcrumb>
+    <PageLayout minHeight="viewport" background="cream">
       <Outlet />
       <TanStackRouterDevtools />
-      <ReactQueryDevtools buttonPosition="bottom-right" />;
-    </>
+      <ReactQueryDevtools buttonPosition="bottom-right" />
+    </PageLayout>
   ),
 });
