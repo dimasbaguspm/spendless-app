@@ -12,7 +12,7 @@ mkShell {
     echo "SpendLess APP development environment"
     echo "Node.js $(node --version)"
     
-    export BASE_URL="http://localhost:3000"
+    export BASE_URL="http://localhost:3000/api"
     export PORT="8080"
     export NODE_ENV="development"
   '';

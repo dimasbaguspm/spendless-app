@@ -1,9 +1,9 @@
-import type { User, AuthTokens, Error } from '../../../types/api';
+import type { User, Error } from '../../../types/api';
 import { useApiMutate, type UseApiMutateResult } from '../use-api-mutate';
 
 // Register user
 export const useApiRegisterMutation = (): UseApiMutateResult<
-  { message: string; user: User; tokens: AuthTokens },
+  { message: string; user: User; token: string },
   {
     user: {
       name: string;
@@ -25,7 +25,7 @@ export const useApiRegisterMutation = (): UseApiMutateResult<
 
 // Login user
 export const useApiLoginMutation = (): UseApiMutateResult<
-  { message: string; user: User; tokens: AuthTokens },
+  { message: string; user: User; token: string },
   {
     email: string;
     password: string;

@@ -29,8 +29,8 @@ export const useLoginForm = ({ onSuccess }: Pick<LoginFormProps, 'onSuccess'> = 
     try {
       const response = await loginMutation(payload);
 
-      if (response.tokens) {
-        handleTokenStorage(response.tokens);
+      if (response.token) {
+        handleTokenStorage(response.token);
       }
 
       success('Login successful! Welcome back.');

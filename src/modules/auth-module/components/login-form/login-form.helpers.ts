@@ -1,3 +1,5 @@
+import { TokenManager } from '../../../../hooks/use-session/use-session';
+
 import type { LoginFormValues } from './types';
 
 export const DEFAULT_FORM_VALUES: LoginFormValues = {
@@ -24,12 +26,8 @@ export const VALIDATION_RULES = {
 
 /**
  * Handle storing authentication tokens
+ * @deprecated Use TokenManager.setTokens instead
  */
-export const handleTokenStorage = (tokens: { accessToken?: string; refreshToken?: string }) => {
-  if (tokens.accessToken) {
-    localStorage.setItem('accessToken', tokens.accessToken);
-  }
-  if (tokens.refreshToken) {
-    localStorage.setItem('refreshToken', tokens.refreshToken);
-  }
+export const handleTokenStorage = (accessToken: string) => {
+  TokenManager.setTokens({ accessToken });
 };

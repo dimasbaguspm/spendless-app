@@ -105,7 +105,7 @@ export const useRegisterForm = () => {
       const response = await registerMutation(apiData);
 
       // Store tokens
-      handleTokenStorage(response.tokens);
+      handleTokenStorage(response.token);
 
       success('Account created successfully! Welcome to SpendLess.');
       await navigate({ to: '/' });

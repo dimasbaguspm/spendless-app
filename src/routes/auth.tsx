@@ -1,11 +1,11 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 
+import { redirectIfAuthenticated } from '../hooks';
+
 export const Route = createFileRoute('/auth')({
   component: AuthLayout,
   beforeLoad: () => {
-    // If user is already authenticated, redirect to dashboard
-    // You can add your auth check logic here when you have authentication context
-    // For now, we'll just render the auth pages
+    redirectIfAuthenticated('/');
   },
 });
 
