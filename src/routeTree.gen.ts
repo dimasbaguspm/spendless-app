@@ -16,6 +16,7 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as ProtectedIndexImport } from './routes/_protected/index'
 import { Route as ProtectedTransactionsImport } from './routes/_protected/transactions'
 import { Route as ProtectedAnalyticsImport } from './routes/_protected/analytics'
+import { Route as ProtectedAddImport } from './routes/_protected/add'
 import { Route as ProtectedAccountImport } from './routes/_protected/account'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
@@ -47,6 +48,12 @@ const ProtectedTransactionsRoute = ProtectedTransactionsImport.update({
 const ProtectedAnalyticsRoute = ProtectedAnalyticsImport.update({
   id: '/analytics',
   path: '/analytics',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedAddRoute = ProtectedAddImport.update({
+  id: '/add',
+  path: '/add',
   getParentRoute: () => ProtectedRoute,
 } as any)
 
@@ -107,6 +114,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAccountImport
       parentRoute: typeof ProtectedImport
     }
+    '/_protected/add': {
+      id: '/_protected/add'
+      path: '/add'
+      fullPath: '/add'
+      preLoaderRoute: typeof ProtectedAddImport
+      parentRoute: typeof ProtectedImport
+    }
     '/_protected/analytics': {
       id: '/_protected/analytics'
       path: '/analytics'
@@ -147,6 +161,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface ProtectedRouteChildren {
   ProtectedAccountRoute: typeof ProtectedAccountRoute
+  ProtectedAddRoute: typeof ProtectedAddRoute
   ProtectedAnalyticsRoute: typeof ProtectedAnalyticsRoute
   ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
   ProtectedIndexRoute: typeof ProtectedIndexRoute
@@ -154,6 +169,7 @@ interface ProtectedRouteChildren {
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAccountRoute: ProtectedAccountRoute,
+  ProtectedAddRoute: ProtectedAddRoute,
   ProtectedAnalyticsRoute: ProtectedAnalyticsRoute,
   ProtectedTransactionsRoute: ProtectedTransactionsRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
@@ -168,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/account': typeof ProtectedAccountRoute
+  '/add': typeof ProtectedAddRoute
   '/analytics': typeof ProtectedAnalyticsRoute
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
@@ -178,6 +195,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/account': typeof ProtectedAccountRoute
+  '/add': typeof ProtectedAddRoute
   '/analytics': typeof ProtectedAnalyticsRoute
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
@@ -190,6 +208,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_protected/account': typeof ProtectedAccountRoute
+  '/_protected/add': typeof ProtectedAddRoute
   '/_protected/analytics': typeof ProtectedAnalyticsRoute
   '/_protected/transactions': typeof ProtectedTransactionsRoute
   '/_protected/': typeof ProtectedIndexRoute
@@ -202,6 +221,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/account'
+    | '/add'
     | '/analytics'
     | '/transactions'
     | '/'
@@ -211,6 +231,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/account'
+    | '/add'
     | '/analytics'
     | '/transactions'
     | '/'
@@ -221,6 +242,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/register'
     | '/_protected/account'
+    | '/_protected/add'
     | '/_protected/analytics'
     | '/_protected/transactions'
     | '/_protected/'
@@ -262,6 +284,7 @@ export const routeTree = rootRoute
       "filePath": "_protected.tsx",
       "children": [
         "/_protected/account",
+        "/_protected/add",
         "/_protected/analytics",
         "/_protected/transactions",
         "/_protected/"
@@ -277,6 +300,10 @@ export const routeTree = rootRoute
     },
     "/_protected/account": {
       "filePath": "_protected/account.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/add": {
+      "filePath": "_protected/add.tsx",
       "parent": "/_protected"
     },
     "/_protected/analytics": {

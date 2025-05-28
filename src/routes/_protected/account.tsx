@@ -8,10 +8,8 @@ export const Route = createFileRoute('/_protected/account')({
 
 function AccountComponent() {
   return (
-    <PageLayout background="cream">
+    <PageLayout background="cream" title="Account Settings" showBackButton={true}>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-slate-900">Account Settings</h1>
-
         {/* Profile Section */}
         <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">Profile Information</h3>

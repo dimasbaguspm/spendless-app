@@ -8,18 +8,20 @@ export const Route = createFileRoute('/_protected/analytics')({
 
 function AnalyticsComponent() {
   return (
-    <PageLayout background="cream">
+    <PageLayout
+      background="cream"
+      title="Analytics"
+      showBackButton={true}
+      rightContent={
+        <Select defaultValue="this-month">
+          <option value="this-week">This Week</option>
+          <option value="this-month">This Month</option>
+          <option value="last-month">Last Month</option>
+          <option value="this-year">This Year</option>
+        </Select>
+      }
+    >
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-slate-900">Analytics</h1>
-          <Select defaultValue="this-month">
-            <option value="this-week">This Week</option>
-            <option value="this-month">This Month</option>
-            <option value="last-month">Last Month</option>
-            <option value="this-year">This Year</option>
-          </Select>
-        </div>
-
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">

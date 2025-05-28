@@ -8,13 +8,13 @@ export const Route = createFileRoute('/_protected/transactions')({
 
 function TransactionsComponent() {
   return (
-    <PageLayout background="cream">
+    <PageLayout
+      background="cream"
+      title="Transactions"
+      showBackButton={true}
+      rightContent={<Button variant="coral">Add Transaction</Button>}
+    >
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-slate-900">Transactions</h1>
-          <Button variant="coral">Add Transaction</Button>
-        </div>
-
         <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <TextInput placeholder="Search transactions..." />

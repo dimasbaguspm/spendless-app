@@ -11,7 +11,7 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <PageLayout minHeight="viewport" background="cream">
+    <PageLayout minHeight="viewport" background="cream" maxWidth="lg">
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools buttonPosition="bottom-right" />

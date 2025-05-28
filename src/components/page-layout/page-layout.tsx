@@ -2,6 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
 
 import { cn } from '../../libs/utils';
+import { PageHeader, type PageHeaderProps } from '../page-header';
 
 const pageLayoutVariants = cva('w-full flex flex-col', {
   variants: {
@@ -79,7 +80,7 @@ const pageLayoutHeaderVariants = cva('w-full flex-shrink-0', {
   },
 });
 
-const pageLayoutMainVariants = cva('w-full flex-1 flex flex-col', {
+const pageLayoutMainVariants = cva('relative w-full flex-1 flex flex-col', {
   variants: {
     padding: {
       none: '',
@@ -136,6 +137,14 @@ export interface PageLayoutProps extends React.HTMLAttributes<HTMLDivElement>, V
   headerProps?: PageLayoutHeaderProps;
   mainProps?: PageLayoutMainProps;
   footerProps?: PageLayoutFooterProps;
+  /** Page title - when provided, will show a PageHeader with back button and title */
+  title?: string;
+  /** Show back button in header */
+  showBackButton?: boolean;
+  /** Page header configuration */
+  pageHeaderProps?: Partial<PageHeaderProps>;
+  /** Content to show on the right side of the page header */
+  rightContent?: React.ReactNode;
 }
 
 export interface PageLayoutHeaderProps
@@ -199,11 +208,18 @@ export const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
       headerProps,
       mainProps,
       footerProps,
+      title,
+      showBackButton = false,
+      pageHeaderProps,
+      rightContent,
       children,
       ...props
     },
     ref
   ) => {
+    // Set default padding if title is provided and no mainProps padding is set
+    const defaultMainProps = title && !mainProps?.padding ? { padding: 'md' as const, ...mainProps } : mainProps;
+
     return (
       <div
         ref={ref}
@@ -212,7 +228,17 @@ export const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
       >
         {header && <PageLayoutHeader {...headerProps}>{header}</PageLayoutHeader>}
 
-        <PageLayoutMain {...mainProps}>{children}</PageLayoutMain>
+        <PageLayoutMain {...defaultMainProps}>
+          {title && (
+            <PageHeader
+              title={title}
+              showBackButton={showBackButton}
+              rightContent={rightContent}
+              {...pageHeaderProps}
+            />
+          )}
+          {children}
+        </PageLayoutMain>
 
         {footer && <PageLayoutFooter {...footerProps}>{footer}</PageLayoutFooter>}
       </div>

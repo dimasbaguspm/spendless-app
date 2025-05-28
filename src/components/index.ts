@@ -41,3 +41,5 @@ export { Breadcrumb, type BreadcrumbProps } from './breadcrumb';
 export { ScrollArea, type ScrollAreaProps } from './scroll-area';
 export { FormLayout, type FormLayoutProps, type FormLayoutFieldProps } from './form-layout';
 export { BottomBar, type BottomBarProps } from './bottom-bar';
+export { BackButton, type BackButtonProps } from './back-button';
+export { PageHeader, type PageHeaderProps } from './page-header';

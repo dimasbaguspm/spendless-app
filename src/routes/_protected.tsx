@@ -1,6 +1,7 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
+import { Home, Receipt, Plus, BarChart3, Settings } from 'lucide-react';
 
-import { TopNav } from '../components';
+import { BottomBar } from '../components';
 import { requireAuth } from '../hooks';
 
 export const Route = createFileRoute('/_protected')({
@@ -11,21 +12,71 @@ export const Route = createFileRoute('/_protected')({
 });
 
 function RouteComponent() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const navigationItems = [
+    {
+      href: '/',
+      icon: Home,
+      label: 'Home',
+      isActive: currentPath === '/',
+    },
+    {
+      href: '/transactions',
+      icon: Receipt,
+      label: 'Transactions',
+      isActive: currentPath === '/transactions',
+    },
+    {
+      href: '/add',
+      icon: Plus,
+      label: 'Add',
+      isActive: currentPath === '/add',
+    },
+    {
+      href: '/analytics',
+      icon: BarChart3,
+      label: 'Reports',
+      isActive: currentPath === '/analytics',
+    },
+    {
+      href: '/account',
+      icon: Settings,
+      label: 'Settings',
+      isActive: currentPath === '/account',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-cream-50 flex flex-col">
-      <TopNav
-        menuItems={[
-          { label: 'Home', href: '/home' },
-          { label: 'Transactions', href: '/transactions' },
-          { label: 'Account', href: '/account' },
-          { label: 'Analytics', href: '/analytics' },
-        ]}
-        avatarSrc="https://picsum.photos/32/32"
-      />
-
-      <main className="flex-1 p-4">
+      <main className="flex-1">
         <Outlet />
       </main>
+
+      <BottomBar variant="compact">
+        <BottomBar.Content>
+          <div className="flex items-center justify-around w-full max-w-md mx-auto px-3 py-1">
+            {navigationItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="flex items-center justify-center transition-all duration-200 px-1"
+                >
+                  <BottomBar.IconButton
+                    variant={item.isActive ? 'coral' : 'slate-ghost'}
+                    size="md"
+                    icon={<IconComponent className="w-5 h-5" />}
+                    tooltip={item.label}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </BottomBar.Content>
+      </BottomBar>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { cn } from '../../libs/utils';
 
@@ -19,18 +18,18 @@ export interface BottomBarProps {
 const variantClasses = {
   default: {
     container: 'bottom-0 left-0 right-0',
-    content: 'w-full bg-cream-50/95 backdrop-blur-md border-t border-mist-200',
+    content: 'w-full bg-cream-50/95 backdrop-blur-md border-t border-mist-200/80 shadow-sm',
     padding: 'px-4 py-3',
   },
   floating: {
     container: 'bottom-4 left-4 right-4',
-    content: 'w-full bg-cream-50/90 backdrop-blur-lg border border-mist-200 rounded-2xl shadow-lg',
+    content: 'w-full bg-cream-50/90 backdrop-blur-lg border border-mist-200/70 rounded-2xl shadow-md',
     padding: 'px-6 py-4',
   },
   compact: {
     container: 'bottom-0 left-0 right-0',
-    content: 'w-full bg-cream-50/98 backdrop-blur-sm border-t border-mist-100',
-    padding: 'px-3 py-2',
+    content: 'w-full bg-cream-50/98 backdrop-blur-sm border-t border-mist-200/70 shadow-sm',
+    padding: 'px-2 py-1.5',
   },
 } as const;
 
@@ -115,10 +114,10 @@ export function BottomBar({
 
   const variantConfig = variantClasses[variant];
 
-  const bottomBarElement = (
+  return (
     <div
       className={cn(
-        'fixed z-50 transition-all duration-300 ease-in-out',
+        'sticky z-50 transition-all duration-300 ease-in-out',
         variantConfig.container,
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0',
         className
@@ -127,7 +126,7 @@ export function BottomBar({
       {backdrop && (
         <div
           className={cn(
-            'fixed inset-0 bg-slate-900/20 backdrop-blur-sm transition-opacity duration-300',
+            'absolute inset-0 bg-slate-900/20 backdrop-blur-sm transition-opacity duration-300',
             isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
           )}
           style={{ zIndex: -1 }}
@@ -148,8 +147,6 @@ export function BottomBar({
       </div>
     </div>
   );
-
-  return createPortal(bottomBarElement, document.body);
 }
 
 export function useBottomBar() {
