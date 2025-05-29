@@ -2,19 +2,21 @@ import { CreditCard, Loader, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button, Modal } from '../../../../components';
-import { useApiDeleteAccountMutation } from '../../../../hooks/use-api/built-in/use-accounts';
+import { useApiAccountsQuery, useApiDeleteAccountMutation } from '../../../../hooks/use-api/built-in/use-accounts';
 import { useDrawerRouterProvider } from '../../../../providers/drawer-router';
 import { useSnack } from '../../../../providers/snack';
 import type { Account } from '../../../../types/api';
 
 import { AccountItem } from './account-item';
-import type { AccountListProps } from './types';
 
-export function AccountList({ accounts, isLoading }: AccountListProps) {
+export function AccountList() {
+  const [pagedAccounts, , { isLoading }] = useApiAccountsQuery();
   const [deleteAccount] = useApiDeleteAccountMutation();
   const [deletingAccountId, setDeletingAccountId] = useState<string | null>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [accountToDelete, setAccountToDelete] = useState<Account | null>(null);
+
+  const accounts = pagedAccounts?.items ?? [];
 
   const { openDrawer } = useDrawerRouterProvider();
   const { success, error } = useSnack();

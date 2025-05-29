@@ -10,6 +10,7 @@ import {
   Download,
   ChevronRight,
   LogOut,
+  Tags,
 } from 'lucide-react';
 
 import { PageLayout, Tile } from '../../../components';
@@ -69,6 +70,13 @@ function AccountIndexComponent() {
       description: 'Manage your cards, banks, and payment preferences',
       icon: <CreditCard className="w-5 h-5" />,
       href: '/settings/accounts',
+    },
+    {
+      id: 'categories',
+      title: 'Categories',
+      description: 'Manage transaction categories and organize your spending',
+      icon: <Tags className="w-5 h-5" />,
+      href: '/settings/categories',
     },
     {
       id: 'preferences',

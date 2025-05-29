@@ -27,6 +27,7 @@ import { Route as ProtectedSettingsNotificationsImport } from './routes/_protect
 import { Route as ProtectedSettingsLegalImport } from './routes/_protected/settings/legal'
 import { Route as ProtectedSettingsHelpImport } from './routes/_protected/settings/help'
 import { Route as ProtectedSettingsDataExportImport } from './routes/_protected/settings/data-export'
+import { Route as ProtectedSettingsCategoriesImport } from './routes/_protected/settings/categories'
 import { Route as ProtectedSettingsAccountsImport } from './routes/_protected/settings/accounts'
 
 // Create/Update Routes
@@ -128,6 +129,13 @@ const ProtectedSettingsDataExportRoute =
     getParentRoute: () => ProtectedRoute,
   } as any)
 
+const ProtectedSettingsCategoriesRoute =
+  ProtectedSettingsCategoriesImport.update({
+    id: '/settings/categories',
+    path: '/settings/categories',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+
 const ProtectedSettingsAccountsRoute = ProtectedSettingsAccountsImport.update({
   id: '/settings/accounts',
   path: '/settings/accounts',
@@ -199,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/settings/accounts'
       fullPath: '/settings/accounts'
       preLoaderRoute: typeof ProtectedSettingsAccountsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/categories': {
+      id: '/_protected/settings/categories'
+      path: '/settings/categories'
+      fullPath: '/settings/categories'
+      preLoaderRoute: typeof ProtectedSettingsCategoriesImport
       parentRoute: typeof ProtectedImport
     }
     '/_protected/settings/data-export': {
@@ -280,6 +295,7 @@ interface ProtectedRouteChildren {
   ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
   ProtectedIndexRoute: typeof ProtectedIndexRoute
   ProtectedSettingsAccountsRoute: typeof ProtectedSettingsAccountsRoute
+  ProtectedSettingsCategoriesRoute: typeof ProtectedSettingsCategoriesRoute
   ProtectedSettingsDataExportRoute: typeof ProtectedSettingsDataExportRoute
   ProtectedSettingsHelpRoute: typeof ProtectedSettingsHelpRoute
   ProtectedSettingsLegalRoute: typeof ProtectedSettingsLegalRoute
@@ -296,6 +312,7 @@ const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedTransactionsRoute: ProtectedTransactionsRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
   ProtectedSettingsAccountsRoute: ProtectedSettingsAccountsRoute,
+  ProtectedSettingsCategoriesRoute: ProtectedSettingsCategoriesRoute,
   ProtectedSettingsDataExportRoute: ProtectedSettingsDataExportRoute,
   ProtectedSettingsHelpRoute: ProtectedSettingsHelpRoute,
   ProtectedSettingsLegalRoute: ProtectedSettingsLegalRoute,
@@ -319,6 +336,7 @@ export interface FileRoutesByFullPath {
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
   '/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/settings/categories': typeof ProtectedSettingsCategoriesRoute
   '/settings/data-export': typeof ProtectedSettingsDataExportRoute
   '/settings/help': typeof ProtectedSettingsHelpRoute
   '/settings/legal': typeof ProtectedSettingsLegalRoute
@@ -338,6 +356,7 @@ export interface FileRoutesByTo {
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
   '/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/settings/categories': typeof ProtectedSettingsCategoriesRoute
   '/settings/data-export': typeof ProtectedSettingsDataExportRoute
   '/settings/help': typeof ProtectedSettingsHelpRoute
   '/settings/legal': typeof ProtectedSettingsLegalRoute
@@ -359,6 +378,7 @@ export interface FileRoutesById {
   '/_protected/transactions': typeof ProtectedTransactionsRoute
   '/_protected/': typeof ProtectedIndexRoute
   '/_protected/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/_protected/settings/categories': typeof ProtectedSettingsCategoriesRoute
   '/_protected/settings/data-export': typeof ProtectedSettingsDataExportRoute
   '/_protected/settings/help': typeof ProtectedSettingsHelpRoute
   '/_protected/settings/legal': typeof ProtectedSettingsLegalRoute
@@ -380,6 +400,7 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/'
     | '/settings/accounts'
+    | '/settings/categories'
     | '/settings/data-export'
     | '/settings/help'
     | '/settings/legal'
@@ -398,6 +419,7 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/'
     | '/settings/accounts'
+    | '/settings/categories'
     | '/settings/data-export'
     | '/settings/help'
     | '/settings/legal'
@@ -417,6 +439,7 @@ export interface FileRouteTypes {
     | '/_protected/transactions'
     | '/_protected/'
     | '/_protected/settings/accounts'
+    | '/_protected/settings/categories'
     | '/_protected/settings/data-export'
     | '/_protected/settings/help'
     | '/_protected/settings/legal'
@@ -467,6 +490,7 @@ export const routeTree = rootRoute
         "/_protected/transactions",
         "/_protected/",
         "/_protected/settings/accounts",
+        "/_protected/settings/categories",
         "/_protected/settings/data-export",
         "/_protected/settings/help",
         "/_protected/settings/legal",
@@ -503,6 +527,10 @@ export const routeTree = rootRoute
     },
     "/_protected/settings/accounts": {
       "filePath": "_protected/settings/accounts.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/categories": {
+      "filePath": "_protected/settings/categories.tsx",
       "parent": "/_protected"
     },
     "/_protected/settings/data-export": {
