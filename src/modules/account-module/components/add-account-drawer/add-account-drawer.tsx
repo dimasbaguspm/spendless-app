@@ -3,7 +3,8 @@ import { Controller } from 'react-hook-form';
 
 import { Drawer, TextInput, Select, TextArea, Button, Switch } from '../../../../components';
 
-import { ACCOUNT_TYPE_OPTIONS, PERIOD_OPTIONS } from './helpers';
+import { AccountTypeSelector } from './account-type-selector';
+import { PERIOD_OPTIONS } from './helpers';
 import type { AddAccountDrawerProps } from './types';
 import { useAddAccountForm } from './use-add-account-form.hook';
 
@@ -34,20 +35,7 @@ export const AddAccountDrawer: FC<AddAccountDrawerProps> = ({ onSuccess, onError
             )}
           />
 
-          <Controller
-            name="type"
-            control={control}
-            rules={validationRules.type}
-            render={({ field }) => (
-              <Select
-                {...field}
-                label="Account Type"
-                placeholder="Select account type"
-                options={ACCOUNT_TYPE_OPTIONS}
-                errorText={errors.type?.message}
-              />
-            )}
-          />
+          <AccountTypeSelector control={control} errors={errors} />
 
           <Controller
             name="note"
@@ -65,7 +53,7 @@ export const AddAccountDrawer: FC<AddAccountDrawerProps> = ({ onSuccess, onError
             )}
           />
 
-          <div className="border-t pt-6">
+          <div className="border-t border-mist-200 pt-6">
             <Controller
               name="enableLimit"
               control={control}
