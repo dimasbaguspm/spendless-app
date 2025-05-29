@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import type {
   Category,
   CategoryQueryParameters,
@@ -59,26 +61,48 @@ export const useApiCategoryTransactionsQuery = (
 
 // Create category
 export const useApiCreateCategoryMutation = (): UseApiMutateResult<Category, NewCategory, Error> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
     path: '/categories',
     method: 'POST',
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORIES.all(), exact: false });
+    },
   });
 };
 
 // Update category
-export const useApiUpdateCategoryMutation = (
-  categoryId: string
-): UseApiMutateResult<Category, UpdateCategory, Error> => {
+export const useApiUpdateCategoryMutation = (): UseApiMutateResult<
+  Category,
+  UpdateCategory & { categoryId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/categories/${categoryId}`,
+    path: `/categories/:categoryId`,
     method: 'PATCH',
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORIES.all(), exact: false });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.CATEGORIES.single(variables.categoryId),
+        exact: false,
+      });
+    },
   });
 };
 
 // Delete category
-export const useApiDeleteCategoryMutation = (categoryId: string): UseApiMutateResult<Category, unknown, Error> => {
+export const useApiDeleteCategoryMutation = (): UseApiMutateResult<Category, { categoryId: number }, Error> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/categories/${categoryId}`,
+    path: `/categories/:categoryId`,
     method: 'DELETE',
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORIES.all(), exact: false });
+      queryClient.removeQueries({ queryKey: QUERY_KEYS.CATEGORIES.single(variables.categoryId), exact: false });
+    },
   });
 };

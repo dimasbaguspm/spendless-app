@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import type { Group, User, Error, NewGroup, UpdateGroup } from '../../../types/api';
 import { QUERY_KEYS } from '../constants';
 import { useApiMutate, type UseApiMutateResult } from '../use-api-mutate';
@@ -14,19 +16,32 @@ export const useApiGroupQuery = (groupId: string): UseApiQueryResult<{ group: Gr
 
 // Create group
 export const useApiCreateGroupMutation = (): UseApiMutateResult<{ message: string; group: Group }, NewGroup, Error> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
     path: '/groups',
     method: 'POST',
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GROUPS.all(), exact: false });
+    },
   });
 };
 
 // Update group
-export const useApiUpdateGroupMutation = (
-  groupId: string
-): UseApiMutateResult<{ message: string; group: Group }, UpdateGroup, Error> => {
+export const useApiUpdateGroupMutation = (): UseApiMutateResult<
+  { message: string; group: Group },
+  UpdateGroup & { groupId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/groups/${groupId}`,
+    path: `/groups/:groupId`,
     method: 'PATCH',
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GROUPS.all(), exact: false });
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GROUPS.single(variables.groupId), exact: false });
+    },
   });
 };
 
@@ -40,11 +55,18 @@ export const useApiGroupUsersQuery = (groupId: string): UseApiQueryResult<{ user
 };
 
 // Invite user to group
-export const useApiInviteUserToGroupMutation = (
-  groupId: string
-): UseApiMutateResult<{ message: string }, { email: string }, Error> => {
+export const useApiInviteUserToGroupMutation = (): UseApiMutateResult<
+  { message: string },
+  { email: string; groupId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/groups/${groupId}/users`,
+    path: `/groups/:groupId/users`,
     method: 'POST',
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GROUPS.users(variables.groupId), exact: false });
+    },
   });
 };

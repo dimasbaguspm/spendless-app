@@ -17,9 +17,17 @@ import { Route as ProtectedIndexImport } from './routes/_protected/index'
 import { Route as ProtectedTransactionsImport } from './routes/_protected/transactions'
 import { Route as ProtectedAnalyticsImport } from './routes/_protected/analytics'
 import { Route as ProtectedAddImport } from './routes/_protected/add'
-import { Route as ProtectedAccountImport } from './routes/_protected/account'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
+import { Route as ProtectedSettingsIndexImport } from './routes/_protected/settings/index'
+import { Route as ProtectedSettingsSecurityImport } from './routes/_protected/settings/security'
+import { Route as ProtectedSettingsProfileImport } from './routes/_protected/settings/profile'
+import { Route as ProtectedSettingsPreferencesImport } from './routes/_protected/settings/preferences'
+import { Route as ProtectedSettingsNotificationsImport } from './routes/_protected/settings/notifications'
+import { Route as ProtectedSettingsLegalImport } from './routes/_protected/settings/legal'
+import { Route as ProtectedSettingsHelpImport } from './routes/_protected/settings/help'
+import { Route as ProtectedSettingsDataExportImport } from './routes/_protected/settings/data-export'
+import { Route as ProtectedSettingsAccountsImport } from './routes/_protected/settings/accounts'
 
 // Create/Update Routes
 
@@ -57,12 +65,6 @@ const ProtectedAddRoute = ProtectedAddImport.update({
   getParentRoute: () => ProtectedRoute,
 } as any)
 
-const ProtectedAccountRoute = ProtectedAccountImport.update({
-  id: '/account',
-  path: '/account',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
 const AuthRegisterRoute = AuthRegisterImport.update({
   id: '/register',
   path: '/register',
@@ -73,6 +75,63 @@ const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => AuthRoute,
+} as any)
+
+const ProtectedSettingsIndexRoute = ProtectedSettingsIndexImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedSettingsSecurityRoute = ProtectedSettingsSecurityImport.update({
+  id: '/settings/security',
+  path: '/settings/security',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedSettingsProfileRoute = ProtectedSettingsProfileImport.update({
+  id: '/settings/profile',
+  path: '/settings/profile',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedSettingsPreferencesRoute =
+  ProtectedSettingsPreferencesImport.update({
+    id: '/settings/preferences',
+    path: '/settings/preferences',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+
+const ProtectedSettingsNotificationsRoute =
+  ProtectedSettingsNotificationsImport.update({
+    id: '/settings/notifications',
+    path: '/settings/notifications',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+
+const ProtectedSettingsLegalRoute = ProtectedSettingsLegalImport.update({
+  id: '/settings/legal',
+  path: '/settings/legal',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedSettingsHelpRoute = ProtectedSettingsHelpImport.update({
+  id: '/settings/help',
+  path: '/settings/help',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedSettingsDataExportRoute =
+  ProtectedSettingsDataExportImport.update({
+    id: '/settings/data-export',
+    path: '/settings/data-export',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+
+const ProtectedSettingsAccountsRoute = ProtectedSettingsAccountsImport.update({
+  id: '/settings/accounts',
+  path: '/settings/accounts',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -107,13 +166,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof AuthImport
     }
-    '/_protected/account': {
-      id: '/_protected/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof ProtectedAccountImport
-      parentRoute: typeof ProtectedImport
-    }
     '/_protected/add': {
       id: '/_protected/add'
       path: '/add'
@@ -142,6 +194,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedIndexImport
       parentRoute: typeof ProtectedImport
     }
+    '/_protected/settings/accounts': {
+      id: '/_protected/settings/accounts'
+      path: '/settings/accounts'
+      fullPath: '/settings/accounts'
+      preLoaderRoute: typeof ProtectedSettingsAccountsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/data-export': {
+      id: '/_protected/settings/data-export'
+      path: '/settings/data-export'
+      fullPath: '/settings/data-export'
+      preLoaderRoute: typeof ProtectedSettingsDataExportImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/help': {
+      id: '/_protected/settings/help'
+      path: '/settings/help'
+      fullPath: '/settings/help'
+      preLoaderRoute: typeof ProtectedSettingsHelpImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/legal': {
+      id: '/_protected/settings/legal'
+      path: '/settings/legal'
+      fullPath: '/settings/legal'
+      preLoaderRoute: typeof ProtectedSettingsLegalImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/notifications': {
+      id: '/_protected/settings/notifications'
+      path: '/settings/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof ProtectedSettingsNotificationsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/preferences': {
+      id: '/_protected/settings/preferences'
+      path: '/settings/preferences'
+      fullPath: '/settings/preferences'
+      preLoaderRoute: typeof ProtectedSettingsPreferencesImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/profile': {
+      id: '/_protected/settings/profile'
+      path: '/settings/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof ProtectedSettingsProfileImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/security': {
+      id: '/_protected/settings/security'
+      path: '/settings/security'
+      fullPath: '/settings/security'
+      preLoaderRoute: typeof ProtectedSettingsSecurityImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/settings/': {
+      id: '/_protected/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ProtectedSettingsIndexImport
+      parentRoute: typeof ProtectedImport
+    }
   }
 }
 
@@ -160,19 +275,35 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface ProtectedRouteChildren {
-  ProtectedAccountRoute: typeof ProtectedAccountRoute
   ProtectedAddRoute: typeof ProtectedAddRoute
   ProtectedAnalyticsRoute: typeof ProtectedAnalyticsRoute
   ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
   ProtectedIndexRoute: typeof ProtectedIndexRoute
+  ProtectedSettingsAccountsRoute: typeof ProtectedSettingsAccountsRoute
+  ProtectedSettingsDataExportRoute: typeof ProtectedSettingsDataExportRoute
+  ProtectedSettingsHelpRoute: typeof ProtectedSettingsHelpRoute
+  ProtectedSettingsLegalRoute: typeof ProtectedSettingsLegalRoute
+  ProtectedSettingsNotificationsRoute: typeof ProtectedSettingsNotificationsRoute
+  ProtectedSettingsPreferencesRoute: typeof ProtectedSettingsPreferencesRoute
+  ProtectedSettingsProfileRoute: typeof ProtectedSettingsProfileRoute
+  ProtectedSettingsSecurityRoute: typeof ProtectedSettingsSecurityRoute
+  ProtectedSettingsIndexRoute: typeof ProtectedSettingsIndexRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
-  ProtectedAccountRoute: ProtectedAccountRoute,
   ProtectedAddRoute: ProtectedAddRoute,
   ProtectedAnalyticsRoute: ProtectedAnalyticsRoute,
   ProtectedTransactionsRoute: ProtectedTransactionsRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
+  ProtectedSettingsAccountsRoute: ProtectedSettingsAccountsRoute,
+  ProtectedSettingsDataExportRoute: ProtectedSettingsDataExportRoute,
+  ProtectedSettingsHelpRoute: ProtectedSettingsHelpRoute,
+  ProtectedSettingsLegalRoute: ProtectedSettingsLegalRoute,
+  ProtectedSettingsNotificationsRoute: ProtectedSettingsNotificationsRoute,
+  ProtectedSettingsPreferencesRoute: ProtectedSettingsPreferencesRoute,
+  ProtectedSettingsProfileRoute: ProtectedSettingsProfileRoute,
+  ProtectedSettingsSecurityRoute: ProtectedSettingsSecurityRoute,
+  ProtectedSettingsIndexRoute: ProtectedSettingsIndexRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
@@ -183,22 +314,38 @@ export interface FileRoutesByFullPath {
   '': typeof ProtectedRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/account': typeof ProtectedAccountRoute
   '/add': typeof ProtectedAddRoute
   '/analytics': typeof ProtectedAnalyticsRoute
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
+  '/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/settings/data-export': typeof ProtectedSettingsDataExportRoute
+  '/settings/help': typeof ProtectedSettingsHelpRoute
+  '/settings/legal': typeof ProtectedSettingsLegalRoute
+  '/settings/notifications': typeof ProtectedSettingsNotificationsRoute
+  '/settings/preferences': typeof ProtectedSettingsPreferencesRoute
+  '/settings/profile': typeof ProtectedSettingsProfileRoute
+  '/settings/security': typeof ProtectedSettingsSecurityRoute
+  '/settings': typeof ProtectedSettingsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/account': typeof ProtectedAccountRoute
   '/add': typeof ProtectedAddRoute
   '/analytics': typeof ProtectedAnalyticsRoute
   '/transactions': typeof ProtectedTransactionsRoute
   '/': typeof ProtectedIndexRoute
+  '/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/settings/data-export': typeof ProtectedSettingsDataExportRoute
+  '/settings/help': typeof ProtectedSettingsHelpRoute
+  '/settings/legal': typeof ProtectedSettingsLegalRoute
+  '/settings/notifications': typeof ProtectedSettingsNotificationsRoute
+  '/settings/preferences': typeof ProtectedSettingsPreferencesRoute
+  '/settings/profile': typeof ProtectedSettingsProfileRoute
+  '/settings/security': typeof ProtectedSettingsSecurityRoute
+  '/settings': typeof ProtectedSettingsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -207,11 +354,19 @@ export interface FileRoutesById {
   '/_protected': typeof ProtectedRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
-  '/_protected/account': typeof ProtectedAccountRoute
   '/_protected/add': typeof ProtectedAddRoute
   '/_protected/analytics': typeof ProtectedAnalyticsRoute
   '/_protected/transactions': typeof ProtectedTransactionsRoute
   '/_protected/': typeof ProtectedIndexRoute
+  '/_protected/settings/accounts': typeof ProtectedSettingsAccountsRoute
+  '/_protected/settings/data-export': typeof ProtectedSettingsDataExportRoute
+  '/_protected/settings/help': typeof ProtectedSettingsHelpRoute
+  '/_protected/settings/legal': typeof ProtectedSettingsLegalRoute
+  '/_protected/settings/notifications': typeof ProtectedSettingsNotificationsRoute
+  '/_protected/settings/preferences': typeof ProtectedSettingsPreferencesRoute
+  '/_protected/settings/profile': typeof ProtectedSettingsProfileRoute
+  '/_protected/settings/security': typeof ProtectedSettingsSecurityRoute
+  '/_protected/settings/': typeof ProtectedSettingsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -220,32 +375,56 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/register'
-    | '/account'
     | '/add'
     | '/analytics'
     | '/transactions'
     | '/'
+    | '/settings/accounts'
+    | '/settings/data-export'
+    | '/settings/help'
+    | '/settings/legal'
+    | '/settings/notifications'
+    | '/settings/preferences'
+    | '/settings/profile'
+    | '/settings/security'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
     | '/login'
     | '/register'
-    | '/account'
     | '/add'
     | '/analytics'
     | '/transactions'
     | '/'
+    | '/settings/accounts'
+    | '/settings/data-export'
+    | '/settings/help'
+    | '/settings/legal'
+    | '/settings/notifications'
+    | '/settings/preferences'
+    | '/settings/profile'
+    | '/settings/security'
+    | '/settings'
   id:
     | '__root__'
     | '/_auth'
     | '/_protected'
     | '/_auth/login'
     | '/_auth/register'
-    | '/_protected/account'
     | '/_protected/add'
     | '/_protected/analytics'
     | '/_protected/transactions'
     | '/_protected/'
+    | '/_protected/settings/accounts'
+    | '/_protected/settings/data-export'
+    | '/_protected/settings/help'
+    | '/_protected/settings/legal'
+    | '/_protected/settings/notifications'
+    | '/_protected/settings/preferences'
+    | '/_protected/settings/profile'
+    | '/_protected/settings/security'
+    | '/_protected/settings/'
   fileRoutesById: FileRoutesById
 }
 
@@ -283,11 +462,19 @@ export const routeTree = rootRoute
     "/_protected": {
       "filePath": "_protected.tsx",
       "children": [
-        "/_protected/account",
         "/_protected/add",
         "/_protected/analytics",
         "/_protected/transactions",
-        "/_protected/"
+        "/_protected/",
+        "/_protected/settings/accounts",
+        "/_protected/settings/data-export",
+        "/_protected/settings/help",
+        "/_protected/settings/legal",
+        "/_protected/settings/notifications",
+        "/_protected/settings/preferences",
+        "/_protected/settings/profile",
+        "/_protected/settings/security",
+        "/_protected/settings/"
       ]
     },
     "/_auth/login": {
@@ -297,10 +484,6 @@ export const routeTree = rootRoute
     "/_auth/register": {
       "filePath": "_auth/register.tsx",
       "parent": "/_auth"
-    },
-    "/_protected/account": {
-      "filePath": "_protected/account.tsx",
-      "parent": "/_protected"
     },
     "/_protected/add": {
       "filePath": "_protected/add.tsx",
@@ -316,6 +499,42 @@ export const routeTree = rootRoute
     },
     "/_protected/": {
       "filePath": "_protected/index.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/accounts": {
+      "filePath": "_protected/settings/accounts.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/data-export": {
+      "filePath": "_protected/settings/data-export.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/help": {
+      "filePath": "_protected/settings/help.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/legal": {
+      "filePath": "_protected/settings/legal.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/notifications": {
+      "filePath": "_protected/settings/notifications.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/preferences": {
+      "filePath": "_protected/settings/preferences.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/profile": {
+      "filePath": "_protected/settings/profile.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/security": {
+      "filePath": "_protected/settings/security.tsx",
+      "parent": "/_protected"
+    },
+    "/_protected/settings/": {
+      "filePath": "_protected/settings/index.tsx",
       "parent": "/_protected"
     }
   }

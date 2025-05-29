@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { Button, PageLayout, PageHeader, IconButton } from '../../components';
 import { WeeklyDateRibbon } from '../../modules/transaction-module';
-import { useDrawerProvider } from '../../providers/drawer';
 
 export const Route = createFileRoute('/_protected/transactions')({
   component: TransactionsComponent,
@@ -13,11 +12,7 @@ export const Route = createFileRoute('/_protected/transactions')({
 function TransactionsComponent() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const { openDrawer } = useDrawerProvider();
-
-  const handleOpenAddTransactionDrawer = () => {
-    openDrawer('create-transaction');
-  };
+  const handleOpenAddTransactionDrawer = () => {};
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);

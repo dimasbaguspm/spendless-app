@@ -106,7 +106,7 @@ export const useSession = (): UseSessionReturn => {
   const [userData, userError, userState, refetchUser] = useApiCurrentUserQuery();
 
   // Extract user from the API response
-  const user = userData?.user;
+  const user = userData;
 
   /**
    * Determine authentication state based on tokens and API response

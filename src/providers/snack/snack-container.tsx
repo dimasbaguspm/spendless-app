@@ -88,7 +88,7 @@ export function SnackContainer({ snacks, onRemove, position }: SnackContainerPro
 
   return (
     <div
-      className={cn('fixed z-50 flex flex-col gap-2 pointer-events-none', positionClasses[position], {
+      className={cn('fixed z-[9999] flex flex-col gap-2 pointer-events-none', positionClasses[position], {
         'flex-col': isTop,
         'flex-col-reverse': !isTop,
       })}

@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import type {
   Transaction,
   TransactionQueryParameters,
@@ -45,28 +47,52 @@ export const useApiTransactionQuery = (transactionId: number): UseApiQueryResult
 
 // Create transaction
 export const useApiCreateTransactionMutation = (): UseApiMutateResult<Transaction, NewTransaction, Error> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
     path: '/transactions',
     method: 'POST',
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TRANSACTIONS.all(), exact: false });
+    },
   });
 };
 
 // Update transaction
-export const useApiUpdateTransactionMutation = (
-  transactionId: string
-): UseApiMutateResult<Transaction, UpdateTransaction, Error> => {
+export const useApiUpdateTransactionMutation = (): UseApiMutateResult<
+  Transaction,
+  UpdateTransaction & { transactionId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/transactions/${transactionId}`,
+    path: `/transactions/:transactionId`,
     method: 'PATCH',
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TRANSACTIONS.all(), exact: false });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.TRANSACTIONS.single(variables.transactionId),
+        exact: false,
+      });
+    },
   });
 };
 
 // Delete transaction
-export const useApiDeleteTransactionMutation = (
-  transactionId: string
-): UseApiMutateResult<Transaction, unknown, Error> => {
+export const useApiDeleteTransactionMutation = (): UseApiMutateResult<
+  Transaction,
+  { transactionId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/transactions/${transactionId}`,
+    path: `/transactions/:transactionId`,
     method: 'DELETE',
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TRANSACTIONS.all(), exact: false });
+      queryClient.removeQueries({ queryKey: QUERY_KEYS.TRANSACTIONS.single(variables.transactionId), exact: false });
+    },
   });
 };

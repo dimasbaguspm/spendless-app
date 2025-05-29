@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import type {
   AccountLimit,
   AccountLimitQueryParameters,
@@ -47,31 +49,70 @@ export const useApiSingleAccountLimitQuery = (
   });
 };
 
-export const useApiCreateSingleAccountLimitMutation = (
-  accountId: string
-): UseApiMutateResult<AccountLimit, NewAccountLimit, Error> => {
+export const useApiCreateSingleAccountLimitMutation = (): UseApiMutateResult<
+  AccountLimit,
+  NewAccountLimit & { accountId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/accounts/${accountId}/limits`,
+    path: '/accounts/:accountId/limits',
     method: 'POST',
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACCOUNT_LIMITS.all(), exact: false });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ACCOUNT_LIMITS.list(variables.accountId),
+        exact: false,
+      });
+    },
   });
 };
 
-export const useApiUpdateSingleAccountLimitMutation = (
-  accountId: string,
-  accountLimitId: string
-): UseApiMutateResult<AccountLimit, UpdateAccountLimit, Error> => {
+export const useApiUpdateSingleAccountLimitMutation = (): UseApiMutateResult<
+  AccountLimit,
+  UpdateAccountLimit & { accountId: number; accountLimitId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/accounts/${accountId}/limits/${accountLimitId}`,
+    path: `/accounts/:accountId/limits/:accountLimitId`,
     method: 'PATCH',
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACCOUNT_LIMITS.all(), exact: false });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ACCOUNT_LIMITS.list(variables.accountId),
+        exact: false,
+      });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ACCOUNT_LIMITS.single(variables.accountId, variables.accountLimitId),
+        exact: false,
+      });
+    },
   });
 };
 
-export const useApiDeleteSingleAccountLimitMutation = (
-  accountId: string,
-  accountLimitId: string
-): UseApiMutateResult<AccountLimit, unknown, Error> => {
+export const useApiDeleteSingleAccountLimitMutation = (): UseApiMutateResult<
+  AccountLimit,
+  { accountId: number; accountLimitId: number },
+  Error
+> => {
+  const queryClient = useQueryClient();
+
   return useApiMutate({
-    path: `/accounts/${accountId}/limits/${accountLimitId}`,
+    path: `/accounts/:accountId/limits/:accountLimitId`,
     method: 'DELETE',
+    onSuccess: async (_data, variables) => {
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACCOUNT_LIMITS.all(), exact: false });
+      await queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.ACCOUNT_LIMITS.list(variables.accountId),
+        exact: false,
+      });
+      queryClient.removeQueries({
+        queryKey: QUERY_KEYS.ACCOUNT_LIMITS.single(variables.accountId, variables.accountLimitId),
+        exact: false,
+      });
+    },
   });
 };

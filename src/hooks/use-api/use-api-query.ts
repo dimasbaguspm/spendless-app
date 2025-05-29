@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { TIME_15_MINUTES } from '../../constants/time';
 import { TokenManager } from '../use-session';
 
 import { BASE_URL } from './constants';
@@ -20,6 +21,8 @@ export interface UseApiQueryOptions<Data, Query, Error> {
   silentError?: boolean;
   onSuccess?: (data: Data) => void;
   onError?: (error: Error) => void;
+  staleTime?: number;
+  gcTime?: number;
 }
 
 type QueryState = Pick<
@@ -60,6 +63,8 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
     retry = true,
     silentError = false,
     headers = {},
+    staleTime = TIME_15_MINUTES,
+    gcTime,
     onSuccess,
     onError,
   } = options ?? {};
@@ -88,6 +93,8 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
     },
     enabled,
     retry,
+    staleTime,
+    gcTime,
     meta: {
       silentError,
     },

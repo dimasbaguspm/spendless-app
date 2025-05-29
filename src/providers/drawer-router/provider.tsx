@@ -1,11 +1,12 @@
 import { useState, type FC, type PropsWithChildren } from 'react';
 
 import { DRAWER_IDS, type DrawerId } from '../../constants/drawer-id';
+import { AddAccountDrawer } from '../../modules/account-module';
 
 import { AddTransactionDrawer } from './contents/add-transaction';
-import { DrawerContextProvider } from './context';
+import { DrawerRouterContextProvider } from './context';
 
-export const DrawerProvider: FC<PropsWithChildren> = ({ children }) => {
+export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
   const [drawerId, setDrawerId] = useState<string | null>(null);
 
   const openDrawer = (id: DrawerId) => setDrawerId(id);
@@ -13,7 +14,7 @@ export const DrawerProvider: FC<PropsWithChildren> = ({ children }) => {
   const is = (id: DrawerId) => drawerId === id;
 
   return (
-    <DrawerContextProvider
+    <DrawerRouterContextProvider
       value={{
         drawerId,
         openDrawer,
@@ -23,6 +24,7 @@ export const DrawerProvider: FC<PropsWithChildren> = ({ children }) => {
       {children}
 
       {is(DRAWER_IDS.CREATE_TRANSACTION) && <AddTransactionDrawer />}
-    </DrawerContextProvider>
+      {is(DRAWER_IDS.ADD_ACCOUNT) && <AddAccountDrawer />}
+    </DrawerRouterContextProvider>
   );
 };

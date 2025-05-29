@@ -8,10 +8,10 @@ import {
   useApiCurrentUserQuery,
 } from '../../../hooks';
 import type { NewTransaction } from '../../../types/api';
-import { useDrawerProvider } from '../context';
+import { useDrawerRouterProvider } from '../context';
 
 export const AddTransactionDrawer: FC = () => {
-  const { closeDrawer } = useDrawerProvider();
+  const { closeDrawer } = useDrawerRouterProvider();
   const [currentUserData] = useApiCurrentUserQuery();
   const [accountsData] = useApiAccountsQuery();
   const [categoriesData] = useApiCategoriesQuery();
@@ -29,11 +29,11 @@ export const AddTransactionDrawer: FC = () => {
 
   // Auto-populate user and group data when available
   useEffect(() => {
-    if (currentUserData?.user) {
+    if (currentUserData) {
       setFormData((prev) => ({
         ...prev,
-        createdByUserId: currentUserData.user.id,
-        groupId: currentUserData.user.groupId,
+        createdByUserId: currentUserData.id,
+        groupId: currentUserData.groupId,
       }));
     }
   }, [currentUserData]);

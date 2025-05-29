@@ -38,6 +38,13 @@ export const useApiMutate = <TData, TVariables = unknown, TError = Error>(
       try {
         let response;
 
+        const templatedPath = path.replace(/:([a-zA-Z_]+)/g, (_, key) => {
+          if (variables && typeof variables === 'object' && key in variables) {
+            return String((variables as Record<string, unknown>)[key]);
+          }
+          throw new Error(`Missing variable for path: ${key}`);
+        });
+
         const axiosConfig: AxiosRequestConfig = {
           baseURL: BASE_URL,
           headers: {
@@ -48,22 +55,22 @@ export const useApiMutate = <TData, TVariables = unknown, TError = Error>(
 
         switch (method.toUpperCase()) {
           case 'GET':
-            response = await axios.get<TData>(path, {
+            response = await axios.get<TData>(templatedPath, {
               ...axiosConfig,
               params: variables,
             });
             break;
           case 'POST':
-            response = await axios.post<TData>(path, variables, axiosConfig);
+            response = await axios.post<TData>(templatedPath, variables, axiosConfig);
             break;
           case 'PUT':
-            response = await axios.put<TData>(path, variables, axiosConfig);
+            response = await axios.put<TData>(templatedPath, variables, axiosConfig);
             break;
           case 'PATCH':
-            response = await axios.patch<TData>(path, variables, axiosConfig);
+            response = await axios.patch<TData>(templatedPath, variables, axiosConfig);
             break;
           case 'DELETE':
-            response = await axios.delete<TData>(path, {
+            response = await axios.delete<TData>(templatedPath, {
               ...axiosConfig,
               data: variables,
             });
