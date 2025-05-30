@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Filter, Calendar } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
 import { WeeklyDateRibbon, SeamlessTransactionList } from '../../modules/transaction-module';
@@ -13,12 +13,18 @@ function TransactionsComponent() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const ribbonRef = useRef<HTMLDivElement>(null);
+
   const handleOpenAddTransactionDrawer = () => {
     setIsDatePickerOpen(true);
   };
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const handleOnTopDateChange = (dateKey: string) => {
+    setSelectedDate(new Date(dateKey));
   };
 
   return (
@@ -72,6 +78,7 @@ function TransactionsComponent() {
       }
     >
       <WeeklyDateRibbon
+        ref={ribbonRef}
         selectedDate={selectedDate}
         onDateSelect={handleDateSelect}
         variant="default"
@@ -79,7 +86,12 @@ function TransactionsComponent() {
         className="mb-6"
       />
       <div className="px-4 space-y-6">
-        <SeamlessTransactionList selectedDate={selectedDate.toISOString()} showBalance={true} />
+        <SeamlessTransactionList
+          selectedDate={selectedDate.toISOString()}
+          showBalance={true}
+          onTopDateChange={handleOnTopDateChange}
+          ribbonElement={ribbonRef.current}
+        />
       </div>
     </PageLayout>
   );

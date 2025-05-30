@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+
 import { Button } from '../../../../components';
 import { cn } from '../../../../libs/utils';
-import { useSeamlessTransactions } from '../../hooks/use-seamless-transactions';
+import { useSeamlessTransactions, useDateIntersectionObserver } from '../../hooks';
 import { TransactionList } from '../transaction-list';
 
 export interface SeamlessTransactionListProps {
@@ -10,6 +12,8 @@ export interface SeamlessTransactionListProps {
   groupId?: number;
   accountId?: number;
   categoryId?: number;
+  onTopDateChange?: (dateKey: string) => void;
+  ribbonElement: HTMLElement | null;
 }
 
 export function SeamlessTransactionList({
@@ -19,6 +23,8 @@ export function SeamlessTransactionList({
   groupId,
   accountId,
   categoryId,
+  onTopDateChange,
+  ribbonElement,
 }: SeamlessTransactionListProps) {
   const { transactionsByDate, isLoading, isError, error, fetchMore } = useSeamlessTransactions({
     selectedDate,
@@ -26,6 +32,17 @@ export function SeamlessTransactionList({
     accountId,
     categoryId,
   });
+
+  const { setDateGroupRef, initializeObserver } = useDateIntersectionObserver({
+    ribbonElement,
+    onTopDateChange,
+  });
+
+  // Set up observer when transactions data changes
+  useEffect(() => {
+    const cleanup = initializeObserver();
+    return cleanup;
+  }, [transactionsByDate, initializeObserver]);
 
   if (isLoading) {
     return (
@@ -67,6 +84,7 @@ export function SeamlessTransactionList({
           return (
             <div
               key={dateKey}
+              ref={setDateGroupRef(dateKey)}
               data-date-key={dateKey}
               className={index > 0 ? 'border-t border-slate-200 pt-4' : undefined}
             >
