@@ -1,5 +1,7 @@
 import { Badge } from '../../../../components/badge';
+import { DRAWER_IDS } from '../../../../constants/drawer-id';
 import { cn } from '../../../../libs/utils';
+import { useDrawerRouterProvider } from '../../../../providers/drawer-router';
 
 import { formatAmount, formatBalance, formatTime } from './helpers';
 
@@ -22,6 +24,7 @@ export interface TransactionCardProps {
 }
 
 export function TransactionCard({ transaction }: TransactionCardProps) {
+  const { openDrawer } = useDrawerRouterProvider();
   const { title, amount, type, category, paymentMethod, icon, iconBgColor, iconTextColor, date, balance } = transaction;
 
   const getCategoryVariant = () => {
@@ -38,8 +41,14 @@ export function TransactionCard({ transaction }: TransactionCardProps) {
     }
   };
 
+  const handleOnClick = async () => {
+    await openDrawer(DRAWER_IDS.EDIT_TRANSACTION, {
+      transactionId: +transaction.id,
+    });
+  };
+
   return (
-    <div className={cn('p-4 hover:bg-slate-50 transition-colors')}>
+    <div className={cn('p-4 hover:bg-slate-50 transition-colors')} onClick={handleOnClick}>
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
