@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-import { useApiUpdateTransactionMutation, useApiAccountsQuery, useApiCategoriesQuery } from '../../../../hooks';
+import {
+  useApiUpdateTransactionMutation,
+  useApiDeleteTransactionMutation,
+  useApiAccountsQuery,
+  useApiCategoriesQuery,
+} from '../../../../hooks';
 import { useDrawerRouterProvider } from '../../../../providers/drawer-router/context';
 import { useSnack } from '../../../../providers/snack';
 
@@ -25,8 +30,9 @@ export const useEditTransactionForm = ({ transaction, onSuccess, onError }: Edit
   const [accountsData] = useApiAccountsQuery();
   const [categoriesData] = useApiCategoriesQuery();
   const [updateTransaction, updateError, updateStates] = useApiUpdateTransactionMutation();
+  const [deleteTransaction, deleteError, deleteStates] = useApiDeleteTransactionMutation();
 
-  const isPending = updateStates.isPending;
+  const isPending = updateStates.isPending || deleteStates.isPending;
 
   // Form setup with react-hook-form
   const {
@@ -73,6 +79,22 @@ export const useEditTransactionForm = ({ transaction, onSuccess, onError }: Edit
     }
   };
 
+  // Handle delete transaction
+  const onDelete = async () => {
+    try {
+      await deleteTransaction({ transactionId: transaction.id! });
+
+      // Handle success
+      success('Transaction deleted successfully');
+      onSuccess?.();
+      closeDrawer();
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete transaction';
+      showError(errorMessage);
+      onError?.(errorMessage);
+    }
+  };
+
   // Prepare options for dropdowns
   const accountOptions =
     accountsData?.items?.map((account) => ({
@@ -97,8 +119,10 @@ export const useEditTransactionForm = ({ transaction, onSuccess, onError }: Edit
     control,
     errors,
     onSubmit,
+    onDelete,
     isPending,
     updateError,
+    deleteError,
     closeDrawer,
     accountOptions,
     categoryOptions,

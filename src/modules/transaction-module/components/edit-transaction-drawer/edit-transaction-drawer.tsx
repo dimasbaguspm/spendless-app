@@ -1,24 +1,41 @@
-import { type FC } from 'react';
+import { Trash2, AlertTriangle } from 'lucide-react';
+import { type FC, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-import { Drawer, TextInput, Select, TextArea, Button } from '../../../../components';
+import { Drawer, TextInput, Select, TextArea, Button, IconButton, Modal } from '../../../../components';
 
 import type { EditTransactionDrawerProps } from './types';
 import { useEditTransactionForm } from './use-edit-transaction-form.hook';
 
 export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transaction, onSuccess, onError }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const {
     handleSubmit,
     control,
     errors,
     onSubmit,
+    onDelete,
     isPending,
     updateError,
+    deleteError,
     closeDrawer,
     accountOptions,
     categoryOptions,
     currencyOptions,
   } = useEditTransactionForm({ transaction, onSuccess, onError });
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    setShowDeleteModal(false);
+    void onDelete();
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false);
+  };
 
   return (
     <Drawer onClose={closeDrawer} size="md">
@@ -146,25 +163,71 @@ export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transact
             />
           </div>
 
-          {updateError && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-sm text-red-600">
-                {(updateError as Error)?.message ?? 'Failed to update transaction. Please try again.'}
+          {(updateError ?? deleteError) && (
+            <div className="mt-4 p-3 bg-danger-50 border border-danger-200 rounded-md">
+              <p className="text-sm text-danger-700">
+                {(updateError as Error)?.message ??
+                  (deleteError as Error)?.message ??
+                  'Failed to update transaction. Please try again.'}
               </p>
             </div>
           )}
         </form>
       </Drawer.Content>
       <Drawer.Footer>
-        <div className="flex gap-3 justify-end">
-          <Button type="button" variant="secondary" onClick={closeDrawer}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="default" onClick={handleSubmit(onSubmit)} disabled={isPending}>
-            {isPending ? 'Updating...' : 'Update Transaction'}
-          </Button>
+        <div className="flex gap-3 justify-between">
+          <IconButton
+            variant="ghost"
+            onClick={handleDeleteClick}
+            disabled={isPending}
+            className="text-danger-600 hover:bg-danger-50"
+          >
+            <Trash2 className="h-4 w-4" />
+          </IconButton>
+          <div className="flex gap-3">
+            <Button type="button" variant="secondary" onClick={closeDrawer}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="default" onClick={handleSubmit(onSubmit)} disabled={isPending}>
+              {isPending ? 'Updating...' : 'Update Transaction'}
+            </Button>
+          </div>
         </div>
       </Drawer.Footer>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <Modal onClose={handleDeleteCancel} size="sm" closeOnOverlayClick closeOnEscape>
+          <Modal.Header>
+            <Modal.Title>Delete Transaction</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Content>
+            <div className="text-center space-y-4">
+              <div className="flex justify-center">
+                <AlertTriangle className="h-12 w-12 text-danger-500" />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-slate-800">Are you sure?</h3>
+                <p className="text-sm text-slate-600">
+                  This transaction will be permanently deleted and cannot be recovered.
+                </p>
+              </div>
+            </div>
+          </Modal.Content>
+          <Modal.Footer>
+            <div className="flex gap-3 justify-center">
+              <Button type="button" variant="secondary" onClick={handleDeleteCancel}>
+                Cancel
+              </Button>
+              <Button type="button" variant="danger" onClick={handleDeleteConfirm} disabled={isPending}>
+                {isPending ? 'Deleting...' : 'Delete Transaction'}
+              </Button>
+            </div>
+          </Modal.Footer>
+        </Modal>
+      )}
     </Drawer>
   );
 };
