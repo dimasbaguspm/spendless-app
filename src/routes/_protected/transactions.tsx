@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Filter, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
-import { Button, PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
+import { PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
 import { WeeklyDateRibbon, SeamlessTransactionList } from '../../modules/transaction-module';
 
 export const Route = createFileRoute('/_protected/transactions')({
@@ -12,8 +12,6 @@ export const Route = createFileRoute('/_protected/transactions')({
 function TransactionsComponent() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [loadMoreTrigger, setLoadMoreTrigger] = useState(0);
-  const [canLoadMore, setCanLoadMore] = useState(true);
 
   const handleOpenAddTransactionDrawer = () => {
     setIsDatePickerOpen(true);
@@ -21,14 +19,6 @@ function TransactionsComponent() {
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
-  };
-
-  const handleLoadMore = () => {
-    setLoadMoreTrigger((prev) => prev + 1);
-  };
-
-  const handleCanLoadMoreChange = (newCanLoadMore: boolean) => {
-    setCanLoadMore(newCanLoadMore);
   };
 
   return (
@@ -89,21 +79,7 @@ function TransactionsComponent() {
         className="mb-6"
       />
       <div className="px-4 space-y-6">
-        <SeamlessTransactionList
-          selectedDate={selectedDate}
-          showBalance={true}
-          maxDaysBefore={4}
-          loadMoreTrigger={loadMoreTrigger}
-          onCanLoadMoreChange={handleCanLoadMoreChange}
-        />
-
-        {canLoadMore && (
-          <div className="flex justify-center">
-            <Button variant="outline" onClick={handleLoadMore}>
-              Load More Transactions
-            </Button>
-          </div>
-        )}
+        <SeamlessTransactionList selectedDate={selectedDate.toISOString()} showBalance={true} />
       </div>
     </PageLayout>
   );

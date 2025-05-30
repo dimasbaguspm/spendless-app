@@ -1,9 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { forwardRef, useCallback, useRef, useEffect, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 
 import { cn } from '../../../../libs/utils';
 
-import { generateCenteredSixMonthsWeeks, formatDate, isSameDay, isToday } from './helpers';
+import { generateWeekDays, formatDate, isSameDay, isToday } from './helpers';
 
 const weeklyDateRibbonVariants = cva('sticky top-0 z-20 border-b border-slate-200 bg-white', {
   variants: {
@@ -59,41 +59,13 @@ export interface WeeklyDateRibbonProps
 
 const WeeklyDateRibbon = forwardRef<HTMLDivElement, WeeklyDateRibbonProps>(
   ({ className, variant, selectedDate = new Date(), onDateSelect, availableDates, size = 'md', ...props }, ref) => {
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const selectedDateRef = useRef<HTMLDivElement>(null);
-    const isFirstRender = useRef(true);
-
-    // Use availableDates if provided, otherwise generate centered 6 months of weeks
+    // Use availableDates if provided, otherwise generate current week
     const days = useMemo(() => {
       if (availableDates && availableDates.length > 0) {
         return availableDates.sort((a, b) => a.getTime() - b.getTime());
       }
-      return generateCenteredSixMonthsWeeks(selectedDate);
+      return generateWeekDays(selectedDate);
     }, [availableDates, selectedDate]);
-
-    // Auto-scroll to selected date when it changes
-    useEffect(() => {
-      if (selectedDateRef.current && scrollContainerRef.current) {
-        const container = scrollContainerRef.current;
-        const selectedElement = selectedDateRef.current;
-        const containerRect = container.getBoundingClientRect();
-        const selectedRect = selectedElement.getBoundingClientRect();
-
-        // Check if selected date is not fully visible or it's the first render
-        if (
-          isFirstRender.current ||
-          selectedRect.left < containerRect.left ||
-          selectedRect.right > containerRect.right
-        ) {
-          selectedElement.scrollIntoView({
-            behavior: isFirstRender.current ? 'instant' : 'smooth',
-            block: 'nearest',
-            inline: 'center',
-          });
-          isFirstRender.current = false;
-        }
-      }
-    }, [selectedDate, days]);
 
     // Handle date selection
     const handleDateSelect = useCallback(
@@ -105,15 +77,7 @@ const WeeklyDateRibbon = forwardRef<HTMLDivElement, WeeklyDateRibbonProps>(
 
     return (
       <div ref={ref} className={cn(weeklyDateRibbonVariants({ variant }), className)} {...props}>
-        <div
-          ref={scrollContainerRef}
-          className="flex overflow-x-auto"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
+        <div className="flex justify-between">
           {days.map((date) => {
             const isSelected = isSameDay(date, selectedDate);
             const dayIsToday = isToday(date);
@@ -121,7 +85,6 @@ const WeeklyDateRibbon = forwardRef<HTMLDivElement, WeeklyDateRibbonProps>(
             return (
               <div
                 key={date.toISOString()}
-                ref={isSelected ? selectedDateRef : undefined}
                 data-date={date.toISOString()}
                 data-selected={isSelected}
                 className={cn(dayItemVariants({ variant, size }))}

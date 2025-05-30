@@ -13,7 +13,6 @@ import { useApiInfinite, type UseApiInfiniteResult } from '../use-api-infinite';
 import { useApiMutate, type UseApiMutateResult } from '../use-api-mutate';
 import { useApiQuery, type UseApiQueryResult } from '../use-api-query';
 
-// List all transactions
 export const useApiTransactionsQuery = (
   params?: TransactionQueryParameters
 ): UseApiQueryResult<PagedTransactions, Error> => {
@@ -24,7 +23,6 @@ export const useApiTransactionsQuery = (
   });
 };
 
-// List all transactions with infinite scroll
 export const useApiTransactionsInfiniteQuery = (
   params?: Omit<TransactionQueryParameters, 'pageNumber'>
 ): UseApiInfiniteResult<PagedTransactions, Error> => {
@@ -42,6 +40,17 @@ export const useApiTransactionQuery = (transactionId: number): UseApiQueryResult
     queryKey: QUERY_KEYS.TRANSACTIONS.single(transactionId),
     path: `/transactions/${transactionId}`,
     enabled: !!transactionId,
+  });
+};
+
+export const useApiGetTransactionsMutation = (): UseApiMutateResult<
+  PagedTransactions,
+  TransactionQueryParameters,
+  Error
+> => {
+  return useApiMutate<PagedTransactions, TransactionQueryParameters, Error>({
+    path: '/transactions',
+    method: 'GET',
   });
 };
 
