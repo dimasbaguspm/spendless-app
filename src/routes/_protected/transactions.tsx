@@ -78,16 +78,16 @@ function TransactionsComponent() {
               }
             }}
           />
-          <WeeklyDateRibbon
-            selectedDate={selectedDate}
-            onDateSelect={handleDateSelect}
-            variant="default"
-            size="md"
-            className="mb-6"
-          />
         </div>
       }
     >
+      <WeeklyDateRibbon
+        selectedDate={selectedDate}
+        onDateSelect={handleDateSelect}
+        variant="default"
+        size="md"
+        className="mb-6"
+      />
       <div className="px-4 space-y-6">
         <SeamlessTransactionList
           selectedDate={selectedDate}

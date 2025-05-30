@@ -5,7 +5,7 @@ import { cn } from '../../../../libs/utils';
 
 import { generateCenteredSixMonthsWeeks, formatDate, isSameDay, isToday } from './helpers';
 
-const weeklyDateRibbonVariants = cva('sticky top-0 z-20 border-b border-slate-200', {
+const weeklyDateRibbonVariants = cva('sticky top-0 z-20 border-b border-slate-200 bg-white', {
   variants: {
     variant: {
       default: '',
