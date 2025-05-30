@@ -3,8 +3,8 @@ import { Home, Receipt, Plus, BarChart3, Settings } from 'lucide-react';
 
 import { BottomBar } from '../components';
 import { DRAWER_IDS } from '../constants/drawer-id';
-import { SessionGuard } from '../core/session-guard';
 import { requireAuth } from '../hooks';
+import { SessionGuard } from '../modules/auth-module';
 import { useDrawerRouterProvider } from '../providers/drawer-router/context';
 
 export const Route = createFileRoute('/_protected')({
@@ -21,8 +21,8 @@ function RouteComponent() {
 
   const currentPath = location.pathname;
 
-  const handleAddClick = () => {
-    openDrawer(DRAWER_IDS.CREATE_TRANSACTION);
+  const handleAddClick = async () => {
+    await openDrawer(DRAWER_IDS.CREATE_TRANSACTION);
   };
 
   const handleNavigationClick = async (href: string) => {

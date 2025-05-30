@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { useSession } from '../hooks';
+import { useSession } from '../../../../hooks';
 
 export interface SessionGuardProps {
   children: ReactNode;
