@@ -1,8 +1,9 @@
+import dayjs, { type Dayjs } from 'dayjs';
 import { useRef, useCallback } from 'react';
 
 interface UseDateIntersectionObserverProps {
   ribbonElement: HTMLElement | null;
-  onTopDateChange?: (dateKey: string) => void;
+  onTopDateChange?: (date: Dayjs) => void;
   isScrollingToDateRef?: React.MutableRefObject<boolean>;
 }
 
@@ -55,24 +56,23 @@ export function useDateIntersectionObserver({
       });
 
       const visibleStates = currentStates.filter((state) => state.isVisible);
+
       if (visibleStates.length === 0) return;
 
-      const bestCandidate = visibleStates
-        .filter((state) => state.rect.top >= -10)
-        .sort((a, b) => {
-          if (a.isInSweetSpot && !b.isInSweetSpot) return -1;
-          if (!a.isInSweetSpot && b.isInSweetSpot) return 1;
+      const [bestCandidate] = visibleStates.sort((a, b) => {
+        if (a.isInSweetSpot && !b.isInSweetSpot) return -1;
+        if (!a.isInSweetSpot && b.isInSweetSpot) return 1;
 
-          if (a.isInSweetSpot && b.isInSweetSpot) {
-            return Math.abs(a.rect.top - ribbonOffsetPx) - Math.abs(b.rect.top - ribbonOffsetPx);
-          }
+        if (a.isInSweetSpot && b.isInSweetSpot) {
+          return Math.abs(a.rect.top - ribbonOffsetPx) - Math.abs(b.rect.top - ribbonOffsetPx);
+        }
 
-          return a.rect.top - b.rect.top;
-        })[0];
+        return a.rect.top - b.rect.top;
+      });
 
       if (bestCandidate && bestCandidate.dateKey !== lastDetectedDateRef.current) {
         lastDetectedDateRef.current = bestCandidate.dateKey;
-        onTopDateChange?.(bestCandidate.dateKey);
+        onTopDateChange?.(dayjs(bestCandidate.dateKey));
       }
     },
     [getRibbonOffset, onTopDateChange, isScrollingToDateRef]

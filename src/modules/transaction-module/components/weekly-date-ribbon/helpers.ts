@@ -9,23 +9,23 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(weekday);
 
 // Date utility functions for weekly date ribbon using dayjs
-export function getStartOfWeek(date: Date | Dayjs): Date {
-  return dayjs(date).weekday(0).startOf('day').toDate(); // Monday = 0
+export function getStartOfWeek(date: Dayjs): Dayjs {
+  return dayjs(date).weekday(0).startOf('day'); // Monday = 0
 }
 
-export function getEndOfWeek(date: Date | Dayjs): Date {
-  return dayjs(date).weekday(6).endOf('day').toDate(); // Sunday = 6
+export function getEndOfWeek(date: Dayjs): Dayjs {
+  return dayjs(date).weekday(6).endOf('day'); // Sunday = 6
 }
 
-export function addDays(date: Date | Dayjs, days: number): Date {
-  return dayjs(date).add(days, 'day').toDate();
+export function addDays(date: Dayjs, days: number): Dayjs {
+  return dayjs(date).add(days, 'day');
 }
 
-export function addWeeks(date: Date | Dayjs, weeks: number): Date {
-  return dayjs(date).add(weeks, 'week').toDate();
+export function addWeeks(date: Dayjs, weeks: number): Dayjs {
+  return dayjs(date).add(weeks, 'week');
 }
 
-export function formatDate(date: Date | Dayjs, format: 'short' | 'long' | 'day' | 'dayNum' = 'short'): string {
+export function formatDate(date: Dayjs, format: 'short' | 'long' | 'day' | 'dayNum' = 'short'): string {
   const dayjsDate = dayjs(date);
 
   if (format === 'day') {
@@ -40,20 +40,20 @@ export function formatDate(date: Date | Dayjs, format: 'short' | 'long' | 'day' 
   return dayjsDate.format('MMM D'); // Jan 1
 }
 
-export function isSameDay(date1: Date | Dayjs, date2: Date | Dayjs): boolean {
+export function isSameDay(date1: Dayjs, date2: Dayjs): boolean {
   return dayjs(date1).isSame(dayjs(date2), 'day');
 }
 
-export function isToday(date: Date | Dayjs): boolean {
+export function isToday(date: Dayjs): boolean {
   return dayjs(date).isSame(dayjs(), 'day');
 }
 
-export function generateWeekDays(startDate: Date | Dayjs): Date[] {
+export function generateWeekDays(startDate: Dayjs): Dayjs[] {
   const weekStart = getStartOfWeek(startDate);
   return Array.from({ length: 7 }, (_, index) => addDays(weekStart, index));
 }
 
-export function generateCenteredSixMonthsWeeks(centerDate: Date | Dayjs = new Date()): Date[] {
+export function generateCenteredSixMonthsWeeks(centerDate: Dayjs = dayjs()): Dayjs[] {
   const today = dayjs(centerDate);
   const threeMonthsBefore = today.subtract(3, 'month');
   const threeMonthsAfter = today.add(3, 'month');
@@ -62,7 +62,7 @@ export function generateCenteredSixMonthsWeeks(centerDate: Date | Dayjs = new Da
   let currentWeekStart = getStartOfWeek(threeMonthsBefore);
   const endWeekStart = getStartOfWeek(threeMonthsAfter);
 
-  const allDays: Date[] = [];
+  const allDays: Dayjs[] = [];
 
   // Generate all weeks from 3 months before to 3 months after
   while (dayjs(currentWeekStart).isSameOrBefore(endWeekStart, 'week')) {

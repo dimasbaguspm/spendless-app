@@ -1,1 +1,5 @@
-export { SeamlessTransactionList, type SeamlessTransactionListProps } from './seamless-transaction-list';
+export {
+  SeamlessTransactionList,
+  type SeamlessTransactionListProps,
+  type SeamlessTransactionListRef,
+} from './seamless-transaction-list';

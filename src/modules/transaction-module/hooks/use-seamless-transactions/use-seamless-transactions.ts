@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import { useMemo, useCallback, useRef } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { useMemo, useCallback, useRef, useState } from 'react';
 
 import { useApiAccountsQuery } from '../../../../hooks/use-api/built-in/use-accounts';
 import { useApiCategoriesQuery } from '../../../../hooks/use-api/built-in/use-categories';
@@ -17,10 +17,11 @@ import {
 } from './helpers';
 
 export interface UseSeamlessTransactionsParams {
-  selectedDate: string;
+  selectedDate: Dayjs;
   groupId?: number;
   accountId?: number;
   categoryId?: number;
+  onSuccessLoadInitial?: () => void;
 }
 
 export function useSeamlessTransactions({
@@ -28,7 +29,9 @@ export function useSeamlessTransactions({
   groupId,
   accountId,
   categoryId,
+  onSuccessLoadInitial,
 }: UseSeamlessTransactionsParams) {
+  const [currentDate, setCurrentDate] = useState<Dayjs>(selectedDate);
   const queryClient = useQueryClient();
 
   const lastEndDate = useRef<string | null>(null);
@@ -40,7 +43,7 @@ export function useSeamlessTransactions({
   const accountsMap = useMemo(() => createAccountsMap(accountsData?.items), [accountsData?.items]);
   const categoriesMap = useMemo(() => createCategoriesMap(categoriesData?.items), [categoriesData?.items]);
 
-  const queryKey = ['transactions', 'seamless', accountId, categoryId];
+  const queryKey = ['transactions', 'seamless', currentDate, accountId, categoryId];
 
   const fetchFormattedTransactions = async (
     fetchStartDate: string,
@@ -64,7 +67,7 @@ export function useSeamlessTransactions({
         convertApiTransactionToComponent(apiTransaction, accountsMap, categoriesMap)
       ) ?? [];
 
-    const allDates = generateDateRange(dayjs(fetchStartDate).toDate(), dayjs(fetchEndDate).toDate());
+    const allDates = generateDateRange(dayjs(fetchStartDate), dayjs(fetchEndDate));
     const transactionsByDate = groupTransactionsByDate(formattedTransactions, allDates);
 
     return transactionsByDate;
@@ -102,21 +105,27 @@ export function useSeamlessTransactions({
     isLoading,
     isError,
     error,
-    refetch: refreshTransactions,
   } = useQuery({
     queryKey,
     queryFn: async () => {
-      const startDate = dayjs(selectedDate).subtract(4, 'day').toISOString();
-      const endDate = dayjs(selectedDate).endOf('day').toISOString();
+      const startDate = currentDate.subtract(4, 'day').toISOString();
+      const endDate = currentDate.endOf('day').toISOString();
 
       lastEndDate.current = endDate;
 
-      return await fetchFormattedTransactions(startDate, endDate);
+      const data = await fetchFormattedTransactions(startDate, endDate);
+
+      onSuccessLoadInitial?.();
+      return data;
     },
     enabled: !!(accountsData && categoriesData),
-    staleTime: 0,
-    gcTime: 0,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
+
+  const refetch = (passedDate: string) => {
+    setCurrentDate(dayjs(passedDate));
+  };
 
   return {
     // Data
@@ -128,7 +137,7 @@ export function useSeamlessTransactions({
     error: error instanceof Error ? error.message : error ? String(error) : null,
 
     // Actions
-    refreshTransactions,
+    refreshTransactions: refetch,
     fetchMore,
   };
 }

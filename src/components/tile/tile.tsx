@@ -1,10 +1,14 @@
-import type { ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 
 interface TileProps {
   children: ReactNode;
   className?: string;
 }
 
-export function Tile({ children, className = '' }: TileProps) {
-  return <div className={`bg-cream-50 rounded-lg border border-mist-200 overflow-hidden ${className}`}>{children}</div>;
-}
+export const Tile = forwardRef<HTMLDivElement, TileProps>(({ children, className = '' }, ref) => {
+  return (
+    <div ref={ref} className={`bg-cream-50 rounded-lg border border-mist-200 overflow-hidden ${className}`}>
+      {children}
+    </div>
+  );
+});

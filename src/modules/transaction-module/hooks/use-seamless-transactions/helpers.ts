@@ -1,39 +1,28 @@
+import dayjs, { type Dayjs } from 'dayjs';
+
 import type { Transaction as ApiTransaction, Account, Category } from '../../../../types/api';
 import { type Transaction } from '../../components/transaction-card';
 
 /**
  * Formats a Date object to API-compatible date string (YYYY-MM-DD)
  */
-function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0];
+function formatDate(date: Dayjs): string {
+  return date.startOf('day').toISOString();
 }
 
 /**
  * Generates an array of date strings between start and end dates (inclusive)
  */
-export function generateDateRange(start: Date, end: Date): string[] {
+export function generateDateRange(start: Dayjs, end: Dayjs): string[] {
   const dates: string[] = [];
-  const currentDate = new Date(start);
+  let currentDate = dayjs(start).startOf('day');
 
-  while (currentDate <= end) {
+  while (currentDate.isSameOrBefore(end, 'date')) {
     dates.push(formatDate(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
+    currentDate = currentDate.add(1, 'day');
   }
 
   return dates;
-}
-
-/**
- * Expands a date range by adding buffer days on each side for caching purposes
- */
-export function expandDateRange(start: Date, end: Date, bufferDays: number = 30) {
-  const expandedStart = new Date(start);
-  expandedStart.setDate(expandedStart.getDate() - bufferDays);
-
-  const expandedEnd = new Date(end);
-  expandedEnd.setDate(expandedEnd.getDate() + bufferDays);
-
-  return { expandedStart, expandedEnd };
 }
 
 /**
@@ -126,7 +115,7 @@ export function groupTransactionsByDate(transactions: Transaction[], dateRange: 
 
   // Group transactions by their date
   transactions.forEach((transaction) => {
-    const transactionDate = formatDate(transaction.date);
+    const transactionDate = formatDate(dayjs(transaction.date));
     if (transactionsByDate[transactionDate]) {
       transactionsByDate[transactionDate].push(transaction);
     }

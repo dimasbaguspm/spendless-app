@@ -1,32 +1,72 @@
+import dayjs, { type Dayjs } from 'dayjs';
+import { debounce } from 'lodash';
+import { useEffect, useRef } from 'react';
+
+import { Tile } from '../../../../components/tile/tile';
 import { cn } from '../../../../libs/utils';
 
 import { TransactionCard, type Transaction } from './transaction-card';
 
 export interface TransactionGroupProps {
-  date: Date;
+  date: Dayjs;
+  selectedDate: Dayjs;
+  shouldScroll: boolean;
   transactions: Transaction[];
-  className?: string;
-  showBalance?: boolean;
+  isParentFinishedToRender?: boolean;
+  ribbonElement?: HTMLElement | null;
 }
 
-export function TransactionGroup({ date, transactions, className, showBalance = true }: TransactionGroupProps) {
-  const formatDate = (dateToFormat: Date) => {
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1);
+export function TransactionGroup({
+  date,
+  selectedDate,
+  shouldScroll = false,
+  isParentFinishedToRender = false,
+  transactions,
+  ribbonElement,
+}: TransactionGroupProps) {
+  const groupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const debouncedScroll = debounce(() => {
+      if (!isParentFinishedToRender) return;
+
+      if (shouldScroll && date.isSame(selectedDate, 'date') && groupRef.current && ribbonElement) {
+        const ribbonRect = ribbonElement.getBoundingClientRect();
+        const dynamicOffset = ribbonRect.height + 16;
+
+        const elementRect = groupRef.current.getBoundingClientRect();
+        const targetScrollTop = window.scrollY + elementRect.top - dynamicOffset;
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollTop) + 10,
+          behavior: 'smooth',
+        });
+      }
+    }, 100); // 100ms debounce delay
+
+    debouncedScroll();
+
+    return () => {
+      debouncedScroll.cancel();
+    };
+  }, [selectedDate, ribbonElement]);
+
+  const formatDate = (dateToFormat: Dayjs) => {
+    const today = dayjs();
+    const yesterday = dayjs().subtract(1, 'day');
 
     // Check if it's today
-    if (dateToFormat.toDateString() === today.toDateString()) {
+    if (dateToFormat.isSame(today, 'date')) {
       return 'Today';
     }
 
     // Check if it's yesterday
-    if (dateToFormat.toDateString() === yesterday.toDateString()) {
+    if (dateToFormat.isSame(yesterday, 'date')) {
       return 'Yesterday';
     }
 
     // Format as regular date
-    return dateToFormat.toLocaleDateString('en-US', {
+    return dateToFormat.toDate().toLocaleDateString('en-US', {
       weekday: 'long',
       month: 'short',
       day: 'numeric',
@@ -47,7 +87,7 @@ export function TransactionGroup({ date, transactions, className, showBalance = 
   const totalAmount = getTotalAmount();
 
   return (
-    <div className={cn('bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden', className)}>
+    <Tile ref={groupRef}>
       <div className="p-4 border-b border-slate-200 bg-slate-50">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold text-slate-900">{formatDate(date)}</h3>
@@ -79,10 +119,10 @@ export function TransactionGroup({ date, transactions, className, showBalance = 
       ) : (
         <div className="divide-y divide-slate-200">
           {transactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} showBalance={showBalance} />
+            <TransactionCard key={transaction.id} transaction={transaction} />
           ))}
         </div>
       )}
-    </div>
+    </Tile>
   );
 }

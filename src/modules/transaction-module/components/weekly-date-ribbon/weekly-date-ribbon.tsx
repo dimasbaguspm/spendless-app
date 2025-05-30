@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
+import dayjs, { Dayjs } from 'dayjs';
 import { forwardRef, useCallback, useMemo } from 'react';
 
 import { cn } from '../../../../libs/utils';
@@ -48,32 +49,22 @@ export interface WeeklyDateRibbonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'>,
     VariantProps<typeof weeklyDateRibbonVariants> {
   /** Current selected date */
-  selectedDate?: Date;
+  selectedDate?: Dayjs;
   /** Callback when a date is selected */
-  onDateSelect?: (date: Date) => void;
-  /** Available dates to display in the ribbon */
-  availableDates?: Date[];
+  onDateSelect?: (date: Dayjs) => void;
+
   /** Size variant for day items */
   size?: 'sm' | 'md' | 'lg';
 }
 
 const WeeklyDateRibbon = forwardRef<HTMLDivElement, WeeklyDateRibbonProps>(
-  ({ className, variant, selectedDate = new Date(), onDateSelect, availableDates, size = 'md', ...props }, ref) => {
-    // Use availableDates if provided, otherwise generate current week
+  ({ className, variant, selectedDate = dayjs(), onDateSelect, size = 'md', ...props }, ref) => {
     const days = useMemo(() => {
-      if (availableDates && availableDates.length > 0) {
-        return availableDates.sort((a, b) => a.getTime() - b.getTime());
-      }
-      return generateWeekDays(selectedDate);
-    }, [availableDates, selectedDate]);
+      return generateWeekDays(dayjs(selectedDate));
+    }, [selectedDate]);
 
     // Handle date selection
-    const handleDateSelect = useCallback(
-      (date: Date) => {
-        onDateSelect?.(date);
-      },
-      [onDateSelect]
-    );
+    const handleDateSelect = useCallback((date: Dayjs) => onDateSelect?.(date), [onDateSelect]);
 
     return (
       <div ref={ref} className={cn(weeklyDateRibbonVariants({ variant }), className)} {...props}>

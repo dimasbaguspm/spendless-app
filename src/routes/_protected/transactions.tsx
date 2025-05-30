@@ -1,9 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
+import dayjs, { Dayjs } from 'dayjs';
 import { Filter, Calendar } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import { PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
-import { WeeklyDateRibbon, SeamlessTransactionList } from '../../modules/transaction-module';
+import {
+  WeeklyDateRibbon,
+  SeamlessTransactionList,
+  type SeamlessTransactionListRef,
+} from '../../modules/transaction-module';
 
 export const Route = createFileRoute('/_protected/transactions')({
   component: TransactionsComponent,
@@ -11,20 +16,27 @@ export const Route = createFileRoute('/_protected/transactions')({
 
 function TransactionsComponent() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+  const [shouldScroll, setShouldScroll] = useState(false);
 
   const ribbonRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<SeamlessTransactionListRef>(null);
 
   const handleOpenAddTransactionDrawer = () => {
     setIsDatePickerOpen(true);
   };
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
+  const handleDateSelect = (date: Dayjs) => {
+    setSelectedDate(date.startOf('day'));
+    setShouldScroll(true);
+
+    listRef.current?.refreshIfNeeded(date);
   };
 
-  const handleOnTopDateChange = (dateKey: string) => {
-    setSelectedDate(new Date(dateKey));
+  const handleOnTopDateChange = (date: Dayjs) => {
+    setSelectedDate(date.startOf('day'));
+    setShouldScroll(false);
   };
 
   return (
@@ -67,11 +79,9 @@ function TransactionsComponent() {
             showInput={false}
             isOpen={isDatePickerOpen}
             onOpenChange={setIsDatePickerOpen}
-            value={selectedDate}
+            value={selectedDate.toDate()}
             onChange={(data) => {
-              if (data) {
-                handleDateSelect(data);
-              }
+              if (data) handleDateSelect(dayjs(data).startOf('day'));
             }}
           />
         </div>
@@ -87,8 +97,9 @@ function TransactionsComponent() {
       />
       <div className="px-4 space-y-6">
         <SeamlessTransactionList
-          selectedDate={selectedDate.toISOString()}
-          showBalance={true}
+          ref={listRef}
+          selectedDate={selectedDate}
+          shouldScroll={shouldScroll}
           onTopDateChange={handleOnTopDateChange}
           ribbonElement={ribbonRef.current}
         />

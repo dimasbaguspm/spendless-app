@@ -19,11 +19,9 @@ export interface Transaction {
 
 export interface TransactionCardProps {
   transaction: Transaction;
-  className?: string;
-  showBalance?: boolean;
 }
 
-export function TransactionCard({ transaction, className, showBalance = true }: TransactionCardProps) {
+export function TransactionCard({ transaction }: TransactionCardProps) {
   const { title, amount, type, category, paymentMethod, icon, iconBgColor, iconTextColor, date, balance } = transaction;
 
   const getCategoryVariant = () => {
@@ -41,7 +39,7 @@ export function TransactionCard({ transaction, className, showBalance = true }: 
   };
 
   return (
-    <div className={cn('p-4 hover:bg-slate-50 transition-colors', className)}>
+    <div className={cn('p-4 hover:bg-slate-50 transition-colors')}>
       <div className="flex justify-between items-start">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
@@ -62,9 +60,7 @@ export function TransactionCard({ transaction, className, showBalance = true }: 
           <p className={cn('font-bold text-lg', type === 'income' ? 'text-green-600' : 'text-red-600')}>
             {formatAmount(type, amount)}
           </p>
-          {showBalance && balance !== undefined && (
-            <p className="text-sm text-slate-500">Balance: {formatBalance(balance)}</p>
-          )}
+          {balance !== undefined && <p className="text-sm text-slate-500">Balance: {formatBalance(balance)}</p>}
         </div>
       </div>
     </div>
