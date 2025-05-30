@@ -1,4 +1,4 @@
-import { Trash2, AlertTriangle } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { type FC, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
@@ -203,15 +203,10 @@ export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transact
             <Modal.CloseButton />
           </Modal.Header>
           <Modal.Content>
-            <div className="text-center space-y-4">
-              <div className="flex justify-center">
-                <AlertTriangle className="h-12 w-12 text-danger-500" />
-              </div>
-
+            <div className="space-y-4">
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-slate-800">Are you sure?</h3>
                 <p className="text-sm text-slate-600">
-                  This transaction will be permanently deleted and cannot be recovered.
+                  This transaction will be permanently deleted and cannot be recovered
                 </p>
               </div>
             </div>
