@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Filter, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
-import { Button, PageLayout, PageHeader, IconButton } from '../../components';
+import { Button, PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
 import { WeeklyDateRibbon } from '../../modules/transaction-module';
 
 export const Route = createFileRoute('/_protected/transactions')({
@@ -10,9 +10,12 @@ export const Route = createFileRoute('/_protected/transactions')({
 });
 
 function TransactionsComponent() {
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleOpenAddTransactionDrawer = () => {};
+  const handleOpenAddTransactionDrawer = () => {
+    setIsDatePickerOpen(true);
+  };
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
@@ -52,6 +55,18 @@ function TransactionsComponent() {
               </div>
             }
             className="p-4 pb-0 mb-2"
+          />
+          <DatePicker
+            variant="coral"
+            showInput={false}
+            isOpen={isDatePickerOpen}
+            onOpenChange={setIsDatePickerOpen}
+            value={selectedDate}
+            onChange={(data) => {
+              if (data) {
+                handleDateSelect(data);
+              }
+            }}
           />
           <WeeklyDateRibbon
             selectedDate={selectedDate}
