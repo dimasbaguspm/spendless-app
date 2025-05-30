@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
-import { Button } from '../../../../components';
+import { Button, Loader } from '../../../../components';
 import { cn } from '../../../../libs/utils';
 import { useSeamlessTransactions, useDateIntersectionObserver } from '../../hooks';
 import { TransactionGroup } from '../transaction-card';
@@ -49,18 +49,8 @@ export const SeamlessTransactionList = forwardRef<SeamlessTransactionListRef, Se
 
     if (isLoading) {
       return (
-        <div className={'space-y-4'}>
-          {[...Array(7)].map((_, i) => (
-            <div key={i} className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
-              <div className="animate-pulse">
-                <div className="h-6 bg-slate-200 rounded w-1/3 mb-4"></div>
-                <div className="space-y-3">
-                  <div className="h-16 bg-slate-100 rounded"></div>
-                  <div className="h-16 bg-slate-100 rounded"></div>
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className={cn('flex justify-center items-center min-h-[10vh]')}>
+          <Loader />
         </div>
       );
     }
