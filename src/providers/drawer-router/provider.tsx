@@ -6,8 +6,8 @@ import { useApiAccountQuery, useApiCategoryQuery } from '../../hooks';
 import { AddAccountDrawer } from '../../modules/account-module';
 import { EditAccountDrawer } from '../../modules/account-module/components';
 import { AddCategoryDrawer, EditCategoryDrawer } from '../../modules/category-module';
+import { AddTransactionDrawer } from '../../modules/transaction-module';
 
-import { AddTransactionDrawer } from './contents/add-transaction';
 import { DrawerRouterContextProvider } from './context';
 
 export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
