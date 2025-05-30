@@ -1,9 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { forwardRef, useCallback, useRef, useMemo } from 'react';
+import { forwardRef, useCallback, useRef, useEffect, useMemo } from 'react';
 
 import { cn } from '../../../../libs/utils';
 
-import { getStartOfWeek, addDays, formatDate, isSameDay, isToday } from './helpers';
+import { generateCenteredSixMonthsWeeks, formatDate, isSameDay, isToday } from './helpers';
 
 const weeklyDateRibbonVariants = cva('sticky top-0 z-20 border-b border-slate-200', {
   variants: {
@@ -53,46 +53,47 @@ export interface WeeklyDateRibbonProps
   onDateSelect?: (date: Date) => void;
   /** Available dates to display in the ribbon */
   availableDates?: Date[];
-  /** Number of weeks to show on each side of selected week (used when availableDates is not provided) */
-  weekRange?: number;
   /** Size variant for day items */
   size?: 'sm' | 'md' | 'lg';
 }
 
 const WeeklyDateRibbon = forwardRef<HTMLDivElement, WeeklyDateRibbonProps>(
-  (
-    {
-      className,
-      variant,
-      selectedDate = new Date(),
-      onDateSelect,
-      availableDates,
-      weekRange = 4,
-      size = 'md',
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, variant, selectedDate = new Date(), onDateSelect, availableDates, size = 'md', ...props }, ref) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const selectedDateRef = useRef<HTMLDivElement>(null);
+    const isFirstRender = useRef(true);
 
-    // Use availableDates if provided, otherwise generate days based on week range
+    // Use availableDates if provided, otherwise generate centered 6 months of weeks
     const days = useMemo(() => {
       if (availableDates && availableDates.length > 0) {
-        return availableDates.sort((a, b) => b.getTime() - a.getTime());
+        return availableDates.sort((a, b) => a.getTime() - b.getTime());
       }
+      return generateCenteredSixMonthsWeeks(selectedDate);
+    }, [availableDates, selectedDate]);
 
-      // Fallback to original week-based generation
-      const selectedWeekStart = getStartOfWeek(selectedDate);
-      const totalDays = (weekRange * 2 + 1) * 7;
+    // Auto-scroll to selected date when it changes
+    useEffect(() => {
+      if (selectedDateRef.current && scrollContainerRef.current) {
+        const container = scrollContainerRef.current;
+        const selectedElement = selectedDateRef.current;
+        const containerRect = container.getBoundingClientRect();
+        const selectedRect = selectedElement.getBoundingClientRect();
 
-      return Array.from({ length: totalDays }, (_, index) => {
-        const weekOffset = Math.floor(index / 7) - weekRange;
-        const dayOffset = index % 7;
-        const weekStart = addDays(selectedWeekStart, weekOffset * 7);
-        return addDays(weekStart, dayOffset);
-      });
-    }, [availableDates, selectedDate, weekRange]);
+        // Check if selected date is not fully visible or it's the first render
+        if (
+          isFirstRender.current ||
+          selectedRect.left < containerRect.left ||
+          selectedRect.right > containerRect.right
+        ) {
+          selectedElement.scrollIntoView({
+            behavior: isFirstRender.current ? 'instant' : 'smooth',
+            block: 'nearest',
+            inline: 'center',
+          });
+          isFirstRender.current = false;
+        }
+      }
+    }, [selectedDate, days]);
 
     // Handle date selection
     const handleDateSelect = useCallback(

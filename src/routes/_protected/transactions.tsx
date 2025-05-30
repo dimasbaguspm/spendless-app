@@ -73,7 +73,6 @@ function TransactionsComponent() {
             onDateSelect={handleDateSelect}
             variant="default"
             size="md"
-            weekRange={2}
             className="mb-6"
           />
         </div>
