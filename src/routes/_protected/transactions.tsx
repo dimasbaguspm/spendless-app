@@ -3,7 +3,7 @@ import { Filter, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button, PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
-import { WeeklyDateRibbon } from '../../modules/transaction-module';
+import { WeeklyDateRibbon, SeamlessTransactionList } from '../../modules/transaction-module';
 
 export const Route = createFileRoute('/_protected/transactions')({
   component: TransactionsComponent,
@@ -12,6 +12,8 @@ export const Route = createFileRoute('/_protected/transactions')({
 function TransactionsComponent() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [loadMoreTrigger, setLoadMoreTrigger] = useState(0);
+  const [canLoadMore, setCanLoadMore] = useState(true);
 
   const handleOpenAddTransactionDrawer = () => {
     setIsDatePickerOpen(true);
@@ -19,6 +21,14 @@ function TransactionsComponent() {
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const handleLoadMore = () => {
+    setLoadMoreTrigger((prev) => prev + 1);
+  };
+
+  const handleCanLoadMoreChange = (newCanLoadMore: boolean) => {
+    setCanLoadMore(newCanLoadMore);
   };
 
   return (
@@ -79,24 +89,21 @@ function TransactionsComponent() {
       }
     >
       <div className="px-4 space-y-6">
-        {/* 
-        {selectedDateTransactions.length > 0 ? (
-          <TransactionGroup
-            key={selectedDate.toDateString()}
-            date={selectedDate}
-            transactions={selectedDateTransactions}
-            showBalance={true}
-          />
-        ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-8 text-center">
-            <p className="text-slate-500">No transactions logged for {selectedDate.toLocaleDateString()}.</p>
-          </div>
-        )} */}
+        <SeamlessTransactionList
+          selectedDate={selectedDate}
+          showBalance={true}
+          maxDaysBefore={4}
+          loadMoreTrigger={loadMoreTrigger}
+          onCanLoadMoreChange={handleCanLoadMoreChange}
+        />
 
-        {/* Load More button at bottom */}
-        <div className="flex justify-center">
-          <Button variant="outline">Load More Transactions</Button>
-        </div>
+        {canLoadMore && (
+          <div className="flex justify-center">
+            <Button variant="outline" onClick={handleLoadMore}>
+              Load More Transactions
+            </Button>
+          </div>
+        )}
       </div>
     </PageLayout>
   );

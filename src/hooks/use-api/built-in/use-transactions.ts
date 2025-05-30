@@ -3,10 +3,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import type {
   Transaction,
   TransactionQueryParameters,
-  PaginatedResponse,
   Error,
   NewTransaction,
   UpdateTransaction,
+  PagedTransactions,
 } from '../../../types/api';
 import { QUERY_KEYS } from '../constants';
 import { useApiInfinite, type UseApiInfiniteResult } from '../use-api-infinite';
@@ -16,8 +16,8 @@ import { useApiQuery, type UseApiQueryResult } from '../use-api-query';
 // List all transactions
 export const useApiTransactionsQuery = (
   params?: TransactionQueryParameters
-): UseApiQueryResult<PaginatedResponse, Error> => {
-  return useApiQuery<PaginatedResponse, TransactionQueryParameters, Error>({
+): UseApiQueryResult<PagedTransactions, Error> => {
+  return useApiQuery<PagedTransactions, TransactionQueryParameters, Error>({
     queryKey: QUERY_KEYS.TRANSACTIONS.list(params),
     path: '/transactions',
     queryParams: params,
@@ -27,8 +27,8 @@ export const useApiTransactionsQuery = (
 // List all transactions with infinite scroll
 export const useApiTransactionsInfiniteQuery = (
   params?: Omit<TransactionQueryParameters, 'pageNumber'>
-): UseApiInfiniteResult<PaginatedResponse, Error> => {
-  return useApiInfinite<PaginatedResponse, TransactionQueryParameters, Error>({
+): UseApiInfiniteResult<PagedTransactions, Error> => {
+  return useApiInfinite<PagedTransactions, TransactionQueryParameters, Error>({
     queryKey: QUERY_KEYS.TRANSACTIONS.infinite(params),
     path: '/transactions',
     queryParams: params,
