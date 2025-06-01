@@ -7,6 +7,11 @@ export const getDefaultFormValues = (category: Category): Partial<EditCategoryFo
   name: category.name ?? '',
   note: category.note,
   parentId: category.parentId,
+  metadata: {
+    icon: category.metadata?.icon ?? 'tag',
+    color: category.metadata?.color ?? 'coral',
+    ...category.metadata,
+  },
 });
 
 export const VALIDATION_RULES = {
@@ -29,6 +34,9 @@ export const VALIDATION_RULES = {
   parentId: {
     // No validation needed for optional field
   },
+  metadata: {
+    // No validation needed for metadata, can be empty
+  },
 };
 
 /**
@@ -39,6 +47,7 @@ export const transformToCategoryData = (data: EditCategoryFormData) => ({
   name: data.name,
   note: data.note,
   parentId: data.parentId,
+  metadata: data.metadata,
 });
 
 /**

@@ -1,14 +1,18 @@
 import { type FC } from 'react';
 import { Controller } from 'react-hook-form';
 
-import { Drawer, TextInput, Select, TextArea, Button } from '../../../../components';
+import { Drawer, TextInput, TextArea, Button } from '../../../../components';
+import { CategoryAppearanceSelector } from '../category-appearance-selector';
+import { GroupCategorySelector } from '../group-category-selector';
 
 import type { AddCategoryDrawerProps } from './types';
 import { useAddCategoryForm } from './use-add-category-form.hook';
 
 export const AddCategoryDrawer: FC<AddCategoryDrawerProps> = ({ onSuccess, onError }) => {
-  const { handleSubmit, control, errors, isPending, onSubmit, closeDrawer, validationRules, parentCategoryOptions } =
-    useAddCategoryForm({ onSuccess, onError });
+  const { handleSubmit, control, errors, isPending, onSubmit, closeDrawer, validationRules } = useAddCategoryForm({
+    onSuccess,
+    onError,
+  });
 
   return (
     <Drawer onClose={closeDrawer} size="md">
@@ -34,24 +38,6 @@ export const AddCategoryDrawer: FC<AddCategoryDrawerProps> = ({ onSuccess, onErr
           />
 
           <Controller
-            name="parentId"
-            control={control}
-            rules={validationRules.parentId}
-            render={({ field }) => (
-              <Select
-                {...field}
-                value={field.value?.toString() ?? ''}
-                onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value, 10) : null)}
-                label="Parent Category"
-                placeholder="Select parent category (optional)"
-                options={parentCategoryOptions}
-                errorText={errors.parentId?.message}
-                helperText="Choose a parent category to create subcategories"
-              />
-            )}
-          />
-
-          <Controller
             name="note"
             control={control}
             rules={validationRules.note}
@@ -66,6 +52,11 @@ export const AddCategoryDrawer: FC<AddCategoryDrawerProps> = ({ onSuccess, onErr
               />
             )}
           />
+
+          <div className="border-t border-mist-200 pt-6 gap-6 flex flex-col">
+            <CategoryAppearanceSelector control={control} errors={errors} label="Appearance" helperText="" />
+            <GroupCategorySelector control={control} errors={errors} />
+          </div>
         </form>
       </Drawer.Content>
       <Drawer.Footer>

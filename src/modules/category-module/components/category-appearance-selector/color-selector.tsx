@@ -1,7 +1,7 @@
 import { Paintbrush } from 'lucide-react';
 
 import { Segment, type SegmentOption } from '../../../../components';
-import { ACCOUNT_COLORS } from '../account-icon/constants';
+import { CATEGORY_COLORS } from '../category-icon/constants';
 
 interface ColorSelectorProps {
   selectedColor: string;
@@ -17,7 +17,7 @@ const isOutlineColor = (colorValue: string): boolean => {
 
 export const ColorSelector = ({ selectedColor, colorVariant, onColorSelect, onVariantChange }: ColorSelectorProps) => {
   // Filter colors based on current variant
-  const filteredColors = ACCOUNT_COLORS.filter((color) => {
+  const filteredColors = CATEGORY_COLORS.filter((color) => {
     const isOutline = isOutlineColor(color.value);
     return colorVariant === 'outline' ? isOutline : !isOutline;
   });

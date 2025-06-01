@@ -1,6 +1,6 @@
 import { Edit, Trash2, Loader } from 'lucide-react';
 
-import { Button } from '../../../../components';
+import { IconButton } from '../../../../components/button/icon-button';
 import { useApiTransactionsQuery } from '../../../../hooks/use-api/built-in/use-transactions';
 import { AccountIcon } from '../account-icon';
 
@@ -38,20 +38,14 @@ export function AccountItem({ account, isDeleting = false, onEdit, onDelete }: A
 
       <div className="flex items-center gap-2">
         {onEdit && (
-          <Button variant="ghost" size="sm" onClick={() => onEdit(account)}>
+          <IconButton variant="ghost" size="sm" onClick={() => onEdit(account)}>
             <Edit className="w-4 h-4" />
-          </Button>
+          </IconButton>
         )}
         {onDelete && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-red-600 hover:text-red-700"
-            onClick={() => onDelete(account)}
-            disabled={isDeleting}
-          >
+          <IconButton variant="error-ghost" size="sm" onClick={() => onDelete(account)} disabled={isDeleting}>
             {isDeleting ? <Loader className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-          </Button>
+          </IconButton>
         )}
       </div>
     </div>

@@ -4,6 +4,11 @@ export interface EditCategoryFormData extends UpdateCategory {
   name: string;
   note?: string | null;
   parentId?: number | null;
+  metadata?: {
+    icon?: string;
+    color?: string;
+    [key: string]: string | number | boolean | null | undefined;
+  };
 }
 
 export interface EditCategoryDrawerProps {

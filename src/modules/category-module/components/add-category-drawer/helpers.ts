@@ -6,6 +6,10 @@ export const DEFAULT_FORM_VALUES: Partial<AddCategoryFormData> = {
   name: '',
   note: null,
   parentId: null,
+  metadata: {
+    icon: 'tag',
+    color: 'coral',
+  },
 };
 
 export const VALIDATION_RULES = {
@@ -28,6 +32,9 @@ export const VALIDATION_RULES = {
       message: 'Notes must be less than 500 characters',
     },
   },
+  metadata: {
+    // No validation needed for metadata, can be empty
+  },
 };
 
 /**
@@ -38,6 +45,7 @@ export const transformToCategoryData = (data: AddCategoryFormData): NewCategory 
   name: data.name,
   parentId: data.parentId,
   note: data.note,
+  metadata: data.metadata,
 });
 
 /**

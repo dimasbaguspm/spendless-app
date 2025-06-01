@@ -1,6 +1,6 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-import { useApiUpdateCategoryMutation } from '../../../../hooks/use-api/built-in/use-categories';
+import { useApiUpdateCategoryMutation, useApiCategoriesQuery } from '../../../../hooks/use-api/built-in/use-categories';
 import { useDrawerRouterProvider } from '../../../../providers/drawer-router/context';
 import { useSnack } from '../../../../providers/snack';
 
@@ -16,6 +16,8 @@ export const useEditCategoryForm = ({ category, onSuccess, onError }: EditCatego
 
   const [updateCategory, updateCategoryError, { isPending }] = useApiUpdateCategoryMutation();
 
+  const [categoriesData] = useApiCategoriesQuery({ parentId: category.id });
+
   // Form setup with react-hook-form
   const {
     register,
@@ -26,6 +28,9 @@ export const useEditCategoryForm = ({ category, onSuccess, onError }: EditCatego
     mode: 'onChange',
     defaultValues: getDefaultFormValues(category),
   });
+
+  // Check if the current category has children
+  const categoryHasChildren = (categoriesData?.totalItems ?? 0) > 0;
 
   /**
    * Handles form submission
@@ -105,5 +110,8 @@ export const useEditCategoryForm = ({ category, onSuccess, onError }: EditCatego
 
     // Validation rules for direct use
     validationRules: VALIDATION_RULES,
+
+    // Category state
+    categoryHasChildren,
   };
 };
