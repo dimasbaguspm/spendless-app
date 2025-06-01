@@ -21,7 +21,7 @@ export const useAddAccountForm = ({
   onSuccess,
   onError,
 }: Pick<AddAccountDrawerProps, 'onSuccess' | 'onError'> = {}) => {
-  const { closeDrawer } = useDrawerRouterProvider();
+  const { closeDrawer, handleDispatchSubmitDrawerEvent } = useDrawerRouterProvider();
   const { user } = useSession();
   const { success, error: showError } = useSnack();
 
@@ -88,6 +88,8 @@ export const useAddAccountForm = ({
         ...DEFAULT_FORM_VALUES,
         groupId: user?.groupId ?? 0,
       });
+
+      handleDispatchSubmitDrawerEvent();
 
       if (onSuccess) {
         onSuccess();

@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import { Controller } from 'react-hook-form';
 
-import { Drawer, TextInput, Select, TextArea, Button } from '../../../../components';
+import { Drawer, TextInput, Select, TextArea, Button, Segment } from '../../../../components';
 
 import { useAddTransactionForm } from './use-add-transaction-form.hook';
 
@@ -17,6 +17,7 @@ export const AddTransactionDrawer: FC = () => {
     accountOptions,
     categoryOptions,
     currencyOptions,
+    typeOptions,
   } = useAddTransactionForm();
 
   return (
@@ -41,6 +42,22 @@ export const AddTransactionDrawer: FC = () => {
                   value={field.value?.toString() ?? ''}
                   onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                   errorText={errors.accountId?.message}
+                />
+              )}
+            />
+
+            <Controller
+              name="type"
+              control={control}
+              rules={{ required: 'Transaction type is required' }}
+              render={({ field }) => (
+                <Segment
+                  label="Transaction Type"
+                  options={typeOptions}
+                  value={field.value ?? ''}
+                  onValueChange={field.onChange}
+                  errorText={errors.type?.message}
+                  className="w-full"
                 />
               )}
             />
@@ -148,7 +165,7 @@ export const AddTransactionDrawer: FC = () => {
           {createError && (
             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
               <p className="text-sm text-red-600">
-                {(createError as Error)?.message ?? 'Failed to create transaction. Please try again.'}
+                {createError?.message ?? 'Failed to create transaction. Please try again.'}
               </p>
             </div>
           )}

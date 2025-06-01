@@ -11,136 +11,191 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProtectedImport } from './routes/_protected'
-import { Route as AuthImport } from './routes/_auth'
-import { Route as ProtectedIndexImport } from './routes/_protected/index'
-import { Route as ProtectedTransactionsImport } from './routes/_protected/transactions'
-import { Route as ProtectedAnalyticsImport } from './routes/_protected/analytics'
-import { Route as ProtectedAddImport } from './routes/_protected/add'
+import { Route as ProtectedRouteImport } from './routes/_protected/route'
+import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as AuthRegisterImport } from './routes/_auth/register'
 import { Route as AuthLoginImport } from './routes/_auth/login'
-import { Route as ProtectedSettingsIndexImport } from './routes/_protected/settings/index'
-import { Route as ProtectedSettingsSecurityImport } from './routes/_protected/settings/security'
-import { Route as ProtectedSettingsProfileImport } from './routes/_protected/settings/profile'
-import { Route as ProtectedSettingsPreferencesImport } from './routes/_protected/settings/preferences'
-import { Route as ProtectedSettingsNotificationsImport } from './routes/_protected/settings/notifications'
-import { Route as ProtectedSettingsLegalImport } from './routes/_protected/settings/legal'
-import { Route as ProtectedSettingsHelpImport } from './routes/_protected/settings/help'
-import { Route as ProtectedSettingsDataExportImport } from './routes/_protected/settings/data-export'
-import { Route as ProtectedSettingsCategoriesImport } from './routes/_protected/settings/categories'
-import { Route as ProtectedSettingsAccountsImport } from './routes/_protected/settings/accounts'
+import { Route as ProtectedNewUserRouteImport } from './routes/_protected/_new-user/route'
+import { Route as ProtectedExperiencedUserRouteImport } from './routes/_protected/_experienced-user/route'
+import { Route as ProtectedExperiencedUserIndexImport } from './routes/_protected/_experienced-user/index'
+import { Route as ProtectedExperiencedUserTransactionsImport } from './routes/_protected/_experienced-user/transactions'
+import { Route as ProtectedExperiencedUserAnalyticsImport } from './routes/_protected/_experienced-user/analytics'
+import { Route as ProtectedExperiencedUserAddImport } from './routes/_protected/_experienced-user/add'
+import { Route as ProtectedNewUserOnboardingIndexImport } from './routes/_protected/_new-user/onboarding/index'
+import { Route as ProtectedExperiencedUserSettingsIndexImport } from './routes/_protected/_experienced-user/settings/index'
+import { Route as ProtectedNewUserOnboardingCompleteImport } from './routes/_protected/_new-user/onboarding/complete'
+import { Route as ProtectedExperiencedUserSettingsSecurityImport } from './routes/_protected/_experienced-user/settings/security'
+import { Route as ProtectedExperiencedUserSettingsProfileImport } from './routes/_protected/_experienced-user/settings/profile'
+import { Route as ProtectedExperiencedUserSettingsPreferencesImport } from './routes/_protected/_experienced-user/settings/preferences'
+import { Route as ProtectedExperiencedUserSettingsNotificationsImport } from './routes/_protected/_experienced-user/settings/notifications'
+import { Route as ProtectedExperiencedUserSettingsLegalImport } from './routes/_protected/_experienced-user/settings/legal'
+import { Route as ProtectedExperiencedUserSettingsHelpImport } from './routes/_protected/_experienced-user/settings/help'
+import { Route as ProtectedExperiencedUserSettingsDataExportImport } from './routes/_protected/_experienced-user/settings/data-export'
+import { Route as ProtectedExperiencedUserSettingsCategoriesImport } from './routes/_protected/_experienced-user/settings/categories'
+import { Route as ProtectedExperiencedUserSettingsAccountsImport } from './routes/_protected/_experienced-user/settings/accounts'
+import { Route as ProtectedNewUserOnboardingSetupCategoryImport } from './routes/_protected/_new-user/onboarding/setup/category'
+import { Route as ProtectedNewUserOnboardingSetupAccountImport } from './routes/_protected/_new-user/onboarding/setup/account'
 
 // Create/Update Routes
 
-const ProtectedRoute = ProtectedImport.update({
+const ProtectedRouteRoute = ProtectedRouteImport.update({
   id: '/_protected',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRoute = AuthImport.update({
+const AuthRouteRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
-} as any)
-
-const ProtectedIndexRoute = ProtectedIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
-const ProtectedTransactionsRoute = ProtectedTransactionsImport.update({
-  id: '/transactions',
-  path: '/transactions',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
-const ProtectedAnalyticsRoute = ProtectedAnalyticsImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-
-const ProtectedAddRoute = ProtectedAddImport.update({
-  id: '/add',
-  path: '/add',
-  getParentRoute: () => ProtectedRoute,
 } as any)
 
 const AuthRegisterRoute = AuthRegisterImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthLoginRoute = AuthLoginImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const ProtectedSettingsIndexRoute = ProtectedSettingsIndexImport.update({
-  id: '/settings/',
-  path: '/settings/',
-  getParentRoute: () => ProtectedRoute,
+const ProtectedNewUserRouteRoute = ProtectedNewUserRouteImport.update({
+  id: '/_new-user',
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
 
-const ProtectedSettingsSecurityRoute = ProtectedSettingsSecurityImport.update({
-  id: '/settings/security',
-  path: '/settings/security',
-  getParentRoute: () => ProtectedRoute,
-} as any)
+const ProtectedExperiencedUserRouteRoute =
+  ProtectedExperiencedUserRouteImport.update({
+    id: '/_experienced-user',
+    getParentRoute: () => ProtectedRouteRoute,
+  } as any)
 
-const ProtectedSettingsProfileRoute = ProtectedSettingsProfileImport.update({
-  id: '/settings/profile',
-  path: '/settings/profile',
-  getParentRoute: () => ProtectedRoute,
-} as any)
+const ProtectedExperiencedUserIndexRoute =
+  ProtectedExperiencedUserIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
 
-const ProtectedSettingsPreferencesRoute =
-  ProtectedSettingsPreferencesImport.update({
+const ProtectedExperiencedUserTransactionsRoute =
+  ProtectedExperiencedUserTransactionsImport.update({
+    id: '/transactions',
+    path: '/transactions',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserAnalyticsRoute =
+  ProtectedExperiencedUserAnalyticsImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserAddRoute =
+  ProtectedExperiencedUserAddImport.update({
+    id: '/add',
+    path: '/add',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedNewUserOnboardingIndexRoute =
+  ProtectedNewUserOnboardingIndexImport.update({
+    id: '/onboarding/',
+    path: '/onboarding/',
+    getParentRoute: () => ProtectedNewUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserSettingsIndexRoute =
+  ProtectedExperiencedUserSettingsIndexImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedNewUserOnboardingCompleteRoute =
+  ProtectedNewUserOnboardingCompleteImport.update({
+    id: '/onboarding/complete',
+    path: '/onboarding/complete',
+    getParentRoute: () => ProtectedNewUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserSettingsSecurityRoute =
+  ProtectedExperiencedUserSettingsSecurityImport.update({
+    id: '/settings/security',
+    path: '/settings/security',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserSettingsProfileRoute =
+  ProtectedExperiencedUserSettingsProfileImport.update({
+    id: '/settings/profile',
+    path: '/settings/profile',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedExperiencedUserSettingsPreferencesRoute =
+  ProtectedExperiencedUserSettingsPreferencesImport.update({
     id: '/settings/preferences',
     path: '/settings/preferences',
-    getParentRoute: () => ProtectedRoute,
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
   } as any)
 
-const ProtectedSettingsNotificationsRoute =
-  ProtectedSettingsNotificationsImport.update({
+const ProtectedExperiencedUserSettingsNotificationsRoute =
+  ProtectedExperiencedUserSettingsNotificationsImport.update({
     id: '/settings/notifications',
     path: '/settings/notifications',
-    getParentRoute: () => ProtectedRoute,
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
   } as any)
 
-const ProtectedSettingsLegalRoute = ProtectedSettingsLegalImport.update({
-  id: '/settings/legal',
-  path: '/settings/legal',
-  getParentRoute: () => ProtectedRoute,
-} as any)
+const ProtectedExperiencedUserSettingsLegalRoute =
+  ProtectedExperiencedUserSettingsLegalImport.update({
+    id: '/settings/legal',
+    path: '/settings/legal',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
 
-const ProtectedSettingsHelpRoute = ProtectedSettingsHelpImport.update({
-  id: '/settings/help',
-  path: '/settings/help',
-  getParentRoute: () => ProtectedRoute,
-} as any)
+const ProtectedExperiencedUserSettingsHelpRoute =
+  ProtectedExperiencedUserSettingsHelpImport.update({
+    id: '/settings/help',
+    path: '/settings/help',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
 
-const ProtectedSettingsDataExportRoute =
-  ProtectedSettingsDataExportImport.update({
+const ProtectedExperiencedUserSettingsDataExportRoute =
+  ProtectedExperiencedUserSettingsDataExportImport.update({
     id: '/settings/data-export',
     path: '/settings/data-export',
-    getParentRoute: () => ProtectedRoute,
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
   } as any)
 
-const ProtectedSettingsCategoriesRoute =
-  ProtectedSettingsCategoriesImport.update({
+const ProtectedExperiencedUserSettingsCategoriesRoute =
+  ProtectedExperiencedUserSettingsCategoriesImport.update({
     id: '/settings/categories',
     path: '/settings/categories',
-    getParentRoute: () => ProtectedRoute,
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
   } as any)
 
-const ProtectedSettingsAccountsRoute = ProtectedSettingsAccountsImport.update({
-  id: '/settings/accounts',
-  path: '/settings/accounts',
-  getParentRoute: () => ProtectedRoute,
-} as any)
+const ProtectedExperiencedUserSettingsAccountsRoute =
+  ProtectedExperiencedUserSettingsAccountsImport.update({
+    id: '/settings/accounts',
+    path: '/settings/accounts',
+    getParentRoute: () => ProtectedExperiencedUserRouteRoute,
+  } as any)
+
+const ProtectedNewUserOnboardingSetupCategoryRoute =
+  ProtectedNewUserOnboardingSetupCategoryImport.update({
+    id: '/onboarding/setup/category',
+    path: '/onboarding/setup/category',
+    getParentRoute: () => ProtectedNewUserRouteRoute,
+  } as any)
+
+const ProtectedNewUserOnboardingSetupAccountRoute =
+  ProtectedNewUserOnboardingSetupAccountImport.update({
+    id: '/onboarding/setup/account',
+    path: '/onboarding/setup/account',
+    getParentRoute: () => ProtectedNewUserRouteRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -150,243 +205,352 @@ declare module '@tanstack/react-router' {
       id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
     '/_protected': {
       id: '/_protected'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/_protected/_experienced-user': {
+      id: '/_protected/_experienced-user'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedExperiencedUserRouteImport
+      parentRoute: typeof ProtectedRouteImport
+    }
+    '/_protected/_new-user': {
+      id: '/_protected/_new-user'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedNewUserRouteImport
+      parentRoute: typeof ProtectedRouteImport
     }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/register': {
       id: '/_auth/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof AuthRegisterImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthRouteImport
     }
-    '/_protected/add': {
-      id: '/_protected/add'
+    '/_protected/_experienced-user/add': {
+      id: '/_protected/_experienced-user/add'
       path: '/add'
       fullPath: '/add'
-      preLoaderRoute: typeof ProtectedAddImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserAddImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/analytics': {
-      id: '/_protected/analytics'
+    '/_protected/_experienced-user/analytics': {
+      id: '/_protected/_experienced-user/analytics'
       path: '/analytics'
       fullPath: '/analytics'
-      preLoaderRoute: typeof ProtectedAnalyticsImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserAnalyticsImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/transactions': {
-      id: '/_protected/transactions'
+    '/_protected/_experienced-user/transactions': {
+      id: '/_protected/_experienced-user/transactions'
       path: '/transactions'
       fullPath: '/transactions'
-      preLoaderRoute: typeof ProtectedTransactionsImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserTransactionsImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/': {
-      id: '/_protected/'
+    '/_protected/_experienced-user/': {
+      id: '/_protected/_experienced-user/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof ProtectedIndexImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserIndexImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/accounts': {
-      id: '/_protected/settings/accounts'
+    '/_protected/_experienced-user/settings/accounts': {
+      id: '/_protected/_experienced-user/settings/accounts'
       path: '/settings/accounts'
       fullPath: '/settings/accounts'
-      preLoaderRoute: typeof ProtectedSettingsAccountsImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsAccountsImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/categories': {
-      id: '/_protected/settings/categories'
+    '/_protected/_experienced-user/settings/categories': {
+      id: '/_protected/_experienced-user/settings/categories'
       path: '/settings/categories'
       fullPath: '/settings/categories'
-      preLoaderRoute: typeof ProtectedSettingsCategoriesImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsCategoriesImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/data-export': {
-      id: '/_protected/settings/data-export'
+    '/_protected/_experienced-user/settings/data-export': {
+      id: '/_protected/_experienced-user/settings/data-export'
       path: '/settings/data-export'
       fullPath: '/settings/data-export'
-      preLoaderRoute: typeof ProtectedSettingsDataExportImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsDataExportImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/help': {
-      id: '/_protected/settings/help'
+    '/_protected/_experienced-user/settings/help': {
+      id: '/_protected/_experienced-user/settings/help'
       path: '/settings/help'
       fullPath: '/settings/help'
-      preLoaderRoute: typeof ProtectedSettingsHelpImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsHelpImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/legal': {
-      id: '/_protected/settings/legal'
+    '/_protected/_experienced-user/settings/legal': {
+      id: '/_protected/_experienced-user/settings/legal'
       path: '/settings/legal'
       fullPath: '/settings/legal'
-      preLoaderRoute: typeof ProtectedSettingsLegalImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsLegalImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/notifications': {
-      id: '/_protected/settings/notifications'
+    '/_protected/_experienced-user/settings/notifications': {
+      id: '/_protected/_experienced-user/settings/notifications'
       path: '/settings/notifications'
       fullPath: '/settings/notifications'
-      preLoaderRoute: typeof ProtectedSettingsNotificationsImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsNotificationsImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/preferences': {
-      id: '/_protected/settings/preferences'
+    '/_protected/_experienced-user/settings/preferences': {
+      id: '/_protected/_experienced-user/settings/preferences'
       path: '/settings/preferences'
       fullPath: '/settings/preferences'
-      preLoaderRoute: typeof ProtectedSettingsPreferencesImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsPreferencesImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/profile': {
-      id: '/_protected/settings/profile'
+    '/_protected/_experienced-user/settings/profile': {
+      id: '/_protected/_experienced-user/settings/profile'
       path: '/settings/profile'
       fullPath: '/settings/profile'
-      preLoaderRoute: typeof ProtectedSettingsProfileImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsProfileImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/security': {
-      id: '/_protected/settings/security'
+    '/_protected/_experienced-user/settings/security': {
+      id: '/_protected/_experienced-user/settings/security'
       path: '/settings/security'
       fullPath: '/settings/security'
-      preLoaderRoute: typeof ProtectedSettingsSecurityImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsSecurityImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
     }
-    '/_protected/settings/': {
-      id: '/_protected/settings/'
+    '/_protected/_new-user/onboarding/complete': {
+      id: '/_protected/_new-user/onboarding/complete'
+      path: '/onboarding/complete'
+      fullPath: '/onboarding/complete'
+      preLoaderRoute: typeof ProtectedNewUserOnboardingCompleteImport
+      parentRoute: typeof ProtectedNewUserRouteImport
+    }
+    '/_protected/_experienced-user/settings/': {
+      id: '/_protected/_experienced-user/settings/'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof ProtectedSettingsIndexImport
-      parentRoute: typeof ProtectedImport
+      preLoaderRoute: typeof ProtectedExperiencedUserSettingsIndexImport
+      parentRoute: typeof ProtectedExperiencedUserRouteImport
+    }
+    '/_protected/_new-user/onboarding/': {
+      id: '/_protected/_new-user/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof ProtectedNewUserOnboardingIndexImport
+      parentRoute: typeof ProtectedNewUserRouteImport
+    }
+    '/_protected/_new-user/onboarding/setup/account': {
+      id: '/_protected/_new-user/onboarding/setup/account'
+      path: '/onboarding/setup/account'
+      fullPath: '/onboarding/setup/account'
+      preLoaderRoute: typeof ProtectedNewUserOnboardingSetupAccountImport
+      parentRoute: typeof ProtectedNewUserRouteImport
+    }
+    '/_protected/_new-user/onboarding/setup/category': {
+      id: '/_protected/_new-user/onboarding/setup/category'
+      path: '/onboarding/setup/category'
+      fullPath: '/onboarding/setup/category'
+      preLoaderRoute: typeof ProtectedNewUserOnboardingSetupCategoryImport
+      parentRoute: typeof ProtectedNewUserRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AuthRouteChildren {
+interface AuthRouteRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
-const AuthRouteChildren: AuthRouteChildren = {
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
 }
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
-interface ProtectedRouteChildren {
-  ProtectedAddRoute: typeof ProtectedAddRoute
-  ProtectedAnalyticsRoute: typeof ProtectedAnalyticsRoute
-  ProtectedTransactionsRoute: typeof ProtectedTransactionsRoute
-  ProtectedIndexRoute: typeof ProtectedIndexRoute
-  ProtectedSettingsAccountsRoute: typeof ProtectedSettingsAccountsRoute
-  ProtectedSettingsCategoriesRoute: typeof ProtectedSettingsCategoriesRoute
-  ProtectedSettingsDataExportRoute: typeof ProtectedSettingsDataExportRoute
-  ProtectedSettingsHelpRoute: typeof ProtectedSettingsHelpRoute
-  ProtectedSettingsLegalRoute: typeof ProtectedSettingsLegalRoute
-  ProtectedSettingsNotificationsRoute: typeof ProtectedSettingsNotificationsRoute
-  ProtectedSettingsPreferencesRoute: typeof ProtectedSettingsPreferencesRoute
-  ProtectedSettingsProfileRoute: typeof ProtectedSettingsProfileRoute
-  ProtectedSettingsSecurityRoute: typeof ProtectedSettingsSecurityRoute
-  ProtectedSettingsIndexRoute: typeof ProtectedSettingsIndexRoute
+interface ProtectedExperiencedUserRouteRouteChildren {
+  ProtectedExperiencedUserAddRoute: typeof ProtectedExperiencedUserAddRoute
+  ProtectedExperiencedUserAnalyticsRoute: typeof ProtectedExperiencedUserAnalyticsRoute
+  ProtectedExperiencedUserTransactionsRoute: typeof ProtectedExperiencedUserTransactionsRoute
+  ProtectedExperiencedUserIndexRoute: typeof ProtectedExperiencedUserIndexRoute
+  ProtectedExperiencedUserSettingsAccountsRoute: typeof ProtectedExperiencedUserSettingsAccountsRoute
+  ProtectedExperiencedUserSettingsCategoriesRoute: typeof ProtectedExperiencedUserSettingsCategoriesRoute
+  ProtectedExperiencedUserSettingsDataExportRoute: typeof ProtectedExperiencedUserSettingsDataExportRoute
+  ProtectedExperiencedUserSettingsHelpRoute: typeof ProtectedExperiencedUserSettingsHelpRoute
+  ProtectedExperiencedUserSettingsLegalRoute: typeof ProtectedExperiencedUserSettingsLegalRoute
+  ProtectedExperiencedUserSettingsNotificationsRoute: typeof ProtectedExperiencedUserSettingsNotificationsRoute
+  ProtectedExperiencedUserSettingsPreferencesRoute: typeof ProtectedExperiencedUserSettingsPreferencesRoute
+  ProtectedExperiencedUserSettingsProfileRoute: typeof ProtectedExperiencedUserSettingsProfileRoute
+  ProtectedExperiencedUserSettingsSecurityRoute: typeof ProtectedExperiencedUserSettingsSecurityRoute
+  ProtectedExperiencedUserSettingsIndexRoute: typeof ProtectedExperiencedUserSettingsIndexRoute
 }
 
-const ProtectedRouteChildren: ProtectedRouteChildren = {
-  ProtectedAddRoute: ProtectedAddRoute,
-  ProtectedAnalyticsRoute: ProtectedAnalyticsRoute,
-  ProtectedTransactionsRoute: ProtectedTransactionsRoute,
-  ProtectedIndexRoute: ProtectedIndexRoute,
-  ProtectedSettingsAccountsRoute: ProtectedSettingsAccountsRoute,
-  ProtectedSettingsCategoriesRoute: ProtectedSettingsCategoriesRoute,
-  ProtectedSettingsDataExportRoute: ProtectedSettingsDataExportRoute,
-  ProtectedSettingsHelpRoute: ProtectedSettingsHelpRoute,
-  ProtectedSettingsLegalRoute: ProtectedSettingsLegalRoute,
-  ProtectedSettingsNotificationsRoute: ProtectedSettingsNotificationsRoute,
-  ProtectedSettingsPreferencesRoute: ProtectedSettingsPreferencesRoute,
-  ProtectedSettingsProfileRoute: ProtectedSettingsProfileRoute,
-  ProtectedSettingsSecurityRoute: ProtectedSettingsSecurityRoute,
-  ProtectedSettingsIndexRoute: ProtectedSettingsIndexRoute,
+const ProtectedExperiencedUserRouteRouteChildren: ProtectedExperiencedUserRouteRouteChildren =
+  {
+    ProtectedExperiencedUserAddRoute: ProtectedExperiencedUserAddRoute,
+    ProtectedExperiencedUserAnalyticsRoute:
+      ProtectedExperiencedUserAnalyticsRoute,
+    ProtectedExperiencedUserTransactionsRoute:
+      ProtectedExperiencedUserTransactionsRoute,
+    ProtectedExperiencedUserIndexRoute: ProtectedExperiencedUserIndexRoute,
+    ProtectedExperiencedUserSettingsAccountsRoute:
+      ProtectedExperiencedUserSettingsAccountsRoute,
+    ProtectedExperiencedUserSettingsCategoriesRoute:
+      ProtectedExperiencedUserSettingsCategoriesRoute,
+    ProtectedExperiencedUserSettingsDataExportRoute:
+      ProtectedExperiencedUserSettingsDataExportRoute,
+    ProtectedExperiencedUserSettingsHelpRoute:
+      ProtectedExperiencedUserSettingsHelpRoute,
+    ProtectedExperiencedUserSettingsLegalRoute:
+      ProtectedExperiencedUserSettingsLegalRoute,
+    ProtectedExperiencedUserSettingsNotificationsRoute:
+      ProtectedExperiencedUserSettingsNotificationsRoute,
+    ProtectedExperiencedUserSettingsPreferencesRoute:
+      ProtectedExperiencedUserSettingsPreferencesRoute,
+    ProtectedExperiencedUserSettingsProfileRoute:
+      ProtectedExperiencedUserSettingsProfileRoute,
+    ProtectedExperiencedUserSettingsSecurityRoute:
+      ProtectedExperiencedUserSettingsSecurityRoute,
+    ProtectedExperiencedUserSettingsIndexRoute:
+      ProtectedExperiencedUserSettingsIndexRoute,
+  }
+
+const ProtectedExperiencedUserRouteRouteWithChildren =
+  ProtectedExperiencedUserRouteRoute._addFileChildren(
+    ProtectedExperiencedUserRouteRouteChildren,
+  )
+
+interface ProtectedNewUserRouteRouteChildren {
+  ProtectedNewUserOnboardingCompleteRoute: typeof ProtectedNewUserOnboardingCompleteRoute
+  ProtectedNewUserOnboardingIndexRoute: typeof ProtectedNewUserOnboardingIndexRoute
+  ProtectedNewUserOnboardingSetupAccountRoute: typeof ProtectedNewUserOnboardingSetupAccountRoute
+  ProtectedNewUserOnboardingSetupCategoryRoute: typeof ProtectedNewUserOnboardingSetupCategoryRoute
 }
 
-const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
-  ProtectedRouteChildren,
+const ProtectedNewUserRouteRouteChildren: ProtectedNewUserRouteRouteChildren = {
+  ProtectedNewUserOnboardingCompleteRoute:
+    ProtectedNewUserOnboardingCompleteRoute,
+  ProtectedNewUserOnboardingIndexRoute: ProtectedNewUserOnboardingIndexRoute,
+  ProtectedNewUserOnboardingSetupAccountRoute:
+    ProtectedNewUserOnboardingSetupAccountRoute,
+  ProtectedNewUserOnboardingSetupCategoryRoute:
+    ProtectedNewUserOnboardingSetupCategoryRoute,
+}
+
+const ProtectedNewUserRouteRouteWithChildren =
+  ProtectedNewUserRouteRoute._addFileChildren(
+    ProtectedNewUserRouteRouteChildren,
+  )
+
+interface ProtectedRouteRouteChildren {
+  ProtectedExperiencedUserRouteRoute: typeof ProtectedExperiencedUserRouteRouteWithChildren
+  ProtectedNewUserRouteRoute: typeof ProtectedNewUserRouteRouteWithChildren
+}
+
+const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
+  ProtectedExperiencedUserRouteRoute:
+    ProtectedExperiencedUserRouteRouteWithChildren,
+  ProtectedNewUserRouteRoute: ProtectedNewUserRouteRouteWithChildren,
+}
+
+const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
+  ProtectedRouteRouteChildren,
 )
 
 export interface FileRoutesByFullPath {
-  '': typeof ProtectedRouteWithChildren
+  '': typeof ProtectedNewUserRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/add': typeof ProtectedAddRoute
-  '/analytics': typeof ProtectedAnalyticsRoute
-  '/transactions': typeof ProtectedTransactionsRoute
-  '/': typeof ProtectedIndexRoute
-  '/settings/accounts': typeof ProtectedSettingsAccountsRoute
-  '/settings/categories': typeof ProtectedSettingsCategoriesRoute
-  '/settings/data-export': typeof ProtectedSettingsDataExportRoute
-  '/settings/help': typeof ProtectedSettingsHelpRoute
-  '/settings/legal': typeof ProtectedSettingsLegalRoute
-  '/settings/notifications': typeof ProtectedSettingsNotificationsRoute
-  '/settings/preferences': typeof ProtectedSettingsPreferencesRoute
-  '/settings/profile': typeof ProtectedSettingsProfileRoute
-  '/settings/security': typeof ProtectedSettingsSecurityRoute
-  '/settings': typeof ProtectedSettingsIndexRoute
+  '/add': typeof ProtectedExperiencedUserAddRoute
+  '/analytics': typeof ProtectedExperiencedUserAnalyticsRoute
+  '/transactions': typeof ProtectedExperiencedUserTransactionsRoute
+  '/': typeof ProtectedExperiencedUserIndexRoute
+  '/settings/accounts': typeof ProtectedExperiencedUserSettingsAccountsRoute
+  '/settings/categories': typeof ProtectedExperiencedUserSettingsCategoriesRoute
+  '/settings/data-export': typeof ProtectedExperiencedUserSettingsDataExportRoute
+  '/settings/help': typeof ProtectedExperiencedUserSettingsHelpRoute
+  '/settings/legal': typeof ProtectedExperiencedUserSettingsLegalRoute
+  '/settings/notifications': typeof ProtectedExperiencedUserSettingsNotificationsRoute
+  '/settings/preferences': typeof ProtectedExperiencedUserSettingsPreferencesRoute
+  '/settings/profile': typeof ProtectedExperiencedUserSettingsProfileRoute
+  '/settings/security': typeof ProtectedExperiencedUserSettingsSecurityRoute
+  '/onboarding/complete': typeof ProtectedNewUserOnboardingCompleteRoute
+  '/settings': typeof ProtectedExperiencedUserSettingsIndexRoute
+  '/onboarding': typeof ProtectedNewUserOnboardingIndexRoute
+  '/onboarding/setup/account': typeof ProtectedNewUserOnboardingSetupAccountRoute
+  '/onboarding/setup/category': typeof ProtectedNewUserOnboardingSetupCategoryRoute
 }
 
 export interface FileRoutesByTo {
-  '': typeof AuthRouteWithChildren
+  '': typeof ProtectedNewUserRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
-  '/add': typeof ProtectedAddRoute
-  '/analytics': typeof ProtectedAnalyticsRoute
-  '/transactions': typeof ProtectedTransactionsRoute
-  '/': typeof ProtectedIndexRoute
-  '/settings/accounts': typeof ProtectedSettingsAccountsRoute
-  '/settings/categories': typeof ProtectedSettingsCategoriesRoute
-  '/settings/data-export': typeof ProtectedSettingsDataExportRoute
-  '/settings/help': typeof ProtectedSettingsHelpRoute
-  '/settings/legal': typeof ProtectedSettingsLegalRoute
-  '/settings/notifications': typeof ProtectedSettingsNotificationsRoute
-  '/settings/preferences': typeof ProtectedSettingsPreferencesRoute
-  '/settings/profile': typeof ProtectedSettingsProfileRoute
-  '/settings/security': typeof ProtectedSettingsSecurityRoute
-  '/settings': typeof ProtectedSettingsIndexRoute
+  '/add': typeof ProtectedExperiencedUserAddRoute
+  '/analytics': typeof ProtectedExperiencedUserAnalyticsRoute
+  '/transactions': typeof ProtectedExperiencedUserTransactionsRoute
+  '/': typeof ProtectedExperiencedUserIndexRoute
+  '/settings/accounts': typeof ProtectedExperiencedUserSettingsAccountsRoute
+  '/settings/categories': typeof ProtectedExperiencedUserSettingsCategoriesRoute
+  '/settings/data-export': typeof ProtectedExperiencedUserSettingsDataExportRoute
+  '/settings/help': typeof ProtectedExperiencedUserSettingsHelpRoute
+  '/settings/legal': typeof ProtectedExperiencedUserSettingsLegalRoute
+  '/settings/notifications': typeof ProtectedExperiencedUserSettingsNotificationsRoute
+  '/settings/preferences': typeof ProtectedExperiencedUserSettingsPreferencesRoute
+  '/settings/profile': typeof ProtectedExperiencedUserSettingsProfileRoute
+  '/settings/security': typeof ProtectedExperiencedUserSettingsSecurityRoute
+  '/onboarding/complete': typeof ProtectedNewUserOnboardingCompleteRoute
+  '/settings': typeof ProtectedExperiencedUserSettingsIndexRoute
+  '/onboarding': typeof ProtectedNewUserOnboardingIndexRoute
+  '/onboarding/setup/account': typeof ProtectedNewUserOnboardingSetupAccountRoute
+  '/onboarding/setup/category': typeof ProtectedNewUserOnboardingSetupCategoryRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/_auth': typeof AuthRouteWithChildren
-  '/_protected': typeof ProtectedRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_protected': typeof ProtectedRouteRouteWithChildren
+  '/_protected/_experienced-user': typeof ProtectedExperiencedUserRouteRouteWithChildren
+  '/_protected/_new-user': typeof ProtectedNewUserRouteRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
-  '/_protected/add': typeof ProtectedAddRoute
-  '/_protected/analytics': typeof ProtectedAnalyticsRoute
-  '/_protected/transactions': typeof ProtectedTransactionsRoute
-  '/_protected/': typeof ProtectedIndexRoute
-  '/_protected/settings/accounts': typeof ProtectedSettingsAccountsRoute
-  '/_protected/settings/categories': typeof ProtectedSettingsCategoriesRoute
-  '/_protected/settings/data-export': typeof ProtectedSettingsDataExportRoute
-  '/_protected/settings/help': typeof ProtectedSettingsHelpRoute
-  '/_protected/settings/legal': typeof ProtectedSettingsLegalRoute
-  '/_protected/settings/notifications': typeof ProtectedSettingsNotificationsRoute
-  '/_protected/settings/preferences': typeof ProtectedSettingsPreferencesRoute
-  '/_protected/settings/profile': typeof ProtectedSettingsProfileRoute
-  '/_protected/settings/security': typeof ProtectedSettingsSecurityRoute
-  '/_protected/settings/': typeof ProtectedSettingsIndexRoute
+  '/_protected/_experienced-user/add': typeof ProtectedExperiencedUserAddRoute
+  '/_protected/_experienced-user/analytics': typeof ProtectedExperiencedUserAnalyticsRoute
+  '/_protected/_experienced-user/transactions': typeof ProtectedExperiencedUserTransactionsRoute
+  '/_protected/_experienced-user/': typeof ProtectedExperiencedUserIndexRoute
+  '/_protected/_experienced-user/settings/accounts': typeof ProtectedExperiencedUserSettingsAccountsRoute
+  '/_protected/_experienced-user/settings/categories': typeof ProtectedExperiencedUserSettingsCategoriesRoute
+  '/_protected/_experienced-user/settings/data-export': typeof ProtectedExperiencedUserSettingsDataExportRoute
+  '/_protected/_experienced-user/settings/help': typeof ProtectedExperiencedUserSettingsHelpRoute
+  '/_protected/_experienced-user/settings/legal': typeof ProtectedExperiencedUserSettingsLegalRoute
+  '/_protected/_experienced-user/settings/notifications': typeof ProtectedExperiencedUserSettingsNotificationsRoute
+  '/_protected/_experienced-user/settings/preferences': typeof ProtectedExperiencedUserSettingsPreferencesRoute
+  '/_protected/_experienced-user/settings/profile': typeof ProtectedExperiencedUserSettingsProfileRoute
+  '/_protected/_experienced-user/settings/security': typeof ProtectedExperiencedUserSettingsSecurityRoute
+  '/_protected/_new-user/onboarding/complete': typeof ProtectedNewUserOnboardingCompleteRoute
+  '/_protected/_experienced-user/settings/': typeof ProtectedExperiencedUserSettingsIndexRoute
+  '/_protected/_new-user/onboarding/': typeof ProtectedNewUserOnboardingIndexRoute
+  '/_protected/_new-user/onboarding/setup/account': typeof ProtectedNewUserOnboardingSetupAccountRoute
+  '/_protected/_new-user/onboarding/setup/category': typeof ProtectedNewUserOnboardingSetupCategoryRoute
 }
 
 export interface FileRouteTypes {
@@ -408,7 +572,11 @@ export interface FileRouteTypes {
     | '/settings/preferences'
     | '/settings/profile'
     | '/settings/security'
+    | '/onboarding/complete'
     | '/settings'
+    | '/onboarding'
+    | '/onboarding/setup/account'
+    | '/onboarding/setup/category'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -427,38 +595,48 @@ export interface FileRouteTypes {
     | '/settings/preferences'
     | '/settings/profile'
     | '/settings/security'
+    | '/onboarding/complete'
     | '/settings'
+    | '/onboarding'
+    | '/onboarding/setup/account'
+    | '/onboarding/setup/category'
   id:
     | '__root__'
     | '/_auth'
     | '/_protected'
+    | '/_protected/_experienced-user'
+    | '/_protected/_new-user'
     | '/_auth/login'
     | '/_auth/register'
-    | '/_protected/add'
-    | '/_protected/analytics'
-    | '/_protected/transactions'
-    | '/_protected/'
-    | '/_protected/settings/accounts'
-    | '/_protected/settings/categories'
-    | '/_protected/settings/data-export'
-    | '/_protected/settings/help'
-    | '/_protected/settings/legal'
-    | '/_protected/settings/notifications'
-    | '/_protected/settings/preferences'
-    | '/_protected/settings/profile'
-    | '/_protected/settings/security'
-    | '/_protected/settings/'
+    | '/_protected/_experienced-user/add'
+    | '/_protected/_experienced-user/analytics'
+    | '/_protected/_experienced-user/transactions'
+    | '/_protected/_experienced-user/'
+    | '/_protected/_experienced-user/settings/accounts'
+    | '/_protected/_experienced-user/settings/categories'
+    | '/_protected/_experienced-user/settings/data-export'
+    | '/_protected/_experienced-user/settings/help'
+    | '/_protected/_experienced-user/settings/legal'
+    | '/_protected/_experienced-user/settings/notifications'
+    | '/_protected/_experienced-user/settings/preferences'
+    | '/_protected/_experienced-user/settings/profile'
+    | '/_protected/_experienced-user/settings/security'
+    | '/_protected/_new-user/onboarding/complete'
+    | '/_protected/_experienced-user/settings/'
+    | '/_protected/_new-user/onboarding/'
+    | '/_protected/_new-user/onboarding/setup/account'
+    | '/_protected/_new-user/onboarding/setup/category'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  AuthRoute: typeof AuthRouteWithChildren
-  ProtectedRoute: typeof ProtectedRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthRoute: AuthRouteWithChildren,
-  ProtectedRoute: ProtectedRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -476,29 +654,47 @@ export const routeTree = rootRoute
       ]
     },
     "/_auth": {
-      "filePath": "_auth.tsx",
+      "filePath": "_auth/route.tsx",
       "children": [
         "/_auth/login",
         "/_auth/register"
       ]
     },
     "/_protected": {
-      "filePath": "_protected.tsx",
+      "filePath": "_protected/route.tsx",
       "children": [
-        "/_protected/add",
-        "/_protected/analytics",
-        "/_protected/transactions",
-        "/_protected/",
-        "/_protected/settings/accounts",
-        "/_protected/settings/categories",
-        "/_protected/settings/data-export",
-        "/_protected/settings/help",
-        "/_protected/settings/legal",
-        "/_protected/settings/notifications",
-        "/_protected/settings/preferences",
-        "/_protected/settings/profile",
-        "/_protected/settings/security",
-        "/_protected/settings/"
+        "/_protected/_experienced-user",
+        "/_protected/_new-user"
+      ]
+    },
+    "/_protected/_experienced-user": {
+      "filePath": "_protected/_experienced-user/route.tsx",
+      "parent": "/_protected",
+      "children": [
+        "/_protected/_experienced-user/add",
+        "/_protected/_experienced-user/analytics",
+        "/_protected/_experienced-user/transactions",
+        "/_protected/_experienced-user/",
+        "/_protected/_experienced-user/settings/accounts",
+        "/_protected/_experienced-user/settings/categories",
+        "/_protected/_experienced-user/settings/data-export",
+        "/_protected/_experienced-user/settings/help",
+        "/_protected/_experienced-user/settings/legal",
+        "/_protected/_experienced-user/settings/notifications",
+        "/_protected/_experienced-user/settings/preferences",
+        "/_protected/_experienced-user/settings/profile",
+        "/_protected/_experienced-user/settings/security",
+        "/_protected/_experienced-user/settings/"
+      ]
+    },
+    "/_protected/_new-user": {
+      "filePath": "_protected/_new-user/route.tsx",
+      "parent": "/_protected",
+      "children": [
+        "/_protected/_new-user/onboarding/complete",
+        "/_protected/_new-user/onboarding/",
+        "/_protected/_new-user/onboarding/setup/account",
+        "/_protected/_new-user/onboarding/setup/category"
       ]
     },
     "/_auth/login": {
@@ -509,61 +705,77 @@ export const routeTree = rootRoute
       "filePath": "_auth/register.tsx",
       "parent": "/_auth"
     },
-    "/_protected/add": {
-      "filePath": "_protected/add.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/add": {
+      "filePath": "_protected/_experienced-user/add.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/analytics": {
-      "filePath": "_protected/analytics.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/analytics": {
+      "filePath": "_protected/_experienced-user/analytics.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/transactions": {
-      "filePath": "_protected/transactions.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/transactions": {
+      "filePath": "_protected/_experienced-user/transactions.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/": {
-      "filePath": "_protected/index.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/": {
+      "filePath": "_protected/_experienced-user/index.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/accounts": {
-      "filePath": "_protected/settings/accounts.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/accounts": {
+      "filePath": "_protected/_experienced-user/settings/accounts.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/categories": {
-      "filePath": "_protected/settings/categories.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/categories": {
+      "filePath": "_protected/_experienced-user/settings/categories.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/data-export": {
-      "filePath": "_protected/settings/data-export.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/data-export": {
+      "filePath": "_protected/_experienced-user/settings/data-export.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/help": {
-      "filePath": "_protected/settings/help.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/help": {
+      "filePath": "_protected/_experienced-user/settings/help.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/legal": {
-      "filePath": "_protected/settings/legal.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/legal": {
+      "filePath": "_protected/_experienced-user/settings/legal.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/notifications": {
-      "filePath": "_protected/settings/notifications.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/notifications": {
+      "filePath": "_protected/_experienced-user/settings/notifications.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/preferences": {
-      "filePath": "_protected/settings/preferences.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/preferences": {
+      "filePath": "_protected/_experienced-user/settings/preferences.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/profile": {
-      "filePath": "_protected/settings/profile.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/profile": {
+      "filePath": "_protected/_experienced-user/settings/profile.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/security": {
-      "filePath": "_protected/settings/security.tsx",
-      "parent": "/_protected"
+    "/_protected/_experienced-user/settings/security": {
+      "filePath": "_protected/_experienced-user/settings/security.tsx",
+      "parent": "/_protected/_experienced-user"
     },
-    "/_protected/settings/": {
-      "filePath": "_protected/settings/index.tsx",
-      "parent": "/_protected"
+    "/_protected/_new-user/onboarding/complete": {
+      "filePath": "_protected/_new-user/onboarding/complete.tsx",
+      "parent": "/_protected/_new-user"
+    },
+    "/_protected/_experienced-user/settings/": {
+      "filePath": "_protected/_experienced-user/settings/index.tsx",
+      "parent": "/_protected/_experienced-user"
+    },
+    "/_protected/_new-user/onboarding/": {
+      "filePath": "_protected/_new-user/onboarding/index.tsx",
+      "parent": "/_protected/_new-user"
+    },
+    "/_protected/_new-user/onboarding/setup/account": {
+      "filePath": "_protected/_new-user/onboarding/setup/account.tsx",
+      "parent": "/_protected/_new-user"
+    },
+    "/_protected/_new-user/onboarding/setup/category": {
+      "filePath": "_protected/_new-user/onboarding/setup/category.tsx",
+      "parent": "/_protected/_new-user"
     }
   }
 }

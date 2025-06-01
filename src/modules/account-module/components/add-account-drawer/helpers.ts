@@ -58,6 +58,9 @@ export const VALIDATION_RULES = {
       return true;
     },
   },
+  metadata: {
+    // No validation needed for metadata, can be empty
+  },
 };
 
 /**

@@ -151,14 +151,14 @@ export const useSession = (): UseSessionReturn => {
 
       // Redirect to login page
       await navigate({
-        to: '/auth/login',
+        to: '/login',
         replace: true,
       });
     } catch {
       // Still clear tokens and redirect even if navigation fails
       TokenManager.clearTokens();
       await navigate({
-        to: '/auth/login',
+        to: '/login',
         replace: true,
       });
     }

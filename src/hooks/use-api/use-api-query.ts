@@ -7,11 +7,12 @@ import {
 import axios from 'axios';
 
 import { TIME_15_MINUTES } from '../../constants/time';
+import type { Error } from '../../types/api';
 import { TokenManager } from '../use-session';
 
 import { BASE_URL } from './constants';
 
-export interface UseApiQueryOptions<Data, Query, Error> {
+export interface UseApiQueryOptions<Data, Query, TError> {
   queryKey: (string | number | undefined)[];
   path: string;
   queryParams?: Query;
@@ -20,7 +21,7 @@ export interface UseApiQueryOptions<Data, Query, Error> {
   retry?: boolean;
   silentError?: boolean;
   onSuccess?: (data: Data) => void;
-  onError?: (error: Error) => void;
+  onError?: (error: TError) => void;
   staleTime?: number;
   gcTime?: number;
 }
@@ -47,7 +48,7 @@ export type UseApiQueryResult<TData, TError> = [
   data: TData | undefined,
   error: TError | null,
   state: QueryState,
-  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<TData, TError> | undefined>,
+  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<TData | undefined, TError> | undefined>,
 ];
 
 export const useApiQuery = <TData, TQuery, TError = Error>(
@@ -69,7 +70,7 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
     onError,
   } = options ?? {};
 
-  const query = useQuery<TData, TError>({
+  const query = useQuery<TData | undefined, TError>({
     queryKey: queryKey.filter(Boolean),
     queryFn: async () => {
       try {
@@ -80,7 +81,6 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
             Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
             ...headers,
           },
-          validateStatus: (status) => status >= 200 && status < 300,
         });
 
         const data = response.data;
@@ -88,7 +88,7 @@ export const useApiQuery = <TData, TQuery, TError = Error>(
         return data;
       } catch (error) {
         onError?.(error as TError);
-        throw error;
+        return undefined;
       }
     },
     enabled,

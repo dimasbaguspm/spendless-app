@@ -7,7 +7,7 @@ import { useApiQuery, type UseApiQueryResult } from '../use-api-query';
 
 // Get current user profile
 export const useApiCurrentUserQuery = (): UseApiQueryResult<User, Error> => {
-  return useApiQuery<User, never, Error>({
+  return useApiQuery<User, never>({
     queryKey: QUERY_KEYS.USERS.current(),
     path: '/users/me',
     enabled: true,
@@ -21,14 +21,10 @@ export const useApiCurrentUserQuery = (): UseApiQueryResult<User, Error> => {
 };
 
 // Update current user profile
-export const useApiUpdateCurrentUserMutation = (): UseApiMutateResult<
-  { message: string; user: User },
-  UpdateUser,
-  Error
-> => {
+export const useApiUpdateCurrentUserMutation = (): UseApiMutateResult<User, UpdateUser, Error> => {
   const queryClient = useQueryClient();
 
-  return useApiMutate<{ message: string; user: User }, UpdateUser, Error>({
+  return useApiMutate<User, UpdateUser>({
     path: '/users/me',
     method: 'PATCH',
     onSuccess: async () => {

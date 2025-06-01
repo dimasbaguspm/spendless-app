@@ -9,7 +9,7 @@ export interface Transaction {
   id: string;
   title: string;
   amount: number;
-  type: 'income' | 'expense';
+  type: 'income' | 'expense' | 'transfer';
   category: string;
   paymentMethod: string;
   icon: string;
@@ -27,15 +27,13 @@ export function TransactionCard({ transaction }: TransactionCardProps) {
   const { openDrawer } = useDrawerRouterProvider();
   const { title, amount, type, category, paymentMethod, icon, iconBgColor, iconTextColor, date, balance } = transaction;
 
-  const getCategoryVariant = () => {
+  const getCategoryVariant = (): 'secondary' | 'sage' | 'mist' => {
     switch (category.toLowerCase()) {
-      case 'income':
-        return 'success';
       case 'food & dining':
       case 'groceries':
-        return 'secondary';
+        return 'sage';
       case 'bills & utilities':
-        return 'secondary';
+        return 'mist';
       default:
         return 'secondary';
     }
@@ -66,7 +64,12 @@ export function TransactionCard({ transaction }: TransactionCardProps) {
           </div>
         </div>
         <div className="text-right">
-          <p className={cn('font-bold text-lg', type === 'income' ? 'text-green-600' : 'text-red-600')}>
+          <p
+            className={cn(
+              'font-bold text-lg',
+              type === 'income' ? 'text-green-600' : type === 'expense' ? 'text-red-600' : 'text-blue-600'
+            )}
+          >
             {formatAmount(type, amount)}
           </p>
           {balance !== undefined && <p className="text-sm text-slate-500">Balance: {formatBalance(balance)}</p>}

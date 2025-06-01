@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Camera } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, TextInput, Button, Avatar, Tile } from '../../../components';
+import { PageLayout, TextInput, Button, Avatar, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/profile')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/profile')({
   component: ProfileComponent,
 });
 

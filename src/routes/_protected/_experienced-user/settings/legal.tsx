@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Shield, FileText, Eye, Download, ExternalLink, AlertCircle } from 'lucide-react';
 
-import { PageLayout, Button } from '../../../components';
+import { PageLayout, Button } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/legal')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/legal')({
   component: LegalComponent,
 });
 

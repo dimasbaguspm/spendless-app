@@ -14,6 +14,7 @@ import {
   getDefaultFormValues,
   VALIDATION_RULES,
   CURRENCY_OPTIONS,
+  TRANSACTION_TYPE_OPTIONS,
   transformToTransactionData,
   validateFormData,
 } from './helpers';
@@ -110,6 +111,9 @@ export const useEditTransactionForm = ({ transaction, onSuccess, onError }: Edit
 
   const currencyOptions = CURRENCY_OPTIONS;
 
+  // Transaction type options
+  const typeOptions = TRANSACTION_TYPE_OPTIONS;
+
   // Validation rules
   const validationRules = VALIDATION_RULES;
 
@@ -127,6 +131,7 @@ export const useEditTransactionForm = ({ transaction, onSuccess, onError }: Edit
     accountOptions,
     categoryOptions,
     currencyOptions,
+    typeOptions,
     validationRules,
     setValue,
   };

@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { PageLayout, Select, Button, Badge, RadialProgress } from '../../components';
+import { PageLayout, Select, Button, Badge, RadialProgress } from '../../../components';
 
-export const Route = createFileRoute('/_protected/analytics')({
+export const Route = createFileRoute('/_protected/_experienced-user/analytics')({
   component: AnalyticsComponent,
 });
 

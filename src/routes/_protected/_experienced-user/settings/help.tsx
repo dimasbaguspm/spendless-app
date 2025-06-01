@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { HelpCircle, MessageCircle, Mail, Phone, FileText, Search, ChevronRight, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, Button, TextInput } from '../../../components';
+import { PageLayout, Button, TextInput } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/help')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/help')({
   component: HelpComponent,
 });
 

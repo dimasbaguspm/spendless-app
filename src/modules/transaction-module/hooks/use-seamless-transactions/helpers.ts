@@ -28,7 +28,13 @@ export function generateDateRange(start: Dayjs, end: Dayjs): string[] {
 /**
  * Gets an appropriate icon for a transaction based on category or transaction type
  */
-export function getTransactionIcon(category: Category | null | undefined, isIncome: boolean): string {
+export function getTransactionIcon(
+  category: Category | null | undefined,
+  transactionType: 'income' | 'expense' | 'transfer'
+): string {
+  // Handle transfer transactions first
+  if (transactionType === 'transfer') return '🔄';
+
   if (category?.name) {
     const categoryName = category.name.toLowerCase();
     if (categoryName.includes('food') || categoryName.includes('dining')) return '🍽️';
@@ -40,7 +46,7 @@ export function getTransactionIcon(category: Category | null | undefined, isInco
     if (categoryName.includes('education')) return '📚';
     if (categoryName.includes('travel')) return '✈️';
   }
-  return isIncome ? '💰' : '💳';
+  return transactionType === 'income' ? '💰' : '💳';
 }
 
 /**
@@ -54,22 +60,33 @@ export function convertApiTransactionToComponent(
   const account = apiTransaction.accountId ? accountsMap.get(apiTransaction.accountId) : null;
   const category = apiTransaction.categoryId ? categoriesMap.get(apiTransaction.categoryId) : null;
 
-  // Determine transaction type based on amount (negative is expense, positive is income)
-  const isIncome = (apiTransaction.amount ?? 0) > 0;
+  // Use the transaction type from the API directly
+  const transactionType = apiTransaction.type ?? 'expense';
+  const isIncome = transactionType === 'income';
+  const isTransfer = transactionType === 'transfer';
 
   // Get proper title from note or create a default based on category
   const title = apiTransaction.note ?? category?.name ?? 'Transaction';
+
+  // Set appropriate colors based on transaction type
+  const getIconColors = () => {
+    if (isIncome) return { bgColor: 'bg-green-100', textColor: 'text-green-600' };
+    if (isTransfer) return { bgColor: 'bg-blue-100', textColor: 'text-blue-600' };
+    return { bgColor: 'bg-red-100', textColor: 'text-red-600' };
+  };
+
+  const { bgColor, textColor } = getIconColors();
 
   return {
     id: apiTransaction.id?.toString() ?? '',
     title,
     amount: Math.abs(apiTransaction.amount ?? 0),
-    type: isIncome ? 'income' : 'expense',
+    type: transactionType,
     category: category?.name ?? 'General',
     paymentMethod: account?.name ?? 'Unknown Account',
-    icon: getTransactionIcon(category, isIncome),
-    iconBgColor: isIncome ? 'bg-green-100' : 'bg-red-100',
-    iconTextColor: isIncome ? 'text-green-600' : 'text-red-600',
+    icon: getTransactionIcon(category, transactionType),
+    iconBgColor: bgColor,
+    iconTextColor: textColor,
     date: new Date(apiTransaction.date ?? new Date()),
     balance: undefined, // This would need to be calculated or provided by the API
   };

@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Shield, Key, Smartphone, Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, Switch, Button, TextInput, Tile } from '../../../components';
+import { PageLayout, Switch, Button, TextInput, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/security')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/security')({
   component: SecurityComponent,
 });
 

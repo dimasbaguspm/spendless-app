@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { PageLayout, Tile } from '../../../components';
-import { AccountList, AccountListHeader } from '../../../modules/account-module';
+import { PageLayout, Tile } from '../../../../components';
+import { AccountList, AccountListHeader } from '../../../../modules/account-module';
 
-export const Route = createFileRoute('/_protected/settings/accounts')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/accounts')({
   component: AccountsComponent,
 });
 

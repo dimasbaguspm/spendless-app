@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { PageLayout, Tile } from '../../../components';
-import { CategoriesList, CategoriesListHeader } from '../../../modules/category-module';
+import { PageLayout, Tile } from '../../../../components';
+import { CategoriesList, CategoriesListHeader } from '../../../../modules/category-module';
 
-export const Route = createFileRoute('/_protected/settings/categories')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/categories')({
   component: CategoriesComponent,
 });
 

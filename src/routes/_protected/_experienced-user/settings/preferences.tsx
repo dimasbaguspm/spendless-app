@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Settings, Palette, Globe, Moon, Sun, Monitor } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, Switch, Button, Tile } from '../../../components';
+import { PageLayout, Switch, Button, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/preferences')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/preferences')({
   component: PreferencesComponent,
 });
 

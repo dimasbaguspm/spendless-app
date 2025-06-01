@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Bell, Mail, Smartphone, Volume2 } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, Switch, Button, Tile } from '../../../components';
+import { PageLayout, Switch, Button, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/notifications')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/notifications')({
   component: NotificationsComponent,
 });
 

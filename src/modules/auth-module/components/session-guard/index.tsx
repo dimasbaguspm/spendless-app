@@ -24,7 +24,7 @@ export function SessionGuard({
   errorComponent,
   unauthenticatedComponent,
 }: SessionGuardProps) {
-  const { authState, isLoading, isError } = useSession();
+  const { authState, isLoading, isError, logout } = useSession();
 
   if (isLoading) {
     return (
@@ -45,10 +45,7 @@ export function SessionGuard({
         <div className="min-h-screen bg-cream-50 flex items-center justify-center">
           <div className="text-center">
             <p className="text-red-600 mb-4">Failed to load session. Please try refreshing the page.</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-coral-600 text-white rounded-md hover:bg-coral-700"
-            >
+            <button onClick={logout} className="px-4 py-2 bg-coral-600 text-white rounded-md hover:bg-coral-700">
               Refresh Page
             </button>
           </div>

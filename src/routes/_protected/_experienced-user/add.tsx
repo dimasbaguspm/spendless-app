@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Button, PageLayout, TextInput, Select, TextArea } from '../../components';
+import { Button, PageLayout, TextInput, Select, TextArea } from '../../../components';
 
-export const Route = createFileRoute('/_protected/add')({
+export const Route = createFileRoute('/_protected/_experienced-user/add')({
   component: AddTransactionComponent,
 });
 

@@ -8,20 +8,26 @@
  * 
  * To regenerate this file, run: npm run generate-types
  * 
- * Generated on: 2025-05-25T08:18:45.913Z
+ * Generated on: 2025-05-31T12:48:20.175Z
  * Source: http://localhost:3000/api/docs/swagger.json
  */
 
 export interface Error {
-  /** Error message */
-  error?: string;
-  /** HTTP status code */
-  status?: number;
   /**
-   * Error timestamp
-   * @format date-time
+   * HTTP status code
+   * @example 400
    */
-  timestamp?: string;
+  status: number;
+  /**
+   * Error message
+   * @example "Validation failed"
+   */
+  message: string;
+  /**
+   * Additional error details (optional)
+   * @example {"field":"email","issue":"invalid format"}
+   */
+  details?: Record<string, any>;
 }
 
 export interface User {
@@ -42,14 +48,18 @@ export interface User {
   name?: string;
   /** Whether the user is active */
   isActive?: boolean;
+  /** Whether the user has completed the onboarding process */
+  isOnboard?: boolean;
   /**
-   * User creation timestamp
+   * User creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * User last update timestamp
+   * User last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -70,13 +80,15 @@ export interface Group {
    */
   defaultCurrency?: string;
   /**
-   * Group creation timestamp
+   * Group creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Group last update timestamp
+   * Group last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -100,13 +112,20 @@ export interface Account {
   /** Optional account notes */
   note?: string | null;
   /**
-   * Account creation timestamp
+   * Optional metadata for storing custom account information as key-value pairs
+   * @example {"bankCode":"ABC123","accountNumber":"1234567890","branch":"Main Branch"}
+   */
+  metadata?: Record<string, any>;
+  /**
+   * Account creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Account last update timestamp
+   * Account last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -126,13 +145,20 @@ export interface Category {
   /** Optional category notes */
   note?: string | null;
   /**
-   * Category creation timestamp
+   * Optional metadata for storing custom category information as key-value pairs
+   * @example {"categoryType":"expense","color":"#FF5733","icon":"shopping-cart"}
+   */
+  metadata?: Record<string, any>;
+  /**
+   * Category creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Category last update timestamp
+   * Category last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -162,8 +188,14 @@ export interface Transaction {
    */
   currency?: string;
   /**
-   * Transaction date
-   * @format date
+   * Transaction type
+   * @example "expense"
+   */
+  type?: "expense" | "income" | "transfer";
+  /**
+   * Transaction date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   date?: string;
   /** Optional transaction notes */
@@ -171,13 +203,21 @@ export interface Transaction {
   /** Recurrence pattern ID if this is a recurring transaction */
   recurrenceId?: number | null;
   /**
-   * Transaction creation timestamp
+   * Whether the transaction is marked as highlighted/important
+   * @default false
+   * @example false
+   */
+  isHighlighted?: boolean;
+  /**
+   * Transaction creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Transaction last update timestamp
+   * Transaction last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -205,13 +245,15 @@ export interface AccountLimit {
    */
   limit?: number;
   /**
-   * Account limit creation timestamp
+   * Account limit creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Account limit last update timestamp
+   * Account limit last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -227,23 +269,27 @@ export interface Recurrence {
    */
   interval?: number;
   /**
-   * Next occurrence date
-   * @format date
+   * Next occurrence date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   nextOccurrenceDate?: string;
   /**
-   * End date for recurrence
-   * @format date
+   * End date for recurrence with timezone support
+   * @format date-time
+   * @example "2023-12-31T23:59:59Z"
    */
   endDate?: string | null;
   /**
-   * Recurrence creation timestamp
+   * Recurrence creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Recurrence last update timestamp
+   * Recurrence last update timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   updatedAt?: string;
 }
@@ -256,18 +302,21 @@ export interface RefreshToken {
   /** Refresh token value */
   token?: string;
   /**
-   * Token expiration timestamp
+   * Token expiration timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   expires?: string;
   /**
-   * Token creation timestamp
+   * Token creation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   createdAt?: string;
   /**
-   * Token revocation timestamp
+   * Token revocation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   revokedAt?: string | null;
   /** Token that replaced this one */
@@ -366,6 +415,11 @@ export interface NewUser {
   name: string;
   /** Whether the user is active */
   isActive: boolean;
+  /**
+   * Whether the user has completed the onboarding process
+   * @default false
+   */
+  isOnboard: boolean;
 }
 
 export interface UpdateUser {
@@ -389,6 +443,66 @@ export interface UpdateUser {
   name?: string;
   /** Whether the user is active */
   isActive?: boolean;
+  /** Whether the user has completed the onboarding process */
+  isOnboard?: boolean;
+}
+
+export interface UserRegistration {
+  /**
+   * User full name
+   * @maxLength 255
+   * @example "John Doe"
+   */
+  name: string;
+  /**
+   * User email address
+   * @format email
+   * @maxLength 255
+   * @example "john.doe@example.com"
+   */
+  email: string;
+  /**
+   * User password (minimum 8 characters)
+   * @minLength 8
+   * @example "securePassword123"
+   */
+  password: string;
+}
+
+export interface GroupRegistration {
+  /**
+   * Group name
+   * @maxLength 255
+   * @example "Doe Family Budget"
+   */
+  name: string;
+  /**
+   * Default currency for the group (3-letter code)
+   * @minLength 3
+   * @maxLength 3
+   * @example "USD"
+   */
+  defaultCurrency?: string | null;
+}
+
+export interface RegistrationRequest {
+  user: UserRegistration;
+  group: GroupRegistration;
+}
+
+export interface LoginRequest {
+  /**
+   * User email address
+   * @format email
+   * @example "john.doe@example.com"
+   */
+  email: string;
+  /**
+   * User password
+   * @format password
+   * @example "securePassword123"
+   */
+  password: string;
 }
 
 export interface NewAccount {
@@ -407,6 +521,11 @@ export interface NewAccount {
   type: string;
   /** Optional account notes */
   note?: string | null;
+  /**
+   * Optional metadata for storing custom account information as key-value pairs
+   * @example {"bankCode":"ABC123","accountNumber":"1234567890","branch":"Main Branch"}
+   */
+  metadata?: Record<string, any>;
 }
 
 export interface UpdateAccount {
@@ -425,6 +544,11 @@ export interface UpdateAccount {
   type?: string;
   /** Optional account notes */
   note?: string | null;
+  /**
+   * Optional metadata for storing custom account information as key-value pairs
+   * @example {"bankCode":"ABC123","accountNumber":"1234567890","branch":"Main Branch"}
+   */
+  metadata?: Record<string, any>;
 }
 
 export interface NewAccountLimit {
@@ -465,6 +589,11 @@ export interface NewCategory {
   name: string;
   /** Optional category notes */
   note?: string | null;
+  /**
+   * Optional metadata for storing custom category information as key-value pairs
+   * @example {"categoryType":"expense","color":"#FF5733","icon":"shopping-cart"}
+   */
+  metadata?: Record<string, any>;
 }
 
 export interface UpdateCategory {
@@ -479,6 +608,11 @@ export interface UpdateCategory {
   name?: string;
   /** Optional category notes */
   note?: string | null;
+  /**
+   * Optional metadata for storing custom category information as key-value pairs
+   * @example {"categoryType":"expense","color":"#FF5733","icon":"shopping-cart"}
+   */
+  metadata?: Record<string, any>;
 }
 
 export interface NewRecurrence {
@@ -490,13 +624,15 @@ export interface NewRecurrence {
    */
   interval: number;
   /**
-   * Next occurrence date
-   * @format date
+   * Next occurrence date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   nextOccurrenceDate: string;
   /**
-   * End date for recurrence
-   * @format date
+   * End date for recurrence with timezone support
+   * @format date-time
+   * @example "2023-12-31T23:59:59Z"
    */
   endDate?: string | null;
 }
@@ -510,13 +646,15 @@ export interface UpdateRecurrence {
    */
   interval?: number;
   /**
-   * Next occurrence date
-   * @format date
+   * Next occurrence date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   nextOccurrenceDate?: string;
   /**
-   * End date for recurrence
-   * @format date
+   * End date for recurrence with timezone support
+   * @format date-time
+   * @example "2023-12-31T23:59:59Z"
    */
   endDate?: string | null;
 }
@@ -544,14 +682,26 @@ export interface NewTransaction {
    */
   currency: string;
   /**
-   * Transaction date
-   * @format date
+   * Transaction type
+   * @example "expense"
+   */
+  type: "expense" | "income" | "transfer";
+  /**
+   * Transaction date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   date: string;
   /** Optional transaction notes */
   note?: string | null;
   /** Recurrence pattern ID if this is a recurring transaction */
   recurrenceId?: number | null;
+  /**
+   * Whether the transaction is marked as highlighted/important
+   * @default false
+   * @example false
+   */
+  isHighlighted?: boolean;
 }
 
 export interface UpdateTransaction {
@@ -577,14 +727,26 @@ export interface UpdateTransaction {
    */
   currency?: string;
   /**
-   * Transaction date
-   * @format date
+   * Transaction type
+   * @example "expense"
+   */
+  type?: "expense" | "income" | "transfer";
+  /**
+   * Transaction date with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   date?: string;
   /** Optional transaction notes */
   note?: string | null;
   /** Recurrence pattern ID if this is a recurring transaction */
   recurrenceId?: number | null;
+  /**
+   * Whether the transaction is marked as highlighted/important
+   * @default false
+   * @example false
+   */
+  isHighlighted?: boolean;
 }
 
 export interface NewRefreshToken {
@@ -593,13 +755,15 @@ export interface NewRefreshToken {
   /** Refresh token value */
   token: string;
   /**
-   * Token expiration timestamp
+   * Token expiration timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   expires: string;
   /**
-   * Token revocation timestamp
+   * Token revocation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   revokedAt?: string | null;
   /** Token that replaced this one */
@@ -612,13 +776,15 @@ export interface UpdateRefreshToken {
   /** Refresh token value */
   token?: string;
   /**
-   * Token expiration timestamp
+   * Token expiration timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   expires?: string;
   /**
-   * Token revocation timestamp
+   * Token revocation timestamp with timezone support
    * @format date-time
+   * @example "2023-12-01T10:30:00Z"
    */
   revokedAt?: string | null;
   /** Token that replaced this one */
@@ -662,6 +828,8 @@ export type UserQueryParameters = QueryParameters & {
   name?: string;
   /** Filter by active status */
   isActive?: boolean;
+  /** Filter by onboarding status */
+  isOnboard?: boolean;
   /** Field to sort by */
   sortBy?: "name" | "email" | "createdAt";
 };
@@ -715,13 +883,15 @@ export type TransactionQueryParameters = QueryParameters & {
   /** Search in transaction notes */
   note?: string;
   /**
-   * Filter transactions from this date
-   * @format date
+   * Filter transactions from this date with timezone support
+   * @format date-time
+   * @example "2023-12-01T00:00:00Z"
    */
   startDate?: string;
   /**
-   * Filter transactions until this date
-   * @format date
+   * Filter transactions until this date with timezone support
+   * @format date-time
+   * @example "2023-12-31T23:59:59Z"
    */
   endDate?: string;
   /**
@@ -734,6 +904,11 @@ export type TransactionQueryParameters = QueryParameters & {
   recurrenceId?: number;
   /** Field to sort by */
   sortBy?: "date" | "amount" | "createdAt";
+  /**
+   * Filter by highlighted status
+   * @example true
+   */
+  isHighlighted?: boolean;
 };
 
 export type AccountLimitQueryParameters = QueryParameters & {
@@ -753,13 +928,15 @@ export type RecurrenceQueryParameters = QueryParameters & {
   /** Filter by frequency */
   frequency?: "daily" | "weekly" | "monthly" | "yearly";
   /**
-   * Filter recurrences starting from this date
-   * @format date
+   * Filter recurrences starting from this date with timezone support
+   * @format date-time
+   * @example "2023-12-01T00:00:00Z"
    */
   startDate?: string;
   /**
-   * Filter recurrences ending before this date
-   * @format date
+   * Filter recurrences ending before this date with timezone support
+   * @format date-time
+   * @example "2023-12-31T23:59:59Z"
    */
   endDate?: string;
   /** Field to sort by */
@@ -775,4 +952,132 @@ export type RefreshTokenQueryParameters = QueryParameters & {
   isActive?: boolean;
   /** Field to sort by */
   sortBy?: "userId" | "expires" | "createdAt";
+};
+
+export interface UserPreference {
+  /** User preference unique identifier */
+  id?: number;
+  /** User identifier this preference belongs to */
+  userId?: number;
+  /**
+   * Day of month when monthly periods start (1-31)
+   * @min 1
+   * @max 31
+   * @example 25
+   */
+  monthlyStartDate?: number;
+  /**
+   * Day of week when weekly periods start (0=Sunday, 1=Monday, ..., 6=Saturday)
+   * @min 0
+   * @max 6
+   * @example 1
+   */
+  weeklyStartDay?: number;
+  /**
+   * Period for spending limits calculation
+   * @example "monthly"
+   */
+  limitPeriod?: "weekly" | "monthly" | "annually";
+  /**
+   * Period for category spending calculation
+   * @example "monthly"
+   */
+  categoryPeriod?: "weekly" | "monthly" | "annually";
+  /**
+   * Preference creation timestamp with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
+   */
+  createdAt?: string;
+  /**
+   * Preference last update timestamp with timezone support
+   * @format date-time
+   * @example "2023-12-01T10:30:00Z"
+   */
+  updatedAt?: string;
+}
+
+export interface CreateUserPreference {
+  /** User identifier this preference belongs to */
+  userId: number;
+  /**
+   * Day of month when monthly periods start (1-31)
+   * @min 1
+   * @max 31
+   * @default 25
+   * @example 25
+   */
+  monthlyStartDate?: number;
+  /**
+   * Day of week when weekly periods start (0=Sunday, 1=Monday, ..., 6=Saturday)
+   * @min 0
+   * @max 6
+   * @default 1
+   * @example 1
+   */
+  weeklyStartDay?: number;
+  /**
+   * Period for spending limits calculation
+   * @default "monthly"
+   * @example "monthly"
+   */
+  limitPeriod?: "weekly" | "monthly" | "annually";
+  /**
+   * Period for category spending calculation
+   * @default "monthly"
+   * @example "monthly"
+   */
+  categoryPeriod?: "weekly" | "monthly" | "annually";
+}
+
+export interface UpdateUserPreference {
+  /**
+   * Day of month when monthly periods start (1-31)
+   * @min 1
+   * @max 31
+   * @example 25
+   */
+  monthlyStartDate?: number;
+  /**
+   * Day of week when weekly periods start (0=Sunday, 1=Monday, ..., 6=Saturday)
+   * @min 0
+   * @max 6
+   * @example 1
+   */
+  weeklyStartDay?: number;
+  /**
+   * Period for spending limits calculation
+   * @example "monthly"
+   */
+  limitPeriod?: "weekly" | "monthly" | "annually";
+  /**
+   * Period for category spending calculation
+   * @example "monthly"
+   */
+  categoryPeriod?: "weekly" | "monthly" | "annually";
+}
+
+export type UserPreferenceQueryParameters = QueryParameters & {
+  /** Filter by preference ID */
+  id?: number;
+  /** Filter by user ID */
+  userId?: number;
+  /**
+   * Filter by monthly start date
+   * @min 1
+   * @max 31
+   */
+  monthlyStartDate?: number;
+  /**
+   * Filter by weekly start day
+   * @min 0
+   * @max 6
+   */
+  weeklyStartDay?: number;
+  /** Filter by limit period */
+  limitPeriod?: "weekly" | "monthly" | "annually";
+  /** Filter by category period */
+  categoryPeriod?: "weekly" | "monthly" | "annually";
+  /** Field to sort by */
+  sortBy?: "userId" | "monthlyStartDate" | "createdAt";
 };

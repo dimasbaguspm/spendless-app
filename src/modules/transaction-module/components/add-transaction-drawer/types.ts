@@ -5,6 +5,7 @@ export interface AddTransactionFormData {
   createdByUserId: number;
   amount: number;
   currency: string;
+  type: 'expense' | 'income' | 'transfer';
   date: string;
   note: string | null;
   recurrenceId: number | null;

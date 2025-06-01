@@ -1,3 +1,6 @@
+import { TrendingDown, TrendingUp, ArrowRightLeft } from 'lucide-react';
+import React from 'react';
+
 import type { UpdateTransaction, Transaction } from '../../../../types/api';
 
 import type { EditTransactionFormData } from './types';
@@ -12,6 +15,7 @@ export const getDefaultFormValues = (transaction: Transaction): EditTransactionF
   createdByUserId: transaction.createdByUserId,
   amount: transaction.amount,
   currency: transaction.currency,
+  type: transaction.type ?? 'expense',
   date: transaction.date,
   note: transaction.note,
   recurrenceId: transaction.recurrenceId,
@@ -52,6 +56,9 @@ export const VALIDATION_RULES = {
       message: 'Currency must be 3 uppercase letters (e.g., USD, EUR)',
     },
   },
+  type: {
+    required: 'Transaction type is required',
+  },
   date: {
     required: 'Date is required',
   },
@@ -75,6 +82,27 @@ export const CURRENCY_OPTIONS = [
   { value: 'GBP', label: 'GBP - British Pound' },
   { value: 'CAD', label: 'CAD - Canadian Dollar' },
   { value: 'AUD', label: 'AUD - Australian Dollar' },
+];
+
+/**
+ * Transaction type options for the segment control
+ */
+export const TRANSACTION_TYPE_OPTIONS = [
+  {
+    value: 'expense' as const,
+    label: 'Expense',
+    icon: React.createElement(TrendingDown, { className: 'w-4 h-4' }),
+  },
+  {
+    value: 'income' as const,
+    label: 'Income',
+    icon: React.createElement(TrendingUp, { className: 'w-4 h-4' }),
+  },
+  {
+    value: 'transfer' as const,
+    label: 'Transfer',
+    icon: React.createElement(ArrowRightLeft, { className: 'w-4 h-4' }),
+  },
 ];
 
 /**
@@ -122,6 +150,7 @@ export const transformToTransactionData = (data: EditTransactionFormData): Updat
   createdByUserId: data.createdByUserId,
   amount: data.amount,
   currency: data.currency,
+  type: data.type,
   date: data.date,
   note: data.note,
   recurrenceId: data.recurrenceId,

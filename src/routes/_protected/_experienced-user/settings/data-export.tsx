@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Download, FileText, Database, Trash2, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 import { useState } from 'react';
 
-import { PageLayout, Button, Switch, Tile } from '../../../components';
+import { PageLayout, Button, Switch, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/data-export')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/data-export')({
   component: DataExportComponent,
 });
 

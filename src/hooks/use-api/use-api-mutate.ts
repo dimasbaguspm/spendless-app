@@ -1,6 +1,7 @@
 import { useMutation, type MutationObserverBaseResult, type UseMutationOptions } from '@tanstack/react-query';
 import axios, { type AxiosRequestConfig } from 'axios';
 
+import type { Error } from '../../types/api';
 import { TokenManager } from '../use-session';
 
 import { BASE_URL } from './constants';

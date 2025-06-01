@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import { type FC, type PropsWithChildren } from 'react';
+import { useRef, type FC, type PropsWithChildren } from 'react';
 
 import { DRAWER_IDS, type DrawerId } from '../../constants/drawer-id';
 import { useApiAccountQuery, useApiCategoryQuery, useApiTransactionQuery } from '../../hooks';
@@ -12,7 +12,21 @@ import { DrawerRouterContextProvider } from './context';
 
 export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
   const navigate = useNavigate();
-  const { drawerId, accountId, categoryId, transactionId } = useSearch({ strict: false });
+  const searchParams = useSearch({ strict: false });
+  const dispatchEl = useRef<HTMLDivElement>(null);
+
+  const { drawerId, accountId, categoryId, transactionId } = searchParams;
+
+  const handleDispatchSubmitDrawerEvent = () => {
+    if (!dispatchEl.current) return;
+
+    dispatchEl.current.dispatchEvent(
+      new CustomEvent('drawer-router:submit', {
+        bubbles: true,
+        detail: searchParams,
+      })
+    );
+  };
 
   const openDrawer = async (id: DrawerId, obj: object = {}) => {
     await navigate({
@@ -25,7 +39,19 @@ export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
       replace: true,
       resetScroll: false,
     });
+
+    if (!dispatchEl.current) return;
+    dispatchEl.current.dispatchEvent(
+      new CustomEvent('drawer-router:open', {
+        bubbles: true,
+        detail: {
+          ...obj,
+          drawerId: id,
+        },
+      })
+    );
   };
+
   const closeDrawer = async () => {
     await navigate({
       // @ts-expect-error is a bug from tanstack/react-router
@@ -39,6 +65,14 @@ export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
       replace: true,
       resetScroll: false,
     });
+
+    if (!dispatchEl.current) return;
+    dispatchEl.current.dispatchEvent(
+      new CustomEvent('drawer-router:close', {
+        bubbles: true,
+        detail: searchParams,
+      })
+    );
   };
 
   const is = (id: DrawerId) => drawerId === id;
@@ -51,10 +85,13 @@ export const DrawerRouterProvider: FC<PropsWithChildren> = ({ children }) => {
     <DrawerRouterContextProvider
       value={{
         drawerId,
+        dispatchEl,
         openDrawer,
         closeDrawer,
+        handleDispatchSubmitDrawerEvent,
       }}
     >
+      <div ref={dispatchEl} />
       {children}
 
       {is(DRAWER_IDS.CREATE_TRANSACTION) && <AddTransactionDrawer />}

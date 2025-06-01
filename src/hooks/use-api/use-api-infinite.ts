@@ -10,12 +10,12 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 
-import type { PaginatedResponse } from '../../types/api';
+import type { Error, PaginatedResponse } from '../../types/api';
 import { TokenManager } from '../use-session';
 
 import { BASE_URL } from './constants';
 
-export interface UseApiInfiniteOptions<Data, Query, Error> {
+export interface UseApiInfiniteOptions<TData, Query, TError> {
   queryKey: unknown[];
   path: string;
   queryParams?: Query;
@@ -23,12 +23,12 @@ export interface UseApiInfiniteOptions<Data, Query, Error> {
   retry?: boolean;
   silentError?: boolean;
   headers?: Record<string, string>;
-  onSuccess?: (data: Data) => void;
-  onError?: (error: Error) => void;
-  getNextPageParam?: (lastPage: Data, allPages: Data[], lastPageParam: unknown, allPageParams: unknown[]) => unknown;
+  onSuccess?: (data: TData) => void;
+  onError?: (error: TError) => void;
+  getNextPageParam?: (lastPage: TData, allPages: TData[], lastPageParam: unknown, allPageParams: unknown[]) => unknown;
   getPreviousPageParam?: (
-    firstPage: Data,
-    allPages: Data[],
+    firstPage: TData,
+    allPages: TData[],
     firstPageParam: unknown,
     allPageParams: unknown[]
   ) => unknown;

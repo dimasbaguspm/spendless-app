@@ -58,7 +58,7 @@ export function LoginForm({ onSuccess, className }: LoginFormProps) {
       <div className="mt-6 text-center space-y-3">
         <div className="text-slate-500">
           Don't have an account?{' '}
-          <Link to="/auth/register" className="text-coral-600 hover:text-coral-700 font-medium transition-colors">
+          <Link to="/register" className="text-coral-600 hover:text-coral-700 font-medium transition-colors">
             Create one here
           </Link>
         </div>

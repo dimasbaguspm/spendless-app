@@ -75,7 +75,15 @@ export function TransactionGroup({
 
   const getTotalAmount = () => {
     return transactions.reduce((total, transaction) => {
-      return total + (transaction.type === 'income' ? transaction.amount : -transaction.amount);
+      if (transaction.type === 'income') {
+        return total + transaction.amount;
+      } else if (transaction.type === 'expense') {
+        return total - transaction.amount;
+      } else {
+        // For transfers, we can consider them neutral in terms of net worth
+        // or handle them differently based on business logic
+        return total;
+      }
     }, 0);
   };
 

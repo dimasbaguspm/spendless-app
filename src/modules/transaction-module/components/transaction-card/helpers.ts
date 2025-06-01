@@ -1,5 +1,5 @@
-export const formatAmount = (type: string, amount: number) => {
-  const prefix = type === 'income' ? '+' : '-';
+export const formatAmount = (type: 'income' | 'expense' | 'transfer', amount: number) => {
+  const prefix = type === 'income' ? '+' : type === 'expense' ? '-' : '↔';
   return `${prefix}$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
 };
 

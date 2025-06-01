@@ -13,6 +13,7 @@ import {
   DEFAULT_FORM_VALUES,
   VALIDATION_RULES,
   CURRENCY_OPTIONS,
+  TRANSACTION_TYPE_OPTIONS,
   transformToTransactionData,
   validateFormData,
 } from './helpers';
@@ -137,5 +138,6 @@ export const useAddTransactionForm = ({
     accountOptions,
     categoryOptions,
     currencyOptions: CURRENCY_OPTIONS,
+    typeOptions: TRANSACTION_TYPE_OPTIONS,
   };
 };

@@ -13,9 +13,9 @@ import {
   Tags,
 } from 'lucide-react';
 
-import { PageLayout, Tile } from '../../../components';
+import { PageLayout, Tile } from '../../../../components';
 
-export const Route = createFileRoute('/_protected/settings/')({
+export const Route = createFileRoute('/_protected/_experienced-user/settings/')({
   component: AccountIndexComponent,
 });
 

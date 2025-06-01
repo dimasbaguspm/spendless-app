@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
-import { redirectIfAuthenticated } from '../hooks';
+import { redirectIfAuthenticated } from '../../hooks';
 
 export const Route = createFileRoute('/_auth')({
   component: RouteComponent,

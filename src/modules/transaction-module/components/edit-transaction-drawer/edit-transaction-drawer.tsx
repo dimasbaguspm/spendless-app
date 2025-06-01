@@ -2,7 +2,7 @@ import { Trash2 } from 'lucide-react';
 import { type FC, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-import { Drawer, TextInput, Select, TextArea, Button, IconButton, Modal } from '../../../../components';
+import { Drawer, TextInput, Select, TextArea, Button, IconButton, Modal, Segment } from '../../../../components';
 
 import type { EditTransactionDrawerProps } from './types';
 import { useEditTransactionForm } from './use-edit-transaction-form.hook';
@@ -22,6 +22,7 @@ export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transact
     accountOptions,
     categoryOptions,
     currencyOptions,
+    typeOptions,
   } = useEditTransactionForm({ transaction, onSuccess, onError });
 
   const handleDeleteClick = () => {
@@ -59,6 +60,22 @@ export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transact
                   value={field.value?.toString() ?? ''}
                   onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                   errorText={errors.accountId?.message}
+                />
+              )}
+            />
+
+            <Controller
+              name="type"
+              control={control}
+              rules={{ required: 'Transaction type is required' }}
+              render={({ field }) => (
+                <Segment
+                  label="Type"
+                  options={typeOptions}
+                  value={field.value ?? 'expense'}
+                  onValueChange={field.onChange}
+                  errorText={errors.type?.message}
+                  className="w-full"
                 />
               )}
             />
@@ -166,9 +183,7 @@ export const EditTransactionDrawer: FC<EditTransactionDrawerProps> = ({ transact
           {(updateError ?? deleteError) && (
             <div className="mt-4 p-3 bg-danger-50 border border-danger-200 rounded-md">
               <p className="text-sm text-danger-700">
-                {(updateError as Error)?.message ??
-                  (deleteError as Error)?.message ??
-                  'Failed to update transaction. Please try again.'}
+                {updateError?.message ?? deleteError?.message ?? 'Failed to update transaction. Please try again.'}
               </p>
             </div>
           )}

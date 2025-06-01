@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { Button, Skeleton } from '../../components';
-import { useApiSummaryQuery, useApiTransactionsQuery, useApiAccountsQuery } from '../../hooks';
-import type { Transaction, Account } from '../../types/api';
+import { Button, PageLayout, Skeleton } from '../../../components';
+import { useApiSummaryQuery, useApiTransactionsQuery, useApiAccountsQuery } from '../../../hooks';
+import type { Transaction, Account } from '../../../types/api';
 
-export const Route = createFileRoute('/_protected/')({
+export const Route = createFileRoute('/_protected/_experienced-user/')({
   component: HomeComponent,
 });
 
@@ -44,7 +44,7 @@ function HomeComponent() {
   const netIncome = summaryData?.summary?.netIncome ?? 0;
 
   return (
-    <div className="p-4 space-y-6">
+    <PageLayout>
       <div className="text-center space-y-2">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Welcome Back!</h1>
         <p className="text-slate-600">Manage your expenses and track your spending</p>
@@ -188,6 +188,6 @@ function HomeComponent() {
           <p className="text-red-600 text-sm sm:text-base">Failed to load financial summary. Please try again.</p>
         </div>
       )}
-    </div>
+    </PageLayout>
   );
 }

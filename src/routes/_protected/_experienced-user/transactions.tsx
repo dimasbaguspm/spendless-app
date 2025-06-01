@@ -3,14 +3,14 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Filter, Calendar } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-import { PageLayout, PageHeader, IconButton, DatePicker } from '../../components';
+import { PageLayout, PageHeader, IconButton, DatePicker } from '../../../components';
 import {
   WeeklyDateRibbon,
   SeamlessTransactionList,
   type SeamlessTransactionListRef,
-} from '../../modules/transaction-module';
+} from '../../../modules/transaction-module';
 
-export const Route = createFileRoute('/_protected/transactions')({
+export const Route = createFileRoute('/_protected/_experienced-user/transactions')({
   component: TransactionsComponent,
 });
 
