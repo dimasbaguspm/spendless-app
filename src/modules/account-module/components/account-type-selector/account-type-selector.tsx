@@ -1,13 +1,11 @@
-import { type FC, useState } from 'react';
-import { Controller, type Control, type FieldErrors } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, type Control, type FieldErrors, type FieldPath, type FieldValues } from 'react-hook-form';
 
 import { TextInput, Tag } from '../../../../components';
 
-import type { EditAccountFormData } from './types';
-
-interface AccountTypeSelectorProps {
-  control: Control<EditAccountFormData>;
-  errors: FieldErrors<EditAccountFormData>;
+interface AccountTypeSelectorProps<T extends FieldValues> {
+  control: Control<T>;
+  errors: FieldErrors<T>;
   value?: string;
   onChange?: (value: string) => void;
 }
@@ -23,12 +21,12 @@ const COMMON_ACCOUNT_TYPES = [
   { value: 'joint', label: 'Joint Account' },
 ];
 
-export const AccountTypeSelector: FC<AccountTypeSelectorProps> = ({ control, errors }) => {
+export const AccountTypeSelector = <T extends FieldValues>({ control, errors }: AccountTypeSelectorProps<T>) => {
   const [showCustomInput, setShowCustomInput] = useState(false);
 
   return (
     <Controller
-      name="type"
+      name={'type' as FieldPath<T>}
       control={control}
       rules={{
         required: 'Account type is required',
@@ -51,6 +49,7 @@ export const AccountTypeSelector: FC<AccountTypeSelectorProps> = ({ control, err
                 <div className="flex flex-wrap gap-2">
                   {COMMON_ACCOUNT_TYPES.map((type) => (
                     <Tag
+                      role="button"
                       key={type.value}
                       variant={field.value === type.value ? 'coral' : 'slate-outline'}
                       className="cursor-pointer transition-all hover:scale-105"
@@ -82,7 +81,7 @@ export const AccountTypeSelector: FC<AccountTypeSelectorProps> = ({ control, err
                   <TextInput
                     {...field}
                     placeholder="Enter custom account type"
-                    errorText={errors.type?.message}
+                    errorText={errors.type?.message as string}
                     maxLength={50}
                     autoFocus
                     helperText="Create your own account type"
@@ -106,7 +105,7 @@ export const AccountTypeSelector: FC<AccountTypeSelectorProps> = ({ control, err
                     clipRule="evenodd"
                   />
                 </svg>
-                {errors.type.message}
+                {errors.type?.message as string}
               </p>
             )}
           </div>

@@ -4,6 +4,11 @@ export interface EditAccountFormData extends UpdateAccount {
   enableLimit: boolean;
   limitPeriod: 'daily' | 'weekly' | 'monthly' | 'yearly';
   limitAmount: number;
+  metadata?: {
+    icon?: string;
+    color?: string;
+    [key: string]: string | number | boolean | null | undefined;
+  };
 }
 
 export interface EditAccountDrawerProps {

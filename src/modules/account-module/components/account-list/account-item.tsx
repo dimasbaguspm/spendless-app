@@ -1,10 +1,22 @@
-import { CreditCard, Edit, Trash2, Loader } from 'lucide-react';
+import { Edit, Trash2, Loader } from 'lucide-react';
 
 import { Button } from '../../../../components';
+import { useApiTransactionsQuery } from '../../../../hooks/use-api/built-in/use-transactions';
+import { AccountIcon } from '../account-icon';
 
 import type { AccountItemProps } from './types';
 
 export function AccountItem({ account, isDeleting = false, onEdit, onDelete }: AccountItemProps) {
+  // Fetch transaction count for this specific account
+  const [pagedTransactions] = useApiTransactionsQuery({
+    accountId: account.id,
+    pageSize: 1, // We only need the totalItems count, not the actual data
+    sortBy: 'date',
+    sortOrder: 'desc',
+  });
+
+  const transactionCount = pagedTransactions?.totalItems ?? 0;
+
   const formatAccountType = (type: string) => {
     return type.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   };
@@ -12,16 +24,14 @@ export function AccountItem({ account, isDeleting = false, onEdit, onDelete }: A
   return (
     <div className="p-4 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <div className="text-coral-600">
-          <CreditCard className="w-6 h-6" />
-        </div>
+        <AccountIcon iconValue={account.metadata?.icon} colorValue={account.metadata?.color} size="md" />
         <div>
           <div className="flex items-center gap-2">
             <p className="font-medium text-slate-900">{account.name}</p>
           </div>
           <p className="text-sm text-slate-500">
             {account.type && formatAccountType(account.type)}
-            {account.note && ` • ${account.note}`}
+            {transactionCount !== undefined && ` • ${transactionCount} transaction${transactionCount !== 1 ? 's' : ''}`}
           </p>
         </div>
       </div>

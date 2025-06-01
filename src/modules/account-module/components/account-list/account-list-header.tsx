@@ -6,8 +6,8 @@ import { useDrawerRouterProvider } from '../../../../providers/drawer-router';
 export function AccountListHeader() {
   const { openDrawer } = useDrawerRouterProvider();
 
-  const handleAddAccount = () => {
-    openDrawer('add-account');
+  const handleAddAccount = async () => {
+    await openDrawer('add-account');
   };
 
   return (

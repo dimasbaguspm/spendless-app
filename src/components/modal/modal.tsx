@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { escapeManager } from '../../libs/escape-manager';
 import { cn } from '../../libs/utils';
 
 import { ModalContext } from './modal-context';
@@ -56,12 +57,6 @@ export function Modal({
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (closeOnEscape && e.key === 'Escape') {
-      handleClose();
-    }
-  };
-
   // Initialize visibility state with a small delay for smooth entrance
   useEffect(() => {
     // Use requestAnimationFrame to ensure the initial state is rendered first
@@ -75,8 +70,10 @@ export function Modal({
 
   useEffect(() => {
     if (closeOnEscape) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      // Use escape manager to handle ESC key with proper z-index priority
+      const modalId = `modal-${Date.now()}-${Math.random()}`;
+      const unregister = escapeManager.register(modalId, 50, handleClose); // z-index 50 for modals
+      return unregister;
     }
   }, [closeOnEscape]);
 

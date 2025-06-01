@@ -10,6 +10,11 @@ export const getDefaultFormValues = (account: Account, accountLimit?: AccountLim
   enableLimit: !!accountLimit,
   limitPeriod: accountLimit?.period === 'week' ? 'weekly' : 'monthly',
   limitAmount: accountLimit?.limit ?? 0,
+  metadata: {
+    icon: account.metadata?.icon ?? 'credit-card',
+    color: account.metadata?.color ?? 'coral',
+    ...account.metadata,
+  },
 });
 
 export const VALIDATION_RULES = {
@@ -59,6 +64,9 @@ export const VALIDATION_RULES = {
       return true;
     },
   },
+  metadata: {
+    // No validation needed for metadata, can be empty
+  },
 };
 
 /**
@@ -91,6 +99,7 @@ export const transformToAccountData = (data: EditAccountFormData): UpdateAccount
   name: data.name,
   type: data.type,
   note: data.note,
+  metadata: data.metadata,
 });
 
 /**

@@ -9,6 +9,10 @@ export const DEFAULT_FORM_VALUES: Partial<AddAccountFormData> = {
   enableLimit: false,
   limitPeriod: 'monthly',
   limitAmount: 0,
+  metadata: {
+    icon: 'credit-card',
+    color: 'coral',
+  },
 };
 
 export const VALIDATION_RULES = {
@@ -93,6 +97,7 @@ export const transformToAccountData = (data: AddAccountFormData): NewAccount => 
   name: data.name,
   type: data.type,
   note: data.note,
+  metadata: data.metadata,
 });
 
 /**
